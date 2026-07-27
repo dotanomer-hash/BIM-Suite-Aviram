@@ -1,5 +1,6 @@
-/* oYmer VR site — restores the interactions lost when Base44's React was stripped:
-   services dropdown, FAQ accordion, mobile menu. Vanilla JS, no dependencies. */
+/* oYmer VR site — restores interactions lost when Base44's React was stripped:
+   services dropdown, FAQ accordion (+open frame), mobile menu, scroll animations,
+   and a self-hosted accessibility menu. Vanilla JS, no dependencies. */
 
 window.OYMER_FAQ = [
   "מציאות מדומה (VR) היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת־מימדית \"כאילו הוא נמצא שם\". באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית – לפני הבנייה.",
@@ -26,11 +27,34 @@ var OYMER_SERVICES = [
     else document.addEventListener("DOMContentLoaded", fn);
   }
   ready(function () {
+    setupReveal();
     setupServicesDropdown();
     setupFAQ();
     setupMobileMenu();
+    setupAccessibility();
   });
 
+  /* ---- scroll-in animations (was Base44's fade/slide reveal) ---- */
+  function setupReveal() {
+    var els = Array.prototype.slice.call(document.querySelectorAll('[style*="opacity: 0"]'))
+      .filter(function (e) { return !e.classList.contains("oymer-ans"); });
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(function (e) { e.style.opacity = 1; e.style.transform = "none"; });
+      return;
+    }
+    els.forEach(function (e) { e.style.transition = "opacity .7s ease, transform .7s ease"; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.style.opacity = 1; en.target.style.transform = "none"; io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    els.forEach(function (e) { io.observe(e); });
+    setTimeout(function () {
+      els.forEach(function (e) { if (getComputedStyle(e).opacity === "0") { e.style.opacity = 1; e.style.transform = "none"; } });
+    }, 4000);
+  }
+
+  /* ---- services dropdown ---- */
   function setupServicesDropdown() {
     var btns = document.querySelectorAll("button[aria-haspopup]");
     Array.prototype.forEach.call(btns, function (btn) {
@@ -56,12 +80,23 @@ var OYMER_SERVICES = [
     });
   }
 
+  /* ---- FAQ accordion with open-frame highlight ---- */
   function setupFAQ() {
     if (!/FAQ/i.test(location.pathname) && !/FAQ/i.test(document.title)) return;
     if (!window.OYMER_FAQ) return;
     var btns = Array.prototype.slice.call(document.querySelectorAll("section button"))
       .filter(function (b) { return b.querySelector("h3"); });
     if (!btns.length) return;
+
+    function closeAll() {
+      btns.forEach(function (b) {
+        var pnl = b.querySelector(".oymer-ans"); if (pnl) pnl.style.maxHeight = "0px";
+        b.style.background = "#fff"; b.style.borderColor = "#e2e8f0"; b.style.boxShadow = "none";
+        var h = b.querySelector("h3"); if (h) h.style.color = "#0f172a";
+        var s = b.querySelector("svg"); if (s) s.style.transform = "";
+      });
+    }
+
     btns.forEach(function (btn, i) {
       var ex = btn.querySelector(".overflow-hidden"); if (ex) ex.remove();
       var ans = window.OYMER_FAQ[i]; if (ans == null) return;
@@ -75,19 +110,21 @@ var OYMER_SERVICES = [
       panel.appendChild(p);
       btn.appendChild(panel);
       btn.style.cursor = "pointer";
-      var chev = btn.querySelector("svg");
       btn.addEventListener("click", function () {
         var isOpen = panel.style.maxHeight && panel.style.maxHeight !== "0px";
-        Array.prototype.forEach.call(document.querySelectorAll(".oymer-ans"), function (pp) { pp.style.maxHeight = "0px"; });
-        Array.prototype.forEach.call(document.querySelectorAll("section button h3 ~ svg, section button svg"), function (s) { s.style.transform = ""; });
+        closeAll();
         if (!isOpen) {
           panel.style.maxHeight = (panel.scrollHeight + 40) + "px";
-          if (chev) chev.style.transform = "rotate(180deg)";
+          btn.style.background = "#f0f9ff"; btn.style.borderColor = "#bae6fd";
+          btn.style.boxShadow = "0 10px 15px -3px rgba(2,132,199,.15)";
+          var h = btn.querySelector("h3"); if (h) h.style.color = "#0369a1";
+          var s = btn.querySelector("svg"); if (s) s.style.transform = "rotate(180deg)";
         }
       });
     });
   }
 
+  /* ---- mobile hamburger menu ---- */
   function setupMobileMenu() {
     var burger = document.querySelector('button[aria-label="פתח תפריט"]');
     if (!burger || document.querySelector(".oymer-mobile")) return;
@@ -95,10 +132,8 @@ var OYMER_SERVICES = [
     menu.className = "oymer-mobile";
     menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:12px 24px;z-index:49;display:none;";
     var links = OYMER_SERVICES.concat([
-      ["שאלות? תשובות!", "FAQ.html"],
-      ["בלוג", "Blog.html"],
-      ["אודות", "About.html"],
-      ["צור קשר", "Contact.html"]
+      ["שאלות? תשובות!", "FAQ.html"], ["בלוג", "Blog.html"],
+      ["אודות", "About.html"], ["צור קשר", "Contact.html"]
     ]);
     links.forEach(function (l) {
       var a = document.createElement("a");
@@ -108,9 +143,80 @@ var OYMER_SERVICES = [
     });
     document.body.appendChild(menu);
     var open = false;
-    burger.addEventListener("click", function (e) {
-      e.preventDefault(); e.stopPropagation();
-      open = !open; menu.style.display = open ? "block" : "none";
+    burger.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); open = !open; menu.style.display = open ? "block" : "none"; });
+  }
+
+  /* ---- self-hosted accessibility menu (נגישות) ---- */
+  function setupAccessibility() {
+    var S = {};
+    try { S = JSON.parse(localStorage.getItem("oymerA11y") || "{}"); } catch (e) { S = {}; }
+    var css = document.createElement("style");
+    css.textContent =
+      "html.a11y-contrast{filter:contrast(1.35)}" +
+      "html.a11y-gray{filter:grayscale(1)}" +
+      "html.a11y-contrast.a11y-gray{filter:contrast(1.35) grayscale(1)}" +
+      "html.a11y-links a{text-decoration:underline !important;background:#fff3cd !important;color:#7a4d00 !important}" +
+      "html.a11y-nomotion *{animation:none !important;transition:none !important}" +
+      ".oymer-a11y-btn{position:fixed;bottom:24px;left:24px;z-index:99998;width:56px;height:56px;border-radius:50%;background:#7c3aed;color:#fff;border:none;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer;display:flex;align-items:center;justify-content:center}" +
+      ".oymer-a11y-panel{position:fixed;bottom:90px;left:24px;z-index:99999;width:260px;background:#fff;color:#1e293b;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.25);padding:14px;display:none;direction:rtl;text-align:right;font-family:inherit}" +
+      ".oymer-a11y-panel h4{margin:0 0 10px;font-size:16px;color:#7c3aed;font-weight:700}" +
+      ".oymer-a11y-panel button.opt{display:flex;width:100%;align-items:center;gap:8px;justify-content:flex-start;margin:5px 0;padding:10px 12px;border:1px solid #e2e8f0;border-radius:9px;background:#f8fafc;cursor:pointer;font-size:14px;color:#1e293b}" +
+      ".oymer-a11y-panel button.opt.on{background:#ede9fe;border-color:#c4b5fd;color:#6d28d9;font-weight:700}" +
+      ".oymer-a11y-row{display:flex;gap:6px}.oymer-a11y-row button{flex:1}";
+    document.head.appendChild(css);
+
+    function apply() {
+      var h = document.documentElement;
+      h.classList.toggle("a11y-contrast", !!S.contrast);
+      h.classList.toggle("a11y-gray", !!S.gray);
+      h.classList.toggle("a11y-links", !!S.links);
+      h.classList.toggle("a11y-nomotion", !!S.nomotion);
+      h.style.fontSize = (100 + (S.font || 0) * 12) + "%";
+      try { localStorage.setItem("oymerA11y", JSON.stringify(S)); } catch (e) {}
+      refresh();
+    }
+
+    var btn = document.createElement("button");
+    btn.className = "oymer-a11y-btn"; btn.setAttribute("aria-label", "תפריט נגישות");
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1"></circle><path d="m18 19 1-7-6 1"></path><path d="m5 8 3-3 5.5 3-2.36 3.5"></path><path d="M4.24 14.5a5 5 0 0 0 6.88 6"></path><path d="M13.76 17.5a5 5 0 0 0-6.88-6"></path></svg>';
+
+    var panel = document.createElement("div");
+    panel.className = "oymer-a11y-panel";
+    panel.innerHTML =
+      '<h4>נגישות</h4>' +
+      '<div class="oymer-a11y-row"><button class="opt" data-a="font-">א־ טקסט קטן</button><button class="opt" data-a="font+">א+ טקסט גדול</button></div>' +
+      '<button class="opt" data-a="contrast">ניגודיות גבוהה</button>' +
+      '<button class="opt" data-a="gray">גווני אפור</button>' +
+      '<button class="opt" data-a="links">הדגשת קישורים</button>' +
+      '<button class="opt" data-a="nomotion">עצירת אנימציות</button>' +
+      '<button class="opt" data-a="reset" style="justify-content:center;background:#fee2e2;border-color:#fecaca;color:#b91c1c">איפוס</button>';
+
+    function refresh() {
+      panel.querySelectorAll("button.opt").forEach(function (b) {
+        var a = b.getAttribute("data-a");
+        if (["contrast", "gray", "links", "nomotion"].indexOf(a) > -1) b.classList.toggle("on", !!S[a]);
+      });
+    }
+
+    panel.addEventListener("click", function (e) {
+      var b = e.target.closest("button.opt"); if (!b) return;
+      var a = b.getAttribute("data-a");
+      if (a === "font+") S.font = Math.min((S.font || 0) + 1, 4);
+      else if (a === "font-") S.font = Math.max((S.font || 0) - 1, -1);
+      else if (a === "reset") S = {};
+      else S[a] = !S[a];
+      apply();
     });
+
+    btn.addEventListener("click", function () {
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+    document.addEventListener("click", function (e) {
+      if (!panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) panel.style.display = "none";
+    });
+
+    document.body.appendChild(btn);
+    document.body.appendChild(panel);
+    apply();
   }
 })();
