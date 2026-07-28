@@ -41,25 +41,32 @@ var OYMER_SERVICES = [
   /* ---- make the OMER DOTAN / VR Solutions block exactly the logo's height,
           top line to the logo top, bottom line to the logo bottom ---- */
   function setupBrandLockupHeight() {
-    var logo = document.querySelector('header a[aria-label] img');
-    var wrap = document.querySelector('header a[aria-label] div[dir="ltr"]');
-    if (!logo || !wrap) return;
-    function apply() {
-      var h = logo.getBoundingClientRect().height;
-      if (!h) return;
-      wrap.style.display = "inline-flex";
-      wrap.style.flexDirection = "column";
-      wrap.style.justifyContent = "space-between";
-      wrap.style.alignItems = "stretch";
-      wrap.style.height = (h * 0.96) + "px";   // spans the circle
-      Array.prototype.forEach.call(wrap.querySelectorAll("span"), function (s, idx) {
-        s.style.lineHeight = "1";
-        s.style.transform = idx === 0 ? "translateY(1.2px)" : "translateY(-1.2px)"; // top down, bottom up -> closer
-      });
-    }
-    if (logo.complete && logo.naturalHeight) apply();
-    logo.addEventListener("load", apply);
-    window.addEventListener("resize", apply);
+    // Handles every "OMER DOTAN / VR Solutions" lockup on the page (header + footer):
+    // make the text block exactly the logo's height, top line to the logo top,
+    // bottom line to its bottom, both lines the same width (justify).
+    var wraps = document.querySelectorAll('div[dir="ltr"]');
+    Array.prototype.forEach.call(wraps, function (wrap) {
+      var spans = wrap.querySelectorAll("span");
+      if (spans.length < 2 || (spans[0].textContent || "").trim() !== "OMER DOTAN") return;
+      var logo = wrap.parentNode && wrap.parentNode.querySelector("img");
+      if (!logo) return;
+      function apply() {
+        var h = logo.getBoundingClientRect().height;
+        if (!h) return;
+        wrap.style.display = "inline-flex";
+        wrap.style.flexDirection = "column";
+        wrap.style.justifyContent = "space-between";
+        wrap.style.alignItems = "stretch";
+        wrap.style.height = (h * 0.96) + "px";   // spans the circle
+        Array.prototype.forEach.call(spans, function (s, idx) {
+          s.style.lineHeight = "1";
+          s.style.transform = idx === 0 ? "translateY(1.2px)" : "translateY(-1.2px)"; // top down, bottom up -> closer
+        });
+      }
+      if (logo.complete && logo.naturalHeight) apply();
+      logo.addEventListener("load", apply);
+      window.addEventListener("resize", apply);
+    });
   }
 
   /* ---- add "סיפורי לקוחות" nav link (between FAQ and Blog) on every page ---- */
