@@ -198,7 +198,8 @@ var OYMER_SERVICES = [
     if (!burger || document.querySelector(".oymer-mobile")) return;
     var menu = document.createElement("div");
     menu.className = "oymer-mobile";
-    menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:12px 24px;z-index:49;display:none;";
+    menu.setAttribute("dir", "rtl");
+    menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:12px 24px;z-index:49;display:none;direction:rtl;max-height:calc(100vh - 80px);overflow-y:auto;";
     var links = OYMER_SERVICES.concat(OYMER_PRODUCTS).concat([
       ["שאלות? תשובות!", "FAQ.html"], ["סיפורי לקוחות", "ClientStories.html"], ["בלוג", "Blog.html"],
       ["אודות", "About.html"], ["צור קשר", "Contact.html"]
