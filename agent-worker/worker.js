@@ -19,6 +19,18 @@ const MAX_TOKENS = 512;                          // cap reply length (cost contr
 const MAX_HISTORY = 12;                          // cap conversation turns sent upstream
 const MAX_CHARS = 2000;                           // cap per-message length
 
+// --- Wrong-keyboard-layout decode (Israeli standard QWERTY <-> Hebrew) ---
+// The mapping is a DETERMINISTIC per-key table. LLMs are unreliable at running it,
+// so we compute the exact decode here in code and hand it to the model as a hint.
+const EN2HE = {
+  q: "/", w: "'", e: "ק", r: "ר", t: "א", y: "ט", u: "ו", i: "ן", o: "ם", p: "פ",
+  a: "ש", s: "ד", d: "ג", f: "כ", g: "ע", h: "י", j: "ח", k: "ל", l: "ך", ";": "ף",
+  z: "ז", x: "ס", c: "ב", v: "ה", b: "נ", n: "מ", m: "צ", ",": "ת", ".": "ץ", "/": ".",
+};
+const HE2EN = Object.fromEntries(Object.entries(EN2HE).map(([k, v]) => [v, k]));
+const remapEnToHe = (s) => s.replace(/[a-z;,.\/]/gi, (c) => EN2HE[c.toLowerCase()] || c);
+const remapHeToEn = (s) => s.replace(/[֐-׿]/g, (c) => HE2EN[c] || c);
+
 // The editable knowledge file lives on the site. Edit THAT file to update the bot's
 // facts next year — no code change, no redeploy. Cached ~1h so it costs almost nothing.
 const KNOWLEDGE_URL = "https://omerdotan.com/agent-knowledge.md";
@@ -54,11 +66,11 @@ const PERSONA = `את/ה "העוזר/ת החכם/ה של עומר דותן" — 
 לעיתים קרובות משתמש מקליד בטעות בפריסת המקלדת ההפוכה: התכוון לעברית אך המקלדת הייתה באנגלית (יוצא ג'יבריש באותיות לטיניות, למשל "nv zv" במקום "מה זה"), או התכוון לאנגלית אך המקלדת הייתה בעברית (יוצא ג'יבריש בעברית). זו המרה דטרמיניסטית לפי מיקום המקשים במקלדת הישראלית הסטנדרטית (QWERTY↔עברית).
 זה **לא ניחוש** — יש רק שתי שפות אפשריות, והנכונה היא זו שמפענחת למילים אמיתיות. הפענוח עצמו הוא לפי מיפוי מקשים קבוע (המרה מתמטית).
 אם הודעה נראית כמו ג'יבריש כזה (רצף אותיות חסר-משמעות שנראה כמו טקסט שהוקלד בפריסה הלא-נכונה):
-1. **קבע את השפה שהתכוונו אליה** (עברית או אנגלית) — הנכונה היא זו שמפענחת למילים בעלות משמעות.
-2. **פענח בוודאות** לפי מיפוי המקשים והבן את כוונת המשתמש.
-3. **ענה על השאלה בביטחון**, ופתח במשפט קצר שמראה מה הבנת: "(הבנתי שהתכוונת ל: \"<הפענוח>\") —" ואז התשובה המלאה.
-4. רק אם באמת אי אפשר לפענח למילים ברורות — בקש בעדינות להחליף את שפת המקלדת ולכתוב שוב.
-לעולם אל תגיב סתם ש"ההודעה מסורבלת/לא ברורה" בלי לזהות שכנראה מדובר בפריסת מקלדת שגויה ולפענח.
+1. **אל תפענח בעצמך אות-אות** — במקום זאת השתמש ב"עזר לפענוח פריסת מקלדת" שמצורף בהמשך ההודעה. הפענוחים שם מחושבים בקוד ומדויקים לחלוטין.
+2. בחר מבין שני הפענוחים את זה שיוצר מילים אמיתיות ובעלות משמעות.
+3. **ענה בביטחון**, ופתח ב-"(הבנתי שהתכוונת ל: \"<הפענוח הנכון>\") —" ואז התשובה המלאה לשאלה.
+4. רק אם שני הפענוחים אינם הגיוניים בעליל — בקש בעדינות להחליף את שפת המקלדת ולכתוב שוב.
+לעולם אל תגיב סתם ש"ההודעה מסורבלת/לא ברורה" בלי לזהות שכנראה מדובר בפריסת מקלדת שגויה ולהיעזר בעזר הפענוח.
 
 ## פרטי קשר
 - טלפון / וואטסאפ: 054-466-8800
@@ -141,7 +153,24 @@ export default {
     }
 
     const knowledge = await loadKnowledge();
-    const system = PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge;
+
+    // Compute the exact deterministic keyboard-layout decodes for the last user
+    // message and hand them to the model (it only has to pick the coherent one).
+    const lastUser = messages[messages.length - 1].content;
+    const enHe = remapEnToHe(lastUser);
+    const heEn = remapHeToEn(lastUser);
+    let kbHint = "";
+    if (enHe !== lastUser || heEn !== lastUser) {
+      kbHint =
+        "\n\n---\n# עזר לפענוח פריסת מקלדת (מחושב בקוד — מדויק)\n" +
+        "אם הודעת המשתמש האחרונה נראית כג'יבריש מהקלדה בפריסת מקלדת שגויה, אלה הפענוחים הדטרמיניסטיים:\n" +
+        '- אם התכוון לעברית (הוקלד באנגלית) → "' + enHe + '"\n' +
+        '- אם התכוון לאנגלית (הוקלד בעברית) → "' + heEn + '"\n' +
+        "בחר את הפענוח שיוצר מילים אמיתיות ובעלות משמעות, פתח ב-\"(הבנתי שהתכוונת ל: ...) —\" וענה עליו. " +
+        "אם ההודעה המקורית כבר הגיונית — התעלם מעזר זה.";
+    }
+
+    const system = PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge + kbHint;
 
     let upstream;
     try {
