@@ -31,6 +31,7 @@ var OYMER_SERVICES = [
     setupProductsNav();
     setupServicesDropdown();
     setupClientStoriesNav();
+    setupActiveNav();
     setupFAQ();
     setupMobileMenu();
     setupAccessibility();
@@ -71,6 +72,19 @@ var OYMER_SERVICES = [
       a.setAttribute("href", "ClientStories.html");
       a.textContent = "סיפורי לקוחות";
       blog.parentNode.insertBefore(a, blog);
+    });
+  }
+
+  /* ---- highlight the nav item that matches the current page ---- */
+  function setupActiveNav() {
+    var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    var links = document.querySelectorAll('header nav a[href]');
+    Array.prototype.forEach.call(links, function (a) {
+      var href = (a.getAttribute("href") || "").split("/").pop().toLowerCase();
+      if (!href || href.charAt(0) === "#") return;
+      a.classList.remove("bg-sky-50", "text-sky-600", "text-slate-700", "hover:bg-slate-100");
+      if (href === current) a.classList.add("bg-sky-50", "text-sky-600");
+      else a.classList.add("text-slate-700", "hover:bg-slate-100");
     });
   }
 
