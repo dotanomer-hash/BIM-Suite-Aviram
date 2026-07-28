@@ -62,16 +62,8 @@ const PERSONA = `את/ה "העוזר/ת החכם/ה של עומר דותן" — 
 ## מחירים — חשוב
 לעולם אל תנקוב במחיר, טווח מחירים או הצעת מחיר. המחיר תלוי בהיקף ובאופי הפרויקט. כשנשאלת על מחיר — הסבר זאת בקצרה, והצע ליצור קשר עם עומר לקבלת הצעה אישית: זו בדיוק הדרך לקבל מענה מדויק.
 
-## פריסת מקלדת שגויה (טעות נפוצה מאוד בישראל)
-לעיתים קרובות משתמש מקליד בטעות בפריסת המקלדת ההפוכה: התכוון לעברית אך המקלדת הייתה באנגלית (יוצא ג'יבריש באותיות לטיניות, למשל "nv zv" במקום "מה זה"), או התכוון לאנגלית אך המקלדת הייתה בעברית (יוצא ג'יבריש בעברית). זו המרה דטרמיניסטית לפי מיקום המקשים במקלדת הישראלית הסטנדרטית (QWERTY↔עברית).
-זה **לא ניחוש** — יש רק שתי שפות אפשריות, והנכונה היא זו שמפענחת למילים אמיתיות. הפענוח עצמו הוא לפי מיפוי מקשים קבוע (המרה מתמטית).
-אם הודעה נראית כמו ג'יבריש כזה (רצף אותיות שנראה כמו טקסט שהוקלד בפריסה הלא-נכונה):
-1. **אל תפענח בעצמך אות-אות** — השתמש ב"עזר לפענוח פריסת מקלדת" שמצורף בהמשך. הפענוחים שם מדויקים.
-2. בחר את הפענוח שיוצר מילים עבריות אמיתיות. **השתמש בו מילה-במילה בדיוק כפי שהוא — זו הודעת המשתמש האמיתית, גם אם השאלה מפתיעה או לא צפויה. אסור לך בשום אופן להחליף אותו בשאלה אחרת ש"נשמעת" לך סבירה יותר.**
-   דוגמה קריטית: אם הפענוח המדויק הוא "בן כמה עומר?" — זו שאלה לגיטימית לחלוטין על הגיל/הניסיון של עומר. ענה עליה כפי שהיא. **אסור** להפוך אותה ל"כמה זה עולה?" רק כי המילה "כמה" מופיעה. מילה מוכרת בודדת לעולם אינה מצדיקה החלפת השאלה כולה.
-3. פתח ב-"(הבנתי שהתכוונת ל: \"<הפענוח המדויק>\") —" וענה על השאלה המפוענחת.
-4. רק אם הפענוח באמת אינו יוצר שום רצף מילים בעל משמעות (אותיות אקראיות לגמרי, לא שאלה) — אמור בחום שכנראה הייתה טעות בפריסת המקלדת, הצג את מה שקיבלת, ובקש לוודא ולכתוב שוב. אל תמציא שאלה משלך.
-לעולם אל תמציא שאלה/כוונה שלא עולה ישירות מהפענוח המדויק.
+## פריסת מקלדת שגויה
+המערכת מתקנת אוטומטית (בקוד) הודעות שהוקלדו בטעות בפריסת מקלדת שגויה, כך שתקבל טקסט עברי נקי. אם תצורף "הערה" שמנחה אותך לפתוח ב-"(הבנתי שהתכוונת ל: ...)" — עשה זאת, וענה על ההודעה המתוקנת כרגיל וכפי שהיא, גם אם השאלה מפתיעה (למשל "בן כמה עומר?" = שאלה לגיטימית על הגיל/הניסיון של עומר).
 
 ## פרטי קשר
 - טלפון / וואטסאפ: 054-466-8800
@@ -118,6 +110,48 @@ function jsonResponse(obj, status, origin) {
   });
 }
 
+// One Claude call -> the text reply (throws on error).
+async function callClaude(env, { system, messages, max_tokens }) {
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+    },
+    body: JSON.stringify({ model: MODEL, max_tokens, system, messages }),
+  });
+  if (!resp.ok) throw new Error("upstream_" + resp.status);
+  const data = await resp.json();
+  return (data.content || []).filter((c) => c.type === "text").map((c) => c.text).join("\n").trim();
+}
+
+// Detect Hebrew-typed-on-an-English-layout and, if a tiny classifier confirms the
+// decoded Hebrew is the real message, return it. Only runs on Latin-heavy input,
+// so normal Hebrew messages make no extra call. The model then sees clean Hebrew
+// and can't hallucinate a different question.
+async function resolveLayout(text, env) {
+  const latin = (text.match(/[a-z]/gi) || []).length;
+  const hebrew = (text.match(/[֐-׿]/g) || []).length;
+  if (latin < 2 || latin < hebrew) return { text, corrected: false };
+  const decoded = remapEnToHe(text);
+  if (decoded === text) return { text, corrected: false };
+  let verdict = "";
+  try {
+    verdict = await callClaude(env, {
+      max_tokens: 6,
+      system:
+        "הכרעה בלבד. מוצגים 'מקורי' ו'פענוח' של הקלדה אפשרית בפריסת מקלדת שגויה. " +
+        "אם המקורי הוא טקסט אמיתי וקריא (למשל אנגלית) — השב NO. " +
+        "אם הפענוח הוא הטקסט האמיתי והקריא (עברית) — השב YES. השב מילה אחת בלבד: YES או NO.",
+      messages: [{ role: "user", content: "מקורי: " + text + "\nפענוח: " + decoded }],
+    });
+  } catch (_) {
+    return { text, corrected: false };
+  }
+  return /YES/i.test(verdict) ? { text: decoded, corrected: true } : { text, corrected: false };
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
@@ -155,56 +189,25 @@ export default {
 
     const knowledge = await loadKnowledge();
 
-    // Compute the exact deterministic keyboard-layout decodes for the last user
-    // message and hand them to the model (it only has to pick the coherent one).
-    const lastUser = messages[messages.length - 1].content;
-    const enHe = remapEnToHe(lastUser);
-    const heEn = remapHeToEn(lastUser);
-    let kbHint = "";
-    if (enHe !== lastUser || heEn !== lastUser) {
-      kbHint =
-        "\n\n---\n# עזר לפענוח פריסת מקלדת (מחושב בקוד — מדויק)\n" +
-        "אם הודעת המשתמש האחרונה נראית כג'יבריש מהקלדה בפריסת מקלדת שגויה, אלה הפענוחים הדטרמיניסטיים:\n" +
-        '- אם התכוון לעברית (הוקלד באנגלית) → "' + enHe + '"\n' +
-        '- אם התכוון לאנגלית (הוקלד בעברית) → "' + heEn + '"\n' +
-        "בחר את הפענוח שיוצר משפט ברור והגיוני, השתמש בו מילה-במילה, פתח ב-\"(הבנתי שהתכוונת ל: ...) —\" וענה עליו. " +
-        "אם אף פענוח אינו יוצר משפט ברור והגיוני — אל תנחש שאלה אחרת; הצג את מה שקיבלת ובקש לוודא את שפת המקלדת ולכתוב שוב. " +
-        "אם ההודעה המקורית כבר הגיונית — התעלם מעזר זה.";
+    // Fix wrong-keyboard-layout input IN CODE (deterministic), so the model only
+    // ever sees clean Hebrew and can't hallucinate a different question.
+    const layout = await resolveLayout(messages[messages.length - 1].content, env);
+    let kbNote = "";
+    if (layout.corrected) {
+      messages[messages.length - 1] = { role: "user", content: layout.text };
+      kbNote =
+        '\n\n---\n# הערה\nהודעת המשתמש תוקנה אוטומטית מטעות פריסת מקלדת. ' +
+        'פתח את תשובתך ב-"(הבנתי שהתכוונת ל: \\"' + layout.text + '\\") —" ואז ענה על ההודעה כרגיל.';
     }
 
-    const system = PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge + kbHint;
+    const system = PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge + kbNote;
 
-    let upstream;
+    let reply;
     try {
-      upstream = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "x-api-key": env.ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          max_tokens: MAX_TOKENS,
-          system,
-          messages,
-        }),
-      });
+      reply = await callClaude(env, { system, max_tokens: MAX_TOKENS, messages });
     } catch (e) {
-      return jsonResponse({ error: "upstream_unreachable" }, 502, origin);
+      return jsonResponse({ error: "upstream_error", detail: String(e.message).slice(0, 200) }, 502, origin);
     }
-
-    if (!upstream.ok) {
-      const detail = (await upstream.text()).slice(0, 300);
-      return jsonResponse({ error: "upstream_error", status: upstream.status, detail }, 502, origin);
-    }
-
-    const data = await upstream.json();
-    const reply = (data.content || [])
-      .filter((c) => c.type === "text")
-      .map((c) => c.text)
-      .join("\n")
-      .trim();
 
     return jsonResponse({ reply: reply || "מצטער, לא הצלחתי לנסח תשובה. אפשר לנסות שוב או ליצור קשר עם עומר." }, 200, origin);
   },
