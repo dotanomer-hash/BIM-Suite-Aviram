@@ -28,11 +28,51 @@ var OYMER_SERVICES = [
   }
   ready(function () {
     setupReveal();
+    setupProductsNav();
     setupServicesDropdown();
+    setupClientStoriesNav();
     setupFAQ();
     setupMobileMenu();
     setupAccessibility();
+    setupBrandLockupHeight();
   });
+
+  /* ---- make the OMER DOTAN / VR Solutions block exactly the logo's height,
+          top line to the logo top, bottom line to the logo bottom ---- */
+  function setupBrandLockupHeight() {
+    var logo = document.querySelector('header a[aria-label] img');
+    var wrap = document.querySelector('header a[aria-label] div[dir="ltr"]');
+    if (!logo || !wrap) return;
+    function apply() {
+      var h = logo.getBoundingClientRect().height;
+      if (!h) return;
+      wrap.style.display = "inline-flex";
+      wrap.style.flexDirection = "column";
+      wrap.style.justifyContent = "space-between";
+      wrap.style.alignItems = "stretch";
+      wrap.style.height = (h * 0.96) + "px";   // spans the circle
+      Array.prototype.forEach.call(wrap.querySelectorAll("span"), function (s, idx) {
+        s.style.lineHeight = "1";
+        s.style.transform = idx === 0 ? "translateY(1.2px)" : "translateY(-1.2px)"; // top down, bottom up -> closer
+      });
+    }
+    if (logo.complete && logo.naturalHeight) apply();
+    logo.addEventListener("load", apply);
+    window.addEventListener("resize", apply);
+  }
+
+  /* ---- add "סיפורי לקוחות" nav link (between FAQ and Blog) on every page ---- */
+  function setupClientStoriesNav() {
+    var blogs = document.querySelectorAll('a[href="Blog.html"]');
+    Array.prototype.forEach.call(blogs, function (blog) {
+      var prev = blog.previousElementSibling;
+      if (prev && prev.getAttribute && prev.getAttribute("href") === "ClientStories.html") return;
+      var a = blog.cloneNode(true);           // inherit exact nav styling
+      a.setAttribute("href", "ClientStories.html");
+      a.textContent = "סיפורי לקוחות";
+      blog.parentNode.insertBefore(a, blog);
+    });
+  }
 
   /* ---- scroll-in animations (was Base44's fade/slide reveal) ---- */
   function setupReveal() {
@@ -54,30 +94,58 @@ var OYMER_SERVICES = [
     }, 4000);
   }
 
+  /* ---- products list ---- */
+  var OYMER_PRODUCTS = [
+    ["oYmer DecisionMaker", "DecisionMaker.html"],
+    ["oYmer VR Tours", "VRTours.html"],
+    ["oYmer BIM Viewer", "BIMViewer.html"],
+    ["oYmer 3D Lab", "Lab3D.html"]
+  ];
+
+  /* ---- shared dropdown builder ---- */
+  function makeDropdown(btn, links) {
+    var wrap = btn.parentNode;
+    if (!wrap || wrap.querySelector(".oymer-submenu")) return;
+    var menu = document.createElement("div");
+    menu.className = "oymer-submenu";
+    menu.style.cssText = "position:absolute;top:100%;right:0;min-width:230px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.12);padding:8px;z-index:60;display:none;";
+    links.forEach(function (l) {
+      var a = document.createElement("a");
+      a.href = l[1]; a.textContent = l[0];
+      a.style.cssText = "display:block;padding:10px 14px;border-radius:8px;color:#334155;font-size:14px;text-decoration:none;text-align:right;";
+      a.addEventListener("mouseenter", function () { a.style.background = "#f1f5f9"; });
+      a.addEventListener("mouseleave", function () { a.style.background = "transparent"; });
+      menu.appendChild(a);
+    });
+    wrap.appendChild(menu);
+    var open = false;
+    function set(o) { open = o; menu.style.display = o ? "block" : "none"; btn.setAttribute("aria-expanded", o); }
+    btn.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); set(!open); });
+    document.addEventListener("click", function () { if (open) set(false); });
+    menu.addEventListener("click", function (e) { e.stopPropagation(); });
+  }
+
   /* ---- services dropdown ---- */
   function setupServicesDropdown() {
-    var btns = document.querySelectorAll("button[aria-haspopup]");
-    Array.prototype.forEach.call(btns, function (btn) {
-      var wrap = btn.parentNode;
-      if (!wrap || wrap.querySelector(".oymer-submenu")) return;
-      var menu = document.createElement("div");
-      menu.className = "oymer-submenu";
-      menu.style.cssText = "position:absolute;top:100%;right:0;min-width:230px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.12);padding:8px;z-index:60;display:none;";
-      OYMER_SERVICES.forEach(function (l) {
-        var a = document.createElement("a");
-        a.href = l[1]; a.textContent = l[0];
-        a.style.cssText = "display:block;padding:10px 14px;border-radius:8px;color:#334155;font-size:14px;text-decoration:none;text-align:right;";
-        a.addEventListener("mouseenter", function () { a.style.background = "#f1f5f9"; });
-        a.addEventListener("mouseleave", function () { a.style.background = "transparent"; });
-        menu.appendChild(a);
-      });
-      wrap.appendChild(menu);
-      var open = false;
-      function set(o) { open = o; menu.style.display = o ? "block" : "none"; btn.setAttribute("aria-expanded", o); }
-      btn.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); set(!open); });
-      document.addEventListener("click", function () { if (open) set(false); });
-      menu.addEventListener("click", function (e) { e.stopPropagation(); });
-    });
+    var btn = document.querySelector("button[aria-haspopup]:not(.oymer-products-btn)");
+    if (btn) makeDropdown(btn, OYMER_SERVICES);
+  }
+
+  /* ---- products dropdown ("המוצרים שלנו") with NEW badge (cloned from services) ---- */
+  function setupProductsNav() {
+    if (document.querySelector(".oymer-products-btn")) return;
+    var svcBtn = document.querySelector("button[aria-haspopup]");
+    if (!svcBtn) return;
+    var svcWrap = svcBtn.parentNode;
+    var wrap = svcWrap.cloneNode(true);
+    var btn = wrap.querySelector("button");
+    btn.classList.add("oymer-products-btn");
+    btn.setAttribute("aria-expanded", "false");
+    var svg = btn.querySelector("svg");
+    btn.textContent = "המוצרים שלנו ";
+    if (svg) btn.appendChild(svg);
+    svcWrap.parentNode.insertBefore(wrap, svcWrap.nextSibling);
+    makeDropdown(btn, OYMER_PRODUCTS);
   }
 
   /* ---- FAQ accordion with open-frame highlight ---- */
@@ -131,8 +199,8 @@ var OYMER_SERVICES = [
     var menu = document.createElement("div");
     menu.className = "oymer-mobile";
     menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:12px 24px;z-index:49;display:none;";
-    var links = OYMER_SERVICES.concat([
-      ["שאלות? תשובות!", "FAQ.html"], ["בלוג", "Blog.html"],
+    var links = OYMER_SERVICES.concat(OYMER_PRODUCTS).concat([
+      ["שאלות? תשובות!", "FAQ.html"], ["סיפורי לקוחות", "ClientStories.html"], ["בלוג", "Blog.html"],
       ["אודות", "About.html"], ["צור קשר", "Contact.html"]
     ]);
     links.forEach(function (l) {
