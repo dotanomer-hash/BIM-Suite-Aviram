@@ -85,22 +85,20 @@ var OYMER_SERVICES = [
   /* ---- highlight the nav item that matches the current page ---- */
   function setupActiveNav() {
     var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-    var links = document.querySelectorAll('header nav a[href]');
-    Array.prototype.forEach.call(links, function (a) {
-      if ((a.textContent || "").trim() === "צ'אט") return;   // chat opens the widget, not a page
-      var href = (a.getAttribute("href") || "").split("/").pop().toLowerCase();
-      if (!href || href.charAt(0) === "#") return;
-      a.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
-      a.style.boxShadow = "";
-      a.style.textDecoration = "none";
-      if (href === current) {
-        a.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
-        a.style.textDecoration = "underline";
-        a.style.textDecorationColor = "#0284c7";
-        a.style.textDecorationThickness = "3px";
-        a.style.textUnderlineOffset = "4px";
+    var items = document.querySelectorAll('header nav a[href], header nav button[aria-haspopup]');
+    Array.prototype.forEach.call(items, function (el) {
+      if (el.closest(".oymer-submenu")) return;                  // skip dropdown sub-items
+      var t = (el.textContent || "").trim();
+      var href = (el.getAttribute("href") || "").split("/").pop().toLowerCase();
+      el.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
+      el.style.textDecoration = "none";
+      el.style.boxShadow = "";                                   // no line by default
+      var isActive = el.tagName === "A" && href && href.charAt(0) !== "#" && href === current && t !== "צ'אט";
+      if (isActive) {
+        el.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
+        el.style.boxShadow = "inset 0 -2px 0 #111";              // thin, wide, black line under the active item only
       } else {
-        a.classList.add("text-slate-700", "hover:bg-slate-100");
+        el.classList.add("text-slate-700", "hover:bg-slate-100");
       }
     });
   }
