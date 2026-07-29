@@ -97,8 +97,8 @@ var OYMER_SERVICES = [
         a.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
         a.style.textDecoration = "underline";
         a.style.textDecorationColor = "#0284c7";
-        a.style.textDecorationThickness = "2px";
-        a.style.textUnderlineOffset = "5px";
+        a.style.textDecorationThickness = "3px";
+        a.style.textUnderlineOffset = "4px";
       } else {
         a.classList.add("text-slate-700", "hover:bg-slate-100");
       }
