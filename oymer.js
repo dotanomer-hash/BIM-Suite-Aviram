@@ -87,10 +87,11 @@ var OYMER_SERVICES = [
     var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     var links = document.querySelectorAll('header nav a[href]');
     Array.prototype.forEach.call(links, function (a) {
+      if ((a.textContent || "").trim() === "צ'אט") return;   // chat opens the widget, not a page
       var href = (a.getAttribute("href") || "").split("/").pop().toLowerCase();
       if (!href || href.charAt(0) === "#") return;
-      a.classList.remove("bg-sky-50", "text-sky-600", "text-slate-700", "hover:bg-slate-100");
-      if (href === current) a.classList.add("bg-sky-50", "text-sky-600");
+      a.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
+      if (href === current) a.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
       else a.classList.add("text-slate-700", "hover:bg-slate-100");
     });
   }
@@ -220,17 +221,25 @@ var OYMER_SERVICES = [
     var menu = document.createElement("div");
     menu.className = "oymer-mobile";
     menu.setAttribute("dir", "rtl");
-    menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:12px 24px;z-index:49;display:none;direction:rtl;max-height:calc(100vh - 80px);overflow-y:auto;";
-    var links = OYMER_SERVICES.concat(OYMER_PRODUCTS).concat([
-      ["שאלות? תשובות!", "FAQ.html"], ["סיפורי לקוחות", "ClientStories.html"], ["בלוג", "Blog.html"],
-      ["אודות", "About.html"], ["צור קשר", "Contact.html"]
-    ]);
-    links.forEach(function (l) {
+    menu.style.cssText = "position:fixed;top:80px;right:0;left:0;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(0,0,0,.1);padding:8px 24px 16px;z-index:49;display:none;direction:rtl;max-height:calc(100vh - 80px);overflow-y:auto;";
+    function header(text) {
+      var d = document.createElement("div");
+      d.textContent = text;
+      d.style.cssText = "padding:14px 4px 6px;font-size:12px;font-weight:800;letter-spacing:.03em;color:#0369a1;";
+      menu.appendChild(d);
+    }
+    function link(l, indent) {
       var a = document.createElement("a");
       a.href = l[1]; a.textContent = l[0];
-      a.style.cssText = "display:block;padding:12px 8px;color:#334155;font-size:16px;text-decoration:none;border-bottom:1px solid #f1f5f9;text-align:right;";
+      a.style.cssText = "display:block;padding:11px " + (indent ? "20px" : "8px") + ";color:#334155;font-size:16px;text-decoration:none;border-bottom:1px solid #f1f5f9;text-align:right;";
       menu.appendChild(a);
-    });
+    }
+    header("השירותים שלנו");
+    OYMER_SERVICES.forEach(function (l) { link(l, true); });
+    header("המוצרים שלנו");
+    OYMER_PRODUCTS.forEach(function (l) { link(l, true); });
+    [["שאלות? תשובות!", "FAQ.html"], ["סיפורי לקוחות", "ClientStories.html"], ["בלוג", "Blog.html"],
+     ["אודות", "About.html"], ["צור קשר", "Contact.html"]].forEach(function (l) { link(l, false); });
     document.body.appendChild(menu);
     var open = false;
     burger.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); open = !open; menu.style.display = open ? "block" : "none"; });
