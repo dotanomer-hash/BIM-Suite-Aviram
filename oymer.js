@@ -91,13 +91,9 @@ var OYMER_SERVICES = [
       var href = (a.getAttribute("href") || "").split("/").pop().toLowerCase();
       if (!href || href.charAt(0) === "#") return;
       a.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
-      if (href === current) {
-        a.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
-        a.style.boxShadow = "inset 0 -2px 0 #0284c7";   // small underline under the chosen item
-      } else {
-        a.classList.add("text-slate-700", "hover:bg-slate-100");
-        a.style.boxShadow = "";
-      }
+      a.style.boxShadow = "";
+      if (href === current) a.classList.add("bg-sky-100", "text-sky-700", "font-semibold");
+      else a.classList.add("text-slate-700", "hover:bg-slate-100");
     });
   }
 
