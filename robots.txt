@@ -1,5 +1,7 @@
 User-agent: *
 Disallow: /viewer/
 Disallow: /white-model/
+Disallow: /BIMViewer-preview.html
+Disallow: /demo/
 
 Sitemap: https://omerdotan.com/
