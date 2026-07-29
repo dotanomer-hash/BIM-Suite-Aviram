@@ -118,11 +118,95 @@
   .ohb--scenes,.ohb--props{opacity:.3;width:150px;height:308px}
   .ohb--props{height:311px}
 }
+
+/* editor palette, sampled from the tour editor UI:
+   bases #0b0b1c / #12122a / #0c182b, accents cyan #02f2ff, orange #ff7a00,
+   yellow #dfd60e, magenta #e32c89 */
+.oymer-hero{background:
+  radial-gradient(900px 430px at 16% 10%, rgba(2,242,255,.13), transparent 60%),
+  radial-gradient(780px 420px at 86% 82%, rgba(227,44,137,.10), transparent 62%),
+  linear-gradient(140deg,#0b0b1c 0%,#0d0d1f 44%,#0c182b 100%)}
+/* hero lockup: the oYmer wordmark (tagline stripped, recoloured white, orange kept)
+   with "VR Tours" sitting where "VR for Architects" was — right-aligned under MER. */
+/* the Y in the title flashes orange, like the wordmark lab's orange-flash */
+.oymer-yflash{color:#ff7a00;animation:oymer-yflash 2.6s ease-in-out infinite}
+@keyframes oymer-yflash{
+  0%,100%{color:#ff7a00;text-shadow:0 0 14px rgba(255,122,0,.45)}
+  50%    {color:#ffbe73;text-shadow:0 0 30px rgba(255,122,0,.95),0 0 62px rgba(255,122,0,.45)}
+}
+@media (prefers-reduced-motion:reduce){.oymer-yflash{animation:none}}
+/* intro sentence in its own angled frame, tilted the other way to the feature card */
+.oymer-intro{position:relative;margin:0 0 38px;padding:26px 32px;border-radius:16px;
+  transform:rotate(1.4deg);
+  background:linear-gradient(150deg,#12122a 0%,#0d0d1f 58%,#0c182b 100%);
+  border:1px solid rgba(2,242,255,.28);
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.06),
+             0 16px 40px rgba(11,11,28,.26),
+             0 0 28px rgba(2,242,255,.11);
+  font-size:1.14rem;line-height:1.9;color:#dbe6f5;text-align:right}
+@media (max-width:640px){.oymer-intro{transform:none;padding:22px 20px}}
+.oymer-feat{position:relative;margin:6px 0 52px;padding:30px 32px 30px;border-radius:16px;
+  transform:rotate(-1.5deg);
+  background:linear-gradient(150deg,#12122a 0%,#0d0d1f 58%,#0c182b 100%);
+  border:1px solid rgba(2,242,255,.34);
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.07),
+             0 18px 46px rgba(11,11,28,.30),
+             0 0 32px rgba(2,242,255,.14)}
+.oymer-feat__kicker{display:inline-block;margin-bottom:16px;font-size:.78rem;font-weight:700;
+  letter-spacing:.19em;color:#02f2ff;text-shadow:0 0 14px rgba(2,242,255,.55)}
+.oymer-feat ul{list-style:none;padding:0;margin:0;display:grid;gap:15px}
+.oymer-feat li{display:flex;gap:13px;align-items:flex-start;font-size:1.06rem;line-height:1.72;
+  color:#dbe6f5}
+.oymer-feat__tick{color:#ff7a00;font-weight:700;flex-shrink:0;
+  text-shadow:0 0 12px rgba(255,122,0,.55)}
+@media (max-width:640px){.oymer-feat{transform:none;padding:24px 22px}}
+/* editor-style CTA: chamfered corners like the toolbar buttons, cyan on dark navy.
+   outer layer is the 2px border, inner layer the fill — clip-path can't render a
+   real border, so it's faked by stacking two clipped boxes. */
+.oymer-cta{display:inline-block;padding:2px;text-decoration:none;
+  background:linear-gradient(160deg,rgba(2,242,255,.85),rgba(2,242,255,.45));
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  box-shadow:0 0 30px rgba(2,242,255,.34),0 14px 34px rgba(11,11,28,.30);
+  transition:box-shadow .22s ease,transform .22s ease}
+.oymer-cta:hover{box-shadow:0 0 44px rgba(2,242,255,.55),0 16px 38px rgba(11,11,28,.34);
+  transform:translateY(-2px)}
+.oymer-cta__in{display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:20px 54px;font-size:1.24rem;font-weight:700;letter-spacing:.045em;color:#02f2ff;
+  background:linear-gradient(160deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(17px 0,100% 0,100% calc(100% - 17px),calc(100% - 17px) 100%,0 100%,0 17px);
+  text-shadow:0 0 16px rgba(2,242,255,.65)}
+.oymer-cta:hover .oymer-cta__in{color:#8bf9ff}
+@media (max-width:640px){.oymer-cta__in{padding:17px 30px;font-size:1.08rem}}
+/* the FREE sign — sits on the hero's bottom edge, half in / half out.
+   orange is the editor's attention colour (the + button, the active NAV tab). */
+.oymer-free{position:absolute;left:50%;bottom:-62px;z-index:20;padding:2px;
+  background:linear-gradient(150deg,rgba(255,122,0,.95),rgba(255,122,0,.5));
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48);
+  transform:translateX(-50%) rotate(-7deg);animation:oymer-freeglow 3.2s ease-in-out infinite}
+.oymer-free__in{display:block;padding:16px 48px 18px;
+  font-size:3rem;font-weight:800;line-height:1;color:#ff7a00;
+  text-shadow:0 0 26px rgba(255,122,0,.8);
+  background:linear-gradient(150deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(21px 0,100% 0,100% calc(100% - 21px),calc(100% - 21px) 100%,0 100%,0 21px)}
+@keyframes oymer-freeglow{
+  0%,100%{box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48)}
+  50%    {box-shadow:0 0 64px rgba(255,122,0,.62),0 18px 42px rgba(11,11,28,.48)}}
+@media (prefers-reduced-motion:reduce){.oymer-free{animation:none}}
+@media (max-width:640px){
+  .oymer-free{bottom:-45px;transform:translateX(-50%) rotate(-5deg)}
+  .oymer-free__in{padding:12px 32px 14px;font-size:2.1rem}
+}
+/* neon frame around the live demo, same cyan as the editor chrome */
+.oymer-demo{border:1px solid rgba(2,242,255,.45)!important;
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.10),
+             0 0 34px rgba(2,242,255,.22),
+             0 18px 46px rgba(11,11,28,.28)!important}
 </style>
-<section class="relative bg-gradient-to-br from-slate-900 to-sky-900" style="min-height:465px;display:flex;flex-direction:column;justify-content:center;padding:72px 0 52px" dir="rtl" aria-label="oYmer VR Tours">
+<section class="relative oymer-hero" style="min-height:520px;display:flex;flex-direction:column;justify-content:center;padding:138px 0 56px" dir="rtl" aria-label="oYmer VR Tours">
   <div class="oymer-herobg" aria-hidden="true"><span class="ohb ohb--scenes"></span><span class="ohb ohb--bar"></span><span class="ohb ohb--props"></span><span class="ohb ohb--bar2"></span><span class="ohb ohb--scenes2"></span><span class="ohb ohb--props2"></span></div>
   <div class="container mx-auto px-6 relative z-10 text-center" style="opacity: 0; transform: translateY(30px);">
-    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">oYmer VR Tours</h1>
+    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">o<span class="oymer-yflash">Y</span>mer VR Tours</h1>
     <p class="text-xl text-sky-100 max-w-3xl mx-auto leading-relaxed">בנה סיור 360° — מהטלפון ועד ה-VR</p>
   </div>
   <div class="oymer-reelstrip" dir="ltr">
@@ -161,6 +245,7 @@
         </figure>
     </div>
   </div>
+  <div class="oymer-free"><span class="oymer-free__in">חינם</span></div>
 </section>
 <script>
 (function () {
@@ -178,13 +263,16 @@
 <section class="py-24 bg-white" dir="rtl">
   <div class="container mx-auto px-6" style="max-width:820px;position:relative;z-index:2">
     <div style="opacity: 0; transform: translateY(30px);">
-      <p style="font-size:1.2rem;line-height:1.95;color:#334155;text-align:right;margin:0 0 36px">עורך סיורי VR מבוסס דפדפן — בונים סיור 360° בעצמכם, בלי להתקין תוכנה ובלי ידע בתכנות. הקובץ שלכם, לתמיד.</p>
-      <ul style="list-style:none;padding:0;margin:0 0 40px;display:grid;gap:14px">
-        <li style="display:flex;gap:12px;align-items:flex-start;font-size:1.08rem;line-height:1.7;color:#334155"><span style="color:#0284c7;font-weight:700;flex-shrink:0">✓</span><span>מעלים פנורמות 360° — מהטלפון, ממצלמת 360° או מהדמיה אדריכלית</span></li>
-        <li style="display:flex;gap:12px;align-items:flex-start;font-size:1.08rem;line-height:1.7;color:#334155"><span style="color:#0284c7;font-weight:700;flex-shrink:0">✓</span><span>מחברים חדר לחדר בנקודות ניווט, ומוסיפים נקודות מידע, תמונות ווידאו</span></li>
-        <li style="display:flex;gap:12px;align-items:flex-start;font-size:1.08rem;line-height:1.7;color:#334155"><span style="color:#0284c7;font-weight:700;flex-shrink:0">✓</span><span>מייצאים קובץ HTML אחד — רץ בכל דפדפן, בלי התקנה ובלי מנוי</span></li>
-        <li style="display:flex;gap:12px;align-items:flex-start;font-size:1.08rem;line-height:1.7;color:#334155"><span style="color:#0284c7;font-weight:700;flex-shrink:0">✓</span><span>נכנסים ל-VR בלחיצה אחת — הסיור עובד על משקפי Meta Quest</span></li>
-      </ul>
+      <p class="oymer-intro">עורך סיורי VR מבוסס דפדפן — בונים סיור 360° בעצמכם, בלי להתקין תוכנה ובלי ידע בתכנות. הקובץ שלכם, לתמיד.</p>
+      <div class="oymer-feat">
+        <span class="oymer-feat__kicker">מה מקבלים</span>
+        <ul>
+          <li><span class="oymer-feat__tick">&#10003;</span><span>מעלים פנורמות 360° — מהטלפון, ממצלמת 360° או מהדמיה אדריכלית</span></li>
+          <li><span class="oymer-feat__tick">&#10003;</span><span>מחברים חדר לחדר בנקודות ניווט, ומוסיפים נקודות מידע, תמונות ווידאו</span></li>
+          <li><span class="oymer-feat__tick">&#10003;</span><span>מייצאים קובץ HTML אחד — רץ בכל דפדפן, בלי התקנה ובלי מנוי</span></li>
+          <li><span class="oymer-feat__tick">&#10003;</span><span>נכנסים ל-VR בלחיצה אחת — הסיור עובד על משקפי Meta Quest</span></li>
+        </ul>
+      </div>
 <style>
 .oymer-demo{position:relative;border-radius:14px;overflow:hidden;background:#0f172a;aspect-ratio:16/9;
   box-shadow:0 16px 40px rgba(15,23,42,.26)}
@@ -204,17 +292,48 @@
       <p style="font-size:1.08rem;line-height:1.8;color:#475569;text-align:right;margin:0 0 22px">סיור אמיתי שבנינו — מועדון החייל. הסתובבו בו כאן, ישירות מהדפדפן, בלי להתקין כלום.</p>
       <div class="oymer-demo" id="oymer-demo">
         <img class="oymer-demo__poster" src="media/demo-poster.jpg" alt="תצוגה מקדימה של סיור מועדון החייל">
-        <a class="oymer-demo__btn" id="oymer-demo-start" href="https://soldiers-club-vr-tour.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none">
+        <button class="oymer-demo__btn" type="button" id="oymer-demo-start">
           <span class="oymer-demo__play">&#9654;</span>
           <span class="oymer-demo__label">הפעלת הסיור</span>
-          <span class="oymer-demo__sub">נפתח בכרטיסייה חדשה</span>
-        </a>
+          <span class="oymer-demo__sub">שתי נקודות מהסיור, ברזולוציה מלאה — נפתח כאן בעמוד</span>
+        </button>
       </div>
-      <div style="margin:0 0 44px"></div>
+      <p style="text-align:center;margin:14px 0 44px;font-size:.9rem;color:#94a3b8">הסיור רץ בתוך העמוד. <a href="https://soldiers-club-vr-tour.netlify.app/" target="_blank" rel="noopener" style="color:#0284c7;text-decoration:none">לסיור המלא, כל התחנות &#8592;</a></p>
+      <script>
+      (function () {
+        var box = document.getElementById('oymer-demo');
+        var btn = document.getElementById('oymer-demo-start');
+        if (!box || !btn) return;
+        btn.addEventListener('click', function () {
+          btn.disabled = true;
+          btn.querySelector('.oymer-demo__label').textContent = 'טוען…';
+          btn.querySelector('.oymer-demo__sub').textContent = 'רגע אחד';
+          var f = document.createElement('iframe');
+          f.title = 'סיור VR — מועדון החייל';
+          // deliberately NO xr-spatial-tracking: without it the framed tour can't reach
+          // WebXR, so it stays in the desktop viewer. the full VR tour is the link below.
+          f.allow = 'fullscreen; gyroscope; accelerometer';
+          f.setAttribute('allowfullscreen', '');
+          f.addEventListener('load', function () {
+            btn.remove();
+            var p = box.querySelector('.oymer-demo__poster');
+            if (p) p.remove();
+            // desktop-only demo: the tour renders its VR button unconditionally, so hide it
+            // inside the frame. same-origin, so this is allowed; wrapped in case that changes.
+            try {
+              var d = f.contentDocument;
+              var s = d.createElement('style');
+              s.textContent = '#vr-button,#enter-vr,.vr-button{display:none!important}';
+              (d.head || d.documentElement).appendChild(s);
+            } catch (e) {}
+          });
+          f.src = 'media/demo-tour.html?v=2';
+          box.appendChild(f);
+        }, { once: true });
+      })();
+      </script>
       <div style="text-align:center">
-        <a href="https://dotanomer-hash.github.io/oymer-tours/app/" target="_blank" rel="noopener" class="inline-flex items-center gap-2" style="padding:15px 36px;background:#0284c7;color:#fff;border-radius:14px;font-weight:600;font-size:18px;text-decoration:none;box-shadow:0 8px 22px rgba(2,132,199,.28)">פתח את העורך ←</a>
-        <div style="margin-top:14px"><span style="display:inline-block;padding:6px 16px;background:#dcfce7;color:#15803d;border-radius:999px;font-size:14px;font-weight:600">חינם — גרסת פיילוט, ללא הרשמה</span></div>
-      </div>
+        <a class="oymer-cta" href="Editor.html" target="_blank" rel="noopener"><span class="oymer-cta__in">פתח את העורך &#8592;</span></a>      </div>
     </div>
   </div>
 </section>
