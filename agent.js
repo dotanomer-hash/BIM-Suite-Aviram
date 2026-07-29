@@ -224,7 +224,13 @@
     '.oymer-chat-input textarea:focus{border-color:' + SKY + '}' +
     '.oymer-chat-send{flex:none;width:40px;height:40px;border:0;border-radius:12px;background:' + SKY + ';color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}' +
     '.oymer-chat-send:disabled{opacity:.5;cursor:default}' +
-    '@media(max-width:480px){.oymer-chat{left:8px;right:8px;width:auto;max-width:none;top:88px;bottom:8px;height:auto}}';
+    '@media(max-width:480px){' +
+      '.oymer-chat{left:8px;right:8px;width:auto;max-width:none;top:88px;bottom:8px;height:auto}' +
+      '.oymer-chat-title{font-size:1.05rem}' +
+      '.oymer-b{font-size:1rem;line-height:1.6}' +      /* rem -> scales with the phone font-size setting */
+      '.oymer-sug{font-size:.9rem}' +
+      '.oymer-chat-input textarea{font-size:1rem}' +    /* >=16px also stops iOS zoom-on-tap */
+    '}';
     // keep the two floating buttons clearly apart on small screens too
 
     var s = document.createElement("style"); s.textContent = css; document.head.appendChild(s);
