@@ -1,0 +1,82 @@
+{
+ "Casework": {
+  "verts": 552,
+  "file": "vlm_Casework.bin",
+  "maxIrradiance": 0.528
+ },
+ "Ceilings": {
+  "verts": 1941,
+  "file": "vlm_Ceilings.bin",
+  "maxIrradiance": 1.279
+ },
+ "Curtain Panels": {
+  "verts": 10662,
+  "file": "vlm_Curtain_Panels.bin",
+  "maxIrradiance": 45.004
+ },
+ "Curtain Wall Mullions": {
+  "verts": 5446,
+  "file": "vlm_Curtain_Wall_Mullions.bin",
+  "maxIrradiance": 72.445
+ },
+ "Doors": {
+  "verts": 29713,
+  "file": "vlm_Doors.bin",
+  "maxIrradiance": 50.166
+ },
+ "Floors": {
+  "verts": 7309,
+  "file": "vlm_Floors.bin",
+  "maxIrradiance": 43.318
+ },
+ "Furniture": {
+  "verts": 368544,
+  "file": "vlm_Furniture.bin",
+  "maxIrradiance": 4.431
+ },
+ "Generic Models": {
+  "verts": 55566,
+  "file": "vlm_Generic_Models.bin",
+  "maxIrradiance": 57.713
+ },
+ "Plumbing Fixtures": {
+  "verts": 57365,
+  "file": "vlm_Plumbing_Fixtures.bin",
+  "maxIrradiance": 54.189
+ },
+ "Railings": {
+  "verts": 20684,
+  "file": "vlm_Railings.bin",
+  "maxIrradiance": 89.413
+ },
+ "Specialty Equipment": {
+  "verts": 41896,
+  "file": "vlm_Specialty_Equipment.bin",
+  "maxIrradiance": 8.669
+ },
+ "Stairs": {
+  "verts": 3864,
+  "file": "vlm_Stairs.bin",
+  "maxIrradiance": 36.737
+ },
+ "Structural Columns": {
+  "verts": 936,
+  "file": "vlm_Structural_Columns.bin",
+  "maxIrradiance": 9.452
+ },
+ "Structural Framing": {
+  "verts": 373,
+  "file": "vlm_Structural_Framing.bin",
+  "maxIrradiance": 26.175
+ },
+ "Walls": {
+  "verts": 21720,
+  "file": "vlm_Walls.bin",
+  "maxIrradiance": 37.188
+ },
+ "Windows": {
+  "verts": 18092,
+  "file": "vlm_Windows.bin",
+  "maxIrradiance": 0.0
+ }
+}

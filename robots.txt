@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /viewer/
+Disallow: /white-model/
+
+Sitemap: https://omerdotan.com/

@@ -1,0 +1,14 @@
+{ "version": 1, "objects": [
+  { "id": "chair-01", "name": "כיסא", "nameEn": "Chair", "kind": "builder",
+    "src": "objects/chair-01.js", "global": "WMOBJ_chair01",
+    "footprint": [0.46, 0.52], "height": 0.82,
+    "revit": { "familyName": "Chair-Simple", "typeName": "Default" } },
+  { "id": "sofa-01", "name": "ספה", "nameEn": "Sofa 2-Seat", "kind": "builder",
+    "src": "objects/sofa-01.js", "global": "WMOBJ_sofa01",
+    "footprint": [1.6, 0.85], "height": 0.78,
+    "revit": { "familyName": "Sofa-2Seat", "typeName": "Default" } },
+  { "id": "tv-01", "name": "טלוויזיה", "nameEn": "Wall TV", "kind": "builder",
+    "src": "objects/tv-01.js", "global": "WMOBJ_tv01",
+    "size": [1.11, 0.65, 0.055], "facing": "+Z", "fit": "bbox",
+    "revit": { "familyName": "TV", "typeName": "Default" } }
+] }

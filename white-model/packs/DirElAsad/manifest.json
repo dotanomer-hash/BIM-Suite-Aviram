@@ -1,0 +1,1227 @@
+{
+  "version": 1,
+  "packId": "MKD_AR_ARM_M3_R24_16_-_no_Topo",
+  "source": "MKD_AR_ARM_M3_R24_16 - no Topo",
+  "exported": "2026-07-16T20:17:07",
+  "units": "m",
+  "up": "Y",
+  "counts": {
+    "elements": 2665,
+    "tris": 1229145
+  },
+  "bounds": {
+    "min": [
+      -52.302,
+      567.34,
+      -34.038
+    ],
+    "max": [
+      14.252,
+      585.02,
+      19.7
+    ]
+  },
+  "categories": [
+    "Walls",
+    "Doors",
+    "Floors",
+    "Windows",
+    "Furniture",
+    "Curtain Panels",
+    "Curtain Wall Mullions",
+    "Plumbing Fixtures",
+    "Casework",
+    "Specialty Equipment",
+    "Ceilings",
+    "Generic Models",
+    "Stairs",
+    "Structural Columns",
+    "Railings",
+    "Structural Framing"
+  ],
+  "levels": [
+    "‏קומת קרקע",
+    "קומת מרתף",
+    "צמג",
+    "‏קומת גג",
+    "בטון",
+    "‏קומת גג שימושי",
+    "בטון מעלית"
+  ],
+  "rooms": [
+    {
+      "pos": [
+        -23.306,
+        574.55,
+        10.318
+      ],
+      "number": "129",
+      "name": "‏ח.‏פעילות נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -29.227,
+        574.55,
+        10.256
+      ],
+      "number": "128",
+      "name": "‏ח.פעילות נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -35.413,
+        574.55,
+        -2.14
+      ],
+      "number": "122",
+      "name": "‏ח.רחצה  נגיש",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -17.37,
+        574.55,
+        11.619
+      ],
+      "number": "134",
+      "name": "‏ח.פעילות גברים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -32.109,
+        574.55,
+        -4.013
+      ],
+      "number": "120",
+      "name": "‏ח.מנוחה נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -19.518,
+        574.55,
+        8.464
+      ],
+      "number": "132",
+      "name": "‏ח.רחצה  נגיש",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -18.606,
+        574.55,
+        4.719
+      ],
+      "number": "130",
+      "name": "‏ח.מנוחה גברים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -33.68,
+        574.55,
+        -3.15
+      ],
+      "number": "121",
+      "name": "‏ש.נגישים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -32.993,
+        574.55,
+        8.71
+      ],
+      "number": "127",
+      "name": "‏ח.תעסוקה נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -17.785,
+        570.59,
+        -7.71
+      ],
+      "number": "150",
+      "name": "‏ח.רחצה נגיש",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -15.532,
+        570.59,
+        -8.929
+      ],
+      "number": "147",
+      "name": "‏ח.רחצה נגיש",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -16.336,
+        574.55,
+        -10.213
+      ],
+      "number": "117",
+      "name": "‏ח.אוכל",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -5.483,
+        574.55,
+        -15.141
+      ],
+      "number": "116",
+      "name": "מטבח מחמם",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -23.976,
+        570.59,
+        9.99
+      ],
+      "number": "158",
+      "name": "‏ח.פעילות - ממ\"מ 4",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -32.842,
+        574.55,
+        3.106
+      ],
+      "number": "125",
+      "name": "‏אגף נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -12.721,
+        574.55,
+        8.793
+      ],
+      "number": "135",
+      "name": "‏אגף גברים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        3.937,
+        574.55,
+        7.209
+      ],
+      "number": "101",
+      "name": "‏ח.מזכירה",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -21.074,
+        570.59,
+        -0.697
+      ],
+      "number": "140",
+      "name": "‏פטיו",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -0.239,
+        574.55,
+        -1.32
+      ],
+      "number": "108",
+      "name": "‏ח.אחות",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -11.294,
+        570.59,
+        -12.474
+      ],
+      "number": "144",
+      "name": "‏מחסן כללי",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -7.501,
+        570.59,
+        5.723
+      ],
+      "number": "161",
+      "name": "‏ח.צוות רב מקצועי",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -28.708,
+        570.59,
+        -4.559
+      ],
+      "number": "154",
+      "name": "‏מחסן תעסוקה",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        1.011,
+        574.55,
+        6.63
+      ],
+      "number": "102",
+      "name": "‏ח.מנהל",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        0.669,
+        574.55,
+        -6.788
+      ],
+      "number": "111",
+      "name": "‏ח.צוות רב תחומי - ממ\"מ 2",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        2.883,
+        574.55,
+        -11.13
+      ],
+      "number": "112",
+      "name": "‏ח.פיזותרפיה - ממ\"מ 3",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -23.268,
+        574.55,
+        -6.492
+      ],
+      "number": "118",
+      "name": "‏ח.צוות",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -18.952,
+        570.59,
+        11.881
+      ],
+      "number": "159",
+      "name": "‏מזווה מטבח",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -8.321,
+        574.55,
+        7.032
+      ],
+      "number": "136",
+      "name": "‏ח.תעסוקה גברים - ממ\"מ 1",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -25.022,
+        570.59,
+        -7.909
+      ],
+      "number": "152",
+      "name": "‏ש.נגישים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -23.447,
+        570.59,
+        -8.637
+      ],
+      "number": "153",
+      "name": "‏ש.נגישים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -32.273,
+        570.59,
+        -3.232
+      ],
+      "number": "155",
+      "name": "‏ח.תעסוקה",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        3.865,
+        574.55,
+        -0.556
+      ],
+      "number": "107",
+      "name": "‏ח.טיפוח",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        4.816,
+        574.55,
+        -5.039
+      ],
+      "number": "109",
+      "name": "‏ח.עובדים זרים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        4.767,
+        574.55,
+        -14.442
+      ],
+      "number": "113",
+      "name": "‏ח.כביסה",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        4.192,
+        574.55,
+        -16.738
+      ],
+      "number": "114",
+      "name": "‏מחסן כללי",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -18.218,
+        570.59,
+        3.781
+      ],
+      "number": "157",
+      "name": "‏ח.אוכל",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        5.131,
+        574.55,
+        -7.589
+      ],
+      "number": "110",
+      "name": "‏ח.מחשבים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -14.17,
+        574.55,
+        4.98
+      ],
+      "number": "131",
+      "name": "‏ש.נגישים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        3.255,
+        574.55,
+        11.167
+      ],
+      "number": "100",
+      "name": "‏ע.קבלה ומבואת כניסה",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -20.197,
+        570.59,
+        -10.328
+      ],
+      "number": "149",
+      "name": "‏ח.מנוחה גברים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -15.553,
+        570.59,
+        -12.609
+      ],
+      "number": "146",
+      "name": "‏ח.מנוחה נשים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -6.721,
+        570.59,
+        2.007
+      ],
+      "number": "162",
+      "name": "‏ח.אם בית",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -38.385,
+        574.55,
+        -0.746
+      ],
+      "number": "124",
+      "name": "‏ח.מנוחה נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        2.095,
+        574.55,
+        3.397
+      ],
+      "number": "103",
+      "name": "‏מבואת שירותים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        4.432,
+        574.55,
+        3.696
+      ],
+      "number": "104",
+      "name": "‏ש.נגישים גברים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        4.384,
+        574.55,
+        2.234
+      ],
+      "number": "105",
+      "name": "‏ש.נגישים נשים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -0.068,
+        574.55,
+        2.439
+      ],
+      "number": "106",
+      "name": "‏ש.צוות",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -4.342,
+        570.59,
+        -15.727
+      ],
+      "number": "141",
+      "name": "‏חדר משאבות",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -4.578,
+        570.59,
+        -11.186
+      ],
+      "number": "142",
+      "name": "מאגר מים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -5.857,
+        574.55,
+        -8.929
+      ],
+      "number": "138",
+      "name": "‏ח. ניקוי",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -16.552,
+        574.55,
+        8.333
+      ],
+      "number": "133",
+      "name": "‏מבואת חדרים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -34.003,
+        574.55,
+        -0.429
+      ],
+      "number": "123",
+      "name": "‏מבואת חדרים",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -38.076,
+        570.59,
+        4.254
+      ],
+      "number": "164",
+      "name": "‏גינה לתשושי נפש",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -19.042,
+        570.59,
+        8.3
+      ],
+      "number": "160",
+      "name": "מטבח מחמם",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -40.914,
+        574.55,
+        5.943
+      ],
+      "number": "126",
+      "name": "‏מרפסת קומת קרקע",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -1.206,
+        574.55,
+        -17.166
+      ],
+      "number": "115",
+      "name": "‏מזווה מטבח",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -17.227,
+        574.55,
+        -1.603
+      ],
+      "number": "140",
+      "name": "פטיו",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -4.887,
+        574.55,
+        -24.491
+      ],
+      "number": "167",
+      "name": "‏חדר אשפה",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        50.672,
+        574.55,
+        -25.054
+      ],
+      "number": "575",
+      "name": "חדר טרפו",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        0.709,
+        574.55,
+        -14.668
+      ],
+      "number": "139",
+      "name": "מסדרון",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -6.959,
+        574.55,
+        -2.818
+      ],
+      "number": "137",
+      "name": "‏חדר מדרגות מס' 1",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -25.363,
+        574.55,
+        -3.398
+      ],
+      "number": "119",
+      "name": "‏חדר מדרגות מס' 2",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -26.52,
+        570.59,
+        1.355
+      ],
+      "number": "156",
+      "name": "‏אגף תשושי נפש",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -9.48,
+        570.59,
+        -6.465
+      ],
+      "number": "163",
+      "name": "‏פרוזדור",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -7.009,
+        570.59,
+        -12.073
+      ],
+      "number": "143",
+      "name": "‏מסדרון",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -12.719,
+        570.59,
+        -10.108
+      ],
+      "number": "145",
+      "name": "‏מבואת חדרים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -22.517,
+        570.59,
+        -5.467
+      ],
+      "number": "151",
+      "name": "‏מבואה",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -19.932,
+        570.59,
+        -6.586
+      ],
+      "number": "148",
+      "name": "‏מבואת חדרים",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -6.486,
+        570.59,
+        -6.89
+      ],
+      "number": "137",
+      "name": "‏חדר מדרגות מס' 1",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -0.187,
+        574.55,
+        -22.433
+      ],
+      "number": "166",
+      "name": "‏חדר מדרגות מס' 3",
+      "level": "‏קומת קרקע"
+    },
+    {
+      "pos": [
+        -8.955,
+        570.59,
+        -15.629
+      ],
+      "number": "169",
+      "name": "‏מעלית מזון",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -6.589,
+        570.59,
+        0.327
+      ],
+      "number": "170",
+      "name": "‏מעלית",
+      "level": "קומת מרתף"
+    },
+    {
+      "pos": [
+        -9.498,
+        579.17,
+        9.169
+      ],
+      "number": "173",
+      "name": "גג שימושי",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -2.108,
+        579.17,
+        -1.86
+      ],
+      "number": "175",
+      "name": "‏אזור מחסה",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -29.318,
+        579.17,
+        -5.391
+      ],
+      "number": "176",
+      "name": "‏אזור מחסה",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -3.153,
+        579.17,
+        -15.965
+      ],
+      "number": "177",
+      "name": "‏מבואה",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -26.897,
+        579.17,
+        -6.687
+      ],
+      "number": "119",
+      "name": "‏חדר מדרגות מס' 2",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        0.076,
+        579.17,
+        -21.124
+      ],
+      "number": "166",
+      "name": "‏חדר מדרגות מס' 3",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -8.947,
+        579.17,
+        -16.17
+      ],
+      "number": "181",
+      "name": "‏מעלית מזון",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -6.429,
+        579.17,
+        0
+      ],
+      "number": "182",
+      "name": "‏מעלית",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        -5.651,
+        579.17,
+        -16.954
+      ],
+      "number": "187",
+      "name": "גג מערכות",
+      "level": "‏קומת גג שימושי"
+    },
+    {
+      "pos": [
+        0.013,
+        574.55,
+        -20.863
+      ],
+      "number": "166",
+      "name": "‏חדר מדרגות מס' 3",
+      "level": "‏קומת קרקע"
+    }
+  ],
+  "materials": [
+    {
+      "color": "#ffffff",
+      "name": "RvZ_Exterior Plaster"
+    },
+    {
+      "color": "#787878",
+      "name": "ARM_Wall Paint"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Gypsum"
+    },
+    {
+      "color": "#808080",
+      "name": "RvZ_Steel"
+    },
+    {
+      "color": "#e3aa80",
+      "name": "RvZ_Wood Bright"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Stone"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Exterior Plaster"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Concrete"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Block"
+    },
+    {
+      "color": "#808080",
+      "name": "ARM_Steel"
+    },
+    {
+      "color": "#6b6b6b",
+      "name": "ARM_Aluminum Grey"
+    },
+    {
+      "color": "#c8daec",
+      "name": "ARM_Glass"
+    },
+    {
+      "color": "#6b6b6b",
+      "name": "RvZ_Aluminum Grey"
+    },
+    {
+      "color": "#c8daec",
+      "name": "RvZ_Glass"
+    },
+    {
+      "color": "#111111",
+      "name": "Metal - Chrome"
+    },
+    {
+      "color": "#f6df70",
+      "name": "Textile - Bamboo Weave"
+    },
+    {
+      "color": "#eceadd",
+      "name": "ARM_Sand"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "ARM_GP Tiles 60"
+    },
+    {
+      "color": "#b4b4b4",
+      "name": "Glass table top"
+    },
+    {
+      "color": "#7f7f7f",
+      "name": "RvZ_Gypsum Mullions"
+    },
+    {
+      "color": "#84583d",
+      "name": "Wood (Oak)"
+    },
+    {
+      "color": "#0000ff",
+      "name": "Glass"
+    },
+    {
+      "color": "#787878",
+      "name": "Linen, Beige"
+    },
+    {
+      "color": "#f7f7f7",
+      "name": "Steel,Galvanized"
+    },
+    {
+      "color": "#000000",
+      "name": "Plastic - Black"
+    },
+    {
+      "color": "#d48c6e",
+      "name": "Metal - Copper"
+    },
+    {
+      "color": "#ffffff",
+      "name": "FIRE SERVICES 2"
+    },
+    {
+      "color": "#ff0000",
+      "name": "FIRE SERVICES"
+    },
+    {
+      "color": "#e0b27e",
+      "name": "Birch"
+    },
+    {
+      "color": "#f7f7ef",
+      "name": "Linen, White"
+    },
+    {
+      "color": "#004b97",
+      "name": "תמונת טלויזיה"
+    },
+    {
+      "color": "#868686",
+      "name": "Plastic - Gray"
+    },
+    {
+      "color": "#f2f2db",
+      "name": "Montel - Shelving - Default"
+    },
+    {
+      "color": "#efefef",
+      "name": "Finishes - Interior - Porcelain"
+    },
+    {
+      "color": "#ffffff",
+      "name": "Framing"
+    },
+    {
+      "color": "#ffffff",
+      "name": "CHAIR leather white"
+    },
+    {
+      "color": "#787878",
+      "name": "Rubber, Black"
+    },
+    {
+      "color": "#bdbbb9",
+      "name": "Steel, S 460"
+    },
+    {
+      "color": "#ffffff",
+      "name": "Default"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Ceiling 60/60"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Ceiling Gypsum"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Ceiling Tin 30"
+    },
+    {
+      "color": "#787878",
+      "name": "ARM-Ceiling_lamelot"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Ceiling MMM 60/60"
+    },
+    {
+      "color": "#e2b180",
+      "name": "Counter Top"
+    },
+    {
+      "color": "#393939",
+      "name": "Metal - Steel, Polished"
+    },
+    {
+      "color": "#4d4a43",
+      "name": "SSG_D91_Slate_Grey_WI"
+    },
+    {
+      "color": "#92774e",
+      "name": "SSG_Wood_Particleboard"
+    },
+    {
+      "color": "#e5c19d",
+      "name": "SSG_Plastic_Laminate_Wood_PBR"
+    },
+    {
+      "color": "#151d1e",
+      "name": "SSG_1595_Black_WI"
+    },
+    {
+      "color": "#919191",
+      "name": "SSG_Plastic_Rubber"
+    },
+    {
+      "color": "#f5f5f3",
+      "name": "PLASTIC_W"
+    },
+    {
+      "color": "#f7f4f2",
+      "name": "ARM_CERAMIC"
+    },
+    {
+      "color": "#f5f5f3",
+      "name": "ARM_PLASTIC_W"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "RvZ_Flooring"
+    },
+    {
+      "color": "#ffffff",
+      "name": "RvZ_Stone Sill"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "ARM_GP Tiles 132/19"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "RvZ_GP Tiles 40"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "ARM_GP Tiles 120"
+    },
+    {
+      "color": "#f9f9f9",
+      "name": "Porcelain"
+    },
+    {
+      "color": "#9b9b9b",
+      "name": "Robineterie"
+    },
+    {
+      "color": "#919191",
+      "name": "SSG_Plastic_Rubber(2)"
+    },
+    {
+      "color": "#1c1f27",
+      "name": "SportsArt - Black"
+    },
+    {
+      "color": "#ffffff",
+      "name": "SportsArt - White"
+    },
+    {
+      "color": "#90c738",
+      "name": "SportsArt - Green"
+    },
+    {
+      "color": "#d7dae4",
+      "name": "SportsArt - Silver"
+    },
+    {
+      "color": "#007833",
+      "name": "SportsArt - Dark Green"
+    },
+    {
+      "color": "#eb2152",
+      "name": "SportsArt - Red"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_HPL"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Paving Stone 1"
+    },
+    {
+      "color": "#e8e8e8",
+      "name": "ARM_GP Tiles 60/30"
+    },
+    {
+      "color": "#000000",
+      "name": "ARM_Mirror"
+    },
+    {
+      "color": "#afafaf",
+      "name": "Stainless Steel Metal"
+    },
+    {
+      "color": "#ddd9c3",
+      "name": "EquipSpace"
+    },
+    {
+      "color": "#282828",
+      "name": "Leather - Black"
+    },
+    {
+      "color": "#111111",
+      "name": "Chrome"
+    },
+    {
+      "color": "#7f7f7f",
+      "name": "White Chair"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Air"
+    },
+    {
+      "color": "#c8daec",
+      "name": "RvZ_Glass זכוכית מודפסת"
+    },
+    {
+      "color": "#c0c0c0",
+      "name": "Aluminum-O'Keeffe's-Standard Mill Finish"
+    },
+    {
+      "color": "#ffffff",
+      "name": "ARM_Ceiling Tin 30(מחורר)"
+    },
+    {
+      "color": "#8b8b8b",
+      "name": "Metal - Chrome(2)"
+    },
+    {
+      "color": "#bdbbb9",
+      "name": "QF_Finishes_Stainless Steel"
+    },
+    {
+      "color": "#919191",
+      "name": "SSG_Plastic_Rubber(3)"
+    },
+    {
+      "color": "#ffffff",
+      "name": "RvZ_Stone Smooth"
+    },
+    {
+      "color": "#787878",
+      "name": "אבנים מסגרת"
+    },
+    {
+      "color": "#ffffff",
+      "name": "אלומיניום לבן"
+    }
+  ],
+  "files": {
+    "model": "model.glb",
+    "elements": "elements.json"
+  }
+}
