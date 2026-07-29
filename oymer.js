@@ -84,18 +84,13 @@ var OYMER_SERVICES = [
 
   /* ---- highlight the nav item that matches the current page ---- */
   function setupActiveNav() {
-    var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     var items = document.querySelectorAll('header nav a[href], header nav button[aria-haspopup]');
     Array.prototype.forEach.call(items, function (el) {
       if (el.closest(".oymer-submenu")) return;                  // skip dropdown sub-items
-      var t = (el.textContent || "").trim();
-      var href = (el.getAttribute("href") || "").split("/").pop().toLowerCase();
       el.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
       el.style.textDecoration = "none";
-      el.style.boxShadow = "";
-      el.classList.add("text-slate-700", "hover:bg-slate-100");   // all items: normal text, no blue
-      var isActive = el.tagName === "A" && href && href.charAt(0) !== "#" && href === current && t !== "צ'אט";
-      if (isActive) el.style.boxShadow = "inset 0 -2px 0 #111";   // active item: thin black line only, no blue
+      el.classList.add("text-slate-700", "hover:bg-slate-100");   // normal text, no blue
+      el.style.boxShadow = "inset 0 -2px 0 #111";                 // thin black line under EVERY menu item
     });
   }
 
