@@ -91,15 +91,11 @@ var OYMER_SERVICES = [
       el.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
       el.style.textDecoration = "none";
       el.style.boxShadow = "";
+      el.classList.add("text-slate-700", "hover:bg-slate-100");
       var href = (el.getAttribute("href") || "").split("/").pop().toLowerCase();
       var t = (el.textContent || "").trim();
       var isActive = el.tagName === "A" && href && href.charAt(0) !== "#" && href === current && t !== "צ'אט";
-      if (isActive) {
-        el.classList.add("bg-sky-100", "text-sky-700", "font-semibold");  // blue highlight
-        el.style.boxShadow = "inset 0 -2px 0 #111";                       // + thin black line
-      } else {
-        el.classList.add("text-slate-700", "hover:bg-slate-100");         // others: nothing
-      }
+      if (isActive) el.style.boxShadow = "inset 0 -2px 0 #111";   // active: thin black line only, no blue
     });
   }
 
