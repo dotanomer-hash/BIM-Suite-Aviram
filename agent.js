@@ -26,6 +26,16 @@
     injectStyle();
     buildPanel();
     hijackLaunchers();
+    hideStrayFixed();
+  }
+
+  // Base44 left an empty toast portal (fixed, z-[100], w-full + p-4) that sticks ~16px
+  // past the right edge and lets the whole page pan sideways on mobile. It's unused — hide it.
+  function hideStrayFixed() {
+    Array.prototype.forEach.call(document.querySelectorAll("div"), function (d) {
+      var c = (d.className && d.className.toString) ? d.className.toString() : "";
+      if (c.indexOf("z-[100]") > -1 && c.indexOf("fixed") > -1) d.style.display = "none";
+    });
   }
 
   /* ---- launcher ---- */
