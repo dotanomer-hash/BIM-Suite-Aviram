@@ -224,7 +224,7 @@
     '.oymer-chat-input textarea:focus{border-color:' + SKY + '}' +
     '.oymer-chat-send{flex:none;width:40px;height:40px;border:0;border-radius:12px;background:' + SKY + ';color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}' +
     '.oymer-chat-send:disabled{opacity:.5;cursor:default}' +
-    '@media(max-width:480px){.oymer-chat{left:8px;right:8px;bottom:8px;width:auto;height:calc(100vh - 16px)}}';
+    '@media(max-width:480px){.oymer-chat{left:8px;right:8px;width:auto;max-width:none;top:88px;bottom:8px;height:auto}}';
     // keep the two floating buttons clearly apart on small screens too
 
     var s = document.createElement("style"); s.textContent = css; document.head.appendChild(s);
