@@ -6,6 +6,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
+<script>
+/* wm-demo-default: without ?pack= the viewer opens its "pick the 3 pack files" screen, which
+   reads as broken to anyone handed a bare link (messaging apps truncate query strings). send
+   them to the published demo pack instead. re-add after any build.js rebuild. */
+(function () {
+  if (!new URLSearchParams(location.search).get('pack')) {
+    location.replace('index.html?pack=DirElAsad&lm=1&set=ue5');
+  }
+})();
+</script>
 <meta name="googlebot" content="noindex, nofollow">
 <title>oYmer — White Model Viewer</title>
 <style>
