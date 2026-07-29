@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>בדיקת רילים</title>
+<style>
+  body{margin:0;padding:20px;background:#0a0a14;color:#e6ecf5;
+       font:16px/1.7 system-ui,-apple-system,sans-serif}
+  h1{font-size:1.1rem;margin:0 0 16px;color:#02f2ff}
+  .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;
+       border-bottom:1px solid #23233a}
+  .k{color:#8a8aa0}
+  .v{font-weight:700;text-align:left;direction:ltr}
+  .ok{color:#4ade80}.bad{color:#f87171}
+  .bar{margin:22px 0 6px;height:52px;overflow:hidden;border:1px solid #23233a;border-radius:10px}
+  .track{display:flex;width:max-content;animation:slide 3s linear infinite}
+  .track span{flex:0 0 auto;width:90px;height:52px;display:flex;align-items:center;
+              justify-content:center;background:#15171c;border-left:1px solid #23233a;color:#ff7a00}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.track{animation:none}}
+  p.note{color:#8a8aa0;font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>בדיקת רילים — מה קורה במכשיר הזה</h1>
+<div id="out"></div>
+
+<p class="note">הפס הזה אמור לזוז. אם הוא עומד — הדפדפן חוסם אנימציות (Reduce&nbsp;Motion).</p>
+<div class="bar"><div class="track" id="tr">
+  <span>1</span><span>2</span><span>3</span><span>4</span>
+  <span>1</span><span>2</span><span>3</span><span>4</span>
+</div></div>
+
+<script>
+(function () {
+  var out = document.getElementById('out');
+  function row(k, v, good) {
+    out.insertAdjacentHTML('beforeend',
+      '<div class="row"><span class="k">' + k + '</span><span class="v ' +
+      (good === true ? 'ok' : good === false ? 'bad' : '') + '">' + v + '</span></div>');
+  }
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  row('רוחב מסך', window.innerWidth + 'px');
+  row('Reduce Motion', rm ? 'ON — חוסם' : 'off', !rm);
+
+  // does the track actually advance? sample the transform twice.
+  var tr = document.getElementById('tr');
+  function x() { return new DOMMatrixReadOnly(getComputedStyle(tr).transform).m41; }
+  var a = x();
+  setTimeout(function () {
+    var moved = Math.abs(x() - a) > 1;
+    row('אנימציה רצה בפועל', moved ? 'כן' : 'לא', moved);
+  }, 900);
+
+  // which build of VRTours.html is this server actually serving?
+  fetch('VRTours.html?probe=' + Math.random()).then(function (r) { return r.text(); }).then(function (t) {
+    var isNew = t.indexOf('62vw') !== -1;          // only the fixed mobile CSS has this
+    row('גרסת VRTours', isNew ? 'חדשה (מתוקנת)' : 'ישנה — לא עודכנה', isNew);
+  }).catch(function () { row('גרסת VRTours', 'לא נטען', false); });
+
+  row('כתובת', location.host);
+})();
+</script>
+</body>
+</html>
