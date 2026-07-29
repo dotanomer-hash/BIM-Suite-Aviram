@@ -85,17 +85,25 @@ var OYMER_SERVICES = [
   /* ---- highlight the nav item that matches the current page ---- */
   function setupActiveNav() {
     var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    var servicesPages = OYMER_SERVICES.map(function (s) { return s[1].toLowerCase(); });
+    var productsPages = OYMER_PRODUCTS.map(function (p) { return p[1].toLowerCase(); });
     var items = document.querySelectorAll('header nav a[href], header nav button[aria-haspopup]');
     Array.prototype.forEach.call(items, function (el) {
-      if (el.closest(".oymer-submenu")) return;                  // skip dropdown sub-items
+      if (el.closest(".oymer-submenu")) return;                  // skip dropdown SUB-items
       el.classList.remove("bg-sky-50", "text-sky-600", "bg-sky-100", "text-sky-700", "font-semibold", "text-slate-700", "hover:bg-slate-100");
       el.style.textDecoration = "none";
       el.style.boxShadow = "";
       el.classList.add("text-slate-700", "hover:bg-slate-100");
-      var href = (el.getAttribute("href") || "").split("/").pop().toLowerCase();
       var t = (el.textContent || "").trim();
-      var isActive = el.tagName === "A" && href && href.charAt(0) !== "#" && href === current && t !== "צ'אט";
-      if (isActive) el.style.boxShadow = "inset 0 -2px 0 #111";   // active: thin black line only, no blue
+      var href = (el.getAttribute("href") || "").split("/").pop().toLowerCase();
+      var isActive = false;
+      if (el.tagName === "A") {
+        isActive = !!href && href.charAt(0) !== "#" && href === current && t !== "צ'אט";
+      } else {                                                    // dropdown MAIN item (השירותים/המוצרים button)
+        if (t.indexOf("השירותים") > -1) isActive = servicesPages.indexOf(current) > -1;
+        else if (t.indexOf("המוצרים") > -1) isActive = productsPages.indexOf(current) > -1;
+      }
+      if (isActive) el.style.boxShadow = "inset 0 -2px 0 #111";   // thin black line, no blue
     });
   }
 
@@ -231,10 +239,12 @@ var OYMER_SERVICES = [
       d.style.cssText = "padding:14px 4px 6px;font-size:12px;font-weight:800;letter-spacing:.03em;color:#0369a1;";
       menu.appendChild(d);
     }
+    var curPage = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     function link(l, indent) {
       var a = document.createElement("a");
       a.href = l[1]; a.textContent = l[0];
       a.style.cssText = "display:block;padding:11px " + (indent ? "20px" : "8px") + ";color:#334155;font-size:16px;text-decoration:none;border-bottom:1px solid #f1f5f9;text-align:right;";
+      if ((l[1] || "").toLowerCase() === curPage) a.style.boxShadow = "inset 0 -2px 0 #111";  // active-item indicator
       menu.appendChild(a);
     }
     header("השירותים שלנו");
