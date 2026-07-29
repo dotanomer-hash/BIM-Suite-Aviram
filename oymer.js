@@ -244,7 +244,11 @@ var OYMER_SERVICES = [
       var a = document.createElement("a");
       a.href = l[1]; a.textContent = l[0];
       a.style.cssText = "display:block;padding:11px " + (indent ? "20px" : "8px") + ";color:#334155;font-size:16px;text-decoration:none;border-bottom:1px solid #f1f5f9;text-align:right;";
-      if ((l[1] || "").toLowerCase() === curPage) a.style.boxShadow = "inset 0 -2px 0 #111";  // active-item indicator
+      if ((l[1] || "").toLowerCase() === curPage) {   // active item: blue highlight (mobile), not the black line
+        a.style.background = "#e0f2fe";
+        a.style.color = "#0369a1";
+        a.style.fontWeight = "700";
+      }
       menu.appendChild(a);
     }
     header("השירותים שלנו");
