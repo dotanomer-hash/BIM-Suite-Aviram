@@ -67,10 +67,11 @@
 @keyframes oymer-reelscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.oymer-reeltrack{animation:none}}
 @media (max-width:640px){
-  .oymer-reelstrip{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-mask-image:none;mask-image:none}
-  .oymer-reeltrack{animation:none}
-  .oymer-reelcard{width:78vw;scroll-snap-align:center}
-  .oymer-reelcard--clone{display:none}
+  /* the strip auto-scrolls on phones too. it used to be a manual swipe carousel
+     (animation:none + overflow-x scroll + clones hidden), which just read as "not moving".
+     clones stay visible so the -50% loop still joins seamlessly. */
+  .oymer-reelcard{width:62vw}
+  .oymer-reeltrack{animation-duration:30s}
 }
 /* pieces of the editor UI, angled behind the hero. each panel is an independent
    layer, so a missing crop just drops that one and the gradient stays intact. */
@@ -257,7 +258,19 @@
       else { e.target.pause(); }
     });
   }, { threshold: 0.2 });
-  Array.prototype.forEach.call(reels, function (v) { io.observe(v); });
+  Array.prototype.forEach.call(reels, function (v) {
+    v.setAttribute('webkit-playsinline', '');   // older iOS still reads the prefixed one
+    io.observe(v);
+  });
+  // iOS can refuse the initial muted autoplay anyway (Low Power Mode is the usual reason).
+  // retry once on the first user gesture — by then the page is allowed to start them.
+  var kick = function () {
+    Array.prototype.forEach.call(reels, function (v) {
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+  };
+  document.addEventListener('touchstart', kick, { once: true, passive: true });
+  document.addEventListener('click', kick, { once: true });
 })();
 </script>
 <section class="py-24 bg-white" dir="rtl">
