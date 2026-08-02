@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>oYmer 3D Lab - mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Assistant:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   oYmer 3D Lab - design mockup
+   Palette locked to the editor / tutorial window:
+     cyan   #02f2ff   structure, hairlines, headings
+     orange #ff7a00   attention only - never structural
+     navy   #12122a -> #0c182b   panel fill
+   ============================================================ */
+:root{
+  --cy:#02f2ff; --cy-dim:rgba(2,242,255,.28); --cy-hair:rgba(2,242,255,.5);
+  --or:#ff7a00; --ink:#dbe6f5; --mute:#7f93ad;
+  --panel:linear-gradient(160deg,#12122a 0%,#0c182b 100%);
+  --bg:#05070f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Assistant','Segoe UI',system-ui,sans-serif;overflow-x:hidden}
+.mono{font-family:'Share Tech Mono','Rajdhani',monospace;letter-spacing:.12em}
+
+/* ---------- the room: perspective grid + horizon glow ---------- */
+.room{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.room__grid{position:absolute;left:-50%;right:-50%;bottom:-30%;height:90%;
+  background-image:
+    linear-gradient(to right,rgba(2,242,255,.16) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(2,242,255,.16) 1px,transparent 1px);
+  background-size:66px 66px;
+  transform:perspective(340px) rotateX(74deg);
+  transform-origin:50% 0;
+  mask-image:linear-gradient(to bottom,#000 0%,transparent 72%);
+  animation:drift 9s linear infinite}
+@keyframes drift{from{background-position:0 0}to{background-position:0 66px}}
+.room__glow{position:absolute;left:50%;top:34%;width:120vw;height:60vh;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse at 50% 100%,rgba(2,242,255,.13),transparent 62%)}
+.room__scan{position:absolute;inset:0;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.028) 0 1px,transparent 1px 3px)}
+
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 26px}
+
+/* ---------- hero ---------- */
+.hero{padding:120px 0 74px;text-align:center}
+.hero__tag{display:inline-flex;align-items:center;gap:10px;padding:6px 16px;margin-bottom:26px;
+  border:1px solid var(--cy-dim);color:var(--cy);font-size:.72rem;
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+.hero__tag i{width:6px;height:6px;background:var(--or);border-radius:50%;
+  box-shadow:0 0 10px var(--or);animation:blip 1.8s ease-in-out infinite;font-style:normal}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{margin:0 0 18px;font-size:clamp(2.6rem,7vw,4.7rem);font-weight:800;color:#fff;
+  letter-spacing:-.01em;line-height:1}
+.hero h1 span{color:var(--or);text-shadow:0 0 34px rgba(255,122,0,.55)}
+.hero p{max-width:620px;margin:0 auto;font-size:1.16rem;line-height:1.75;color:#9fb3cc}
+.hero__rule{width:100%;height:1px;margin:54px 0 0;
+  background:linear-gradient(90deg,transparent,var(--cy-hair) 22%,var(--cy-hair) 78%,transparent)}
+
+/* ---------- section head ---------- */
+.sec{padding:80px 0 26px}
+.sec__no{display:block;margin-bottom:10px;font-size:.74rem;color:var(--cy);opacity:.8}
+.sec h2{margin:0 0 10px;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;color:#fff}
+.sec p.lead{margin:0;max-width:640px;font-size:1.06rem;line-height:1.7;color:#93a8c2}
+
+/* ---------- panel: chamfered, hairline, corner brackets ---------- */
+.panel{position:relative;background:var(--panel);border:1px solid var(--cy-dim);
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.panel:hover{border-color:var(--cy-hair);box-shadow:0 0 40px rgba(2,242,255,.16);
+  transform:translateY(-3px)}
+.panel__media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#04060f;
+  border-bottom:1px solid var(--cy-dim)}
+.panel__media video,.panel__media img{width:100%;height:100%;object-fit:cover;display:block}
+/* scanline sweep over every media slot */
+.panel__media::after{content:'';position:absolute;left:0;right:0;height:34%;
+  background:linear-gradient(to bottom,transparent,rgba(2,242,255,.11),transparent);
+  animation:sweep 5.5s linear infinite}
+@keyframes sweep{from{top:-40%}to{top:110%}}
+.panel__body{padding:22px 24px 26px}
+.panel__kick{display:block;margin-bottom:9px;font-size:.7rem;color:var(--cy);opacity:.85}
+.panel h3{margin:0 0 10px;font-size:1.42rem;font-weight:800;color:#fff}
+.panel p{margin:0;font-size:1.01rem;line-height:1.72;color:#9db1cb}
+
+/* placeholder slot - the piece that is still being built */
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;color:var(--mute);
+  background:
+    repeating-linear-gradient(-45deg,rgba(2,242,255,.05) 0 12px,transparent 12px 24px),
+    radial-gradient(ellipse at 50% 60%,rgba(2,242,255,.10),transparent 65%)}
+.ph b{font-size:1.05rem;color:#b9cbe2;font-weight:600}
+.ph span{font-size:.72rem;color:var(--cy);opacity:.75}
+.ph__frame{position:absolute;inset:16px;border:1px dashed rgba(2,242,255,.3)}
+
+/* HUD readout chips under a media slot */
+.hud{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.hud b{padding:3px 9px;font-size:.66rem;font-weight:500;color:var(--cy);
+  border:1px solid var(--cy-dim);background:rgba(2,242,255,.05)}
+.hud b.on{color:var(--or);border-color:rgba(255,122,0,.45);background:rgba(255,122,0,.07)}
+
+/* ---------- part 01 layout ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
+
+/* ---------- part 02: the pipeline ---------- */
+.pipe{display:grid;grid-template-columns:1fr 54px 1fr 54px 1fr;align-items:center;
+  gap:0;margin-top:34px}
+.pipe .panel__media{aspect-ratio:4/3}
+.arrow{position:relative;height:1px;background:var(--cy-dim)}
+.arrow::before{content:'';position:absolute;top:-3px;right:0;width:7px;height:7px;
+  border-left:1px solid var(--cy);border-bottom:1px solid var(--cy);
+  transform:rotate(45deg)}
+/* a packet travelling down the wire, right to left (RTL flow) */
+.arrow::after{content:'';position:absolute;top:-2px;width:5px;height:5px;border-radius:50%;
+  background:var(--or);box-shadow:0 0 10px var(--or);animation:flow 2.6s linear infinite}
+@keyframes flow{from{right:0;opacity:0}12%{opacity:1}88%{opacity:1}to{right:100%;opacity:0}}
+.stage__no{position:absolute;top:12px;right:14px;z-index:2;font-size:.68rem;color:var(--cy);
+  padding:2px 8px;background:rgba(5,7,15,.75);border:1px solid var(--cy-dim)}
+
+.second{margin-top:26px}
+.second .panel{display:grid;grid-template-columns:340px 1fr;align-items:stretch}
+.second .panel__media{aspect-ratio:auto;border-bottom:0;border-left:1px solid var(--cy-dim)}
+.second .panel__body{padding:30px 32px;align-self:center}
+
+.foot{padding:70px 0 90px;text-align:center;color:var(--mute);font-size:.8rem}
+
+@media (max-width:960px){
+  .duo{grid-template-columns:1fr}
+  .pipe{grid-template-columns:1fr;gap:0}
+  .arrow{width:1px;height:44px;margin:0 auto;background:var(--cy-dim)}
+  .arrow::before{top:auto;bottom:0;right:-3px;transform:rotate(-45deg)}
+  .arrow::after{animation:flowv 2.6s linear infinite;right:-2px}
+  @keyframes flowv{from{top:0;opacity:0}12%{opacity:1}88%{opacity:1}to{top:100%;opacity:0}}
+  .second .panel{grid-template-columns:1fr}
+  .second .panel__media{aspect-ratio:16/10;border-left:0;border-bottom:1px solid var(--cy-dim)}
+}
+@media (prefers-reduced-motion:reduce){
+  .room__grid,.panel__media::after,.arrow::after,.hero__tag i{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="room" aria-hidden="true">
+  <div class="room__glow"></div>
+  <div class="room__grid"></div>
+  <div class="room__scan"></div>
+</div>
+
+<header class="wrap hero">
+  <span class="hero__tag mono"><i></i>OYMER // 3D LAB</span>
+  <h1>oYmer <span>3D</span> Lab</h1>
+  <p>כאן נבנים הדברים לפני שהם נכנסים למודל: אובייקטים שנכנסים למשקפת, ומשפחות Revit שנכנסות לפרויקט.</p>
+  <div class="hero__rule"></div>
+</header>
+
+<!-- ============ PART 01 - VR OBJECTS ============ -->
+<section class="wrap sec">
+  <span class="sec__no mono">// 01 - VR OBJECTS</span>
+  <h2>אובייקטים ל-VR</h2>
+  <p class="lead">מה שנמצא איתך בתוך המשקפת: הכלי שביד, והבינה שעובדת על הקיר מולך.</p>
+
+  <div class="duo">
+
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">OBJ_01</span>
+        <div class="ph">
+          <div class="ph__frame"></div>
+          <b>שרביט ה-VR</b>
+          <span class="mono">RENDER PENDING</span>
+        </div>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">IN THE HAND</span>
+        <div class="hud mono"><b>WEBXR</b><b>GLB</b><b class="on">IN USE</b></div>
+        <h3>השרביט</h3>
+        <p>שרביט עץ מגולף שמחליף את דגם הבקר ביד. הכלי בתוך המשקפת צריך להרגיש כמו כלי, לא כמו שלט טלוויזיה.</p>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">OBJ_02</span>
+        <video src="media/lab/ai-room.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">IN THE ROOM</span>
+        <div class="hud mono"><b>ONE-EYE</b><b>STEREO WARP</b><b class="on">LIVE</b></div>
+        <h3>ה-AI בתוך החדר</h3>
+        <p>עומדים מול הקיר, אומרים איך הוא צריך להיראות - והוא משתנה סביבכם, בזמן אמת, בלי לצאת מהמשקפת.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ PART 02 - BIM CREATION ============ -->
+<section class="wrap sec">
+  <span class="sec__no mono">// 02 - BIM CREATION</span>
+  <h2>יצירת BIM</h2>
+  <p class="lead">מהאובייקט במעבדה אל משפחת Revit אמיתית - פרמטרית, מדידה, מוכנה לפרויקט.</p>
+
+  <div class="pipe">
+
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">STAGE 01</span>
+        <div class="ph">
+          <div class="ph__frame"></div>
+          <b>השולחן בעורך</b>
+          <span class="mono">IN PROGRESS</span>
+        </div>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">LAB EDITOR</span>
+        <h3>מעצבים</h3>
+        <p>השולחן נבנה ונבחן במעבדה בגודל אמיתי, לצד דמות של 1.70 מ׳.</p>
+      </div>
+    </article>
+
+    <div class="arrow" aria-hidden="true"></div>
+
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">STAGE 02</span>
+        <div class="ph">
+          <div class="ph__frame"></div>
+          <b>הפרמטרים</b>
+          <span class="mono">IN PROGRESS</span>
+        </div>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">PARAMETRIC</span>
+        <h3>מחברים</h3>
+        <p>כל פרמטר מזיז גאומטריה אמיתית. אין מספרים מתים במשפחה.</p>
+      </div>
+    </article>
+
+    <div class="arrow" aria-hidden="true"></div>
+
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">STAGE 03</span>
+        <div class="ph">
+          <div class="ph__frame"></div>
+          <b>משפחת Revit</b>
+          <span class="mono">.RFA</span>
+        </div>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">OUTPUT</span>
+        <h3>מוסרים</h3>
+        <p>קובץ ‎.rfa‎ שנכנס לפרויקט ומתנהג נכון בכל תצוגה ובכל כתב כמויות.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="second">
+    <article class="panel">
+      <div class="panel__media">
+        <span class="stage__no mono">FAM_02</span>
+        <div class="ph">
+          <div class="ph__frame"></div>
+          <b>המשפחה הבאה</b>
+          <span class="mono">TO BE BUILT</span>
+        </div>
+      </div>
+      <div class="panel__body">
+        <span class="panel__kick mono">NEXT FAMILY</span>
+        <div class="hud mono"><b>PARAMETRIC</b><b>SHARED</b><b class="on">QUEUED</b></div>
+        <h3>ומשפחה נוספת שניצור</h3>
+        <p>אותו קו ייצור, מוצר אחר - כדי להראות שזה לא מקרה אחד אלא שיטה. את המשפחה השנייה נבחר יחד.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<p class="wrap foot mono">MOCKUP - LAYOUT AND PALETTE ONLY. MEDIA SLOTS PENDING.</p>
+
+</body>
+</html>

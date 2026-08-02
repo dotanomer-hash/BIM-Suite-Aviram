@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>oYmer - כל העמודים והתפריט | מוקאפ</title>
+<link href="base44.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="bimsuite-mockup.css?v=11" rel="stylesheet">
+<link href="suite-pipe.css?v=3" rel="stylesheet">
+<style>
+      @keyframes badge-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .badge-spinner {
+        animation: badge-spin 1s linear infinite;
+      }
+      @keyframes base44-fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes base44-scale-in {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+<style>[style*="opacity: 0"]{opacity:1!important;transform:none!important}</style>
+<style>
+.allnav{position:fixed;bottom:0;right:0;left:0;z-index:70;display:flex;gap:8px;align-items:center;
+  padding:10px 18px;background:rgba(13,9,28,.94);backdrop-filter:blur(10px);overflow-x:auto;
+  box-shadow:0 -6px 24px rgba(0,0,0,.34);direction:rtl;
+  font-family:"Rubik",ui-sans-serif,system-ui,sans-serif}
+.allnav b{font-size:11px;font-weight:800;letter-spacing:.14em;color:#8f86b5;white-space:nowrap;margin-left:6px}
+.allnav a{font-size:12.5px;font-weight:700;color:#d7d0ee;background:rgba(255,255,255,.06);
+  border:1px solid rgba(195,179,255,.24);border-radius:999px;padding:7px 15px;white-space:nowrap;
+  text-decoration:none;transition:background .18s,color .18s,border-color .18s}
+.allnav a:hover{background:#fff;color:#191130;border-color:#fff}
+.allnav a.on{background:#ff7a00;color:#1a0f00;border-color:#ff7a00}
+.allsec{scroll-margin-top:0}
+.allmark{position:relative;z-index:20;background:#0b0818;color:#8f86b5;direction:rtl;
+  font-family:"Rubik",sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;
+  padding:12px 28px;border-top:1px solid rgba(195,179,255,.16)}
+body{padding-bottom:56px}
+</style>
+<link href="oymer-pairs.css?v=1" rel="stylesheet">
+</head>
+<body>
+<div class="min-h-screen" dir="rtl">
+<header role="banner" class="fixed top-0 right-0 left-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-lg shadow-sm"><div class="container mx-auto px-6"><div class="flex items-center justify-between h-20"><a class="flex items-center gap-3" aria-label="עמוד הבית" href="index.html"><img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69416d0ccb7ea3d7274916a0/ec944baee_logo_transparent_2.png" alt="לוגו OMER DOTAN - VR Solutions" class="h-16 w-auto self-center" style="filter: none; transform: scale(0.8);"><div style="display:inline-block" dir="ltr"><span class="font-bold text-2xl block leading-tight text-slate-900" style="text-align:justify;text-align-last:justify;letter-spacing:.01em">OMER DOTAN</span><span class="text-base -mt-1 block text-slate-500" style="font-size:1.35rem;letter-spacing:.18em">VR Solutions</span></div></a><nav class="hidden lg:flex items-center gap-1" role="navigation" aria-label="תפריט ניווט ראשי"><div class="relative"><button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100">השירותים שלנו<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down w-4 h-4 transition-transform"><path d="m6 9 6 6 6-6"></path></svg></button></div><a class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" href="FAQ.html">שאלות? תשובות!</a><a class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" href="Blog.html">בלוג</a><a class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" href="About.html">אודות</a><a class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" href="Contact.html">צור קשר</a><a class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" href="Contact.html">צ'אט</a></nav><div class="hidden lg:block"><a class="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-medium transition-colors shadow-lg shadow-sky-600/25" href="Contact.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>דברו איתי</a></div><button aria-label="פתח תפריט" aria-expanded="false" class="lg:hidden p-2 rounded-lg text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></header>
+<div class="allmark">01  BIM VR SUITE</div>
+<div class="allsec" id="sec-suite">
+<!-- body of the BIM VR Suite mockup; merged with the real site header by the build step -->
+
+<!-- ===== hero: same box as every other hero (min-height 520, padding 138/56) ===== -->
+<section class="bs bs-hero" dir="rtl" aria-label="oYmer BIM VR Suite">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner">
+    <h1 class="rev">o<span class="yflash">Y</span>mer BIM VR Suite</h1>
+    <p class="sub rev">ארבעה כלים ל־Revit.</p>
+  </div>
+</section>
+
+<div class="suite bs" dir="rtl">
+
+  <section class="products" id="products">
+    <div class="bimbg" aria-hidden="true"><span class="plan"></span><span class="iso"></span><span class="dots d1"></span><span class="dots d2"></span>
+      <svg class="draw" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="dg" style="animation-delay:0s">
+        <path pathLength="1" d="M90 150h330v210H90Z"/>
+        <path pathLength="1" d="M250 150v210"/>
+        <path pathLength="1" d="M250 300a60 60 0 0 0 60-60"/>
+        <path pathLength="1" d="M90 400h330"/>
+        <path pathLength="1" d="M90 390v20M420 390v20M250 392v16"/>
+      </g>
+      <g class="dg" style="animation-delay:2.3s">
+        <path pathLength="1" d="M1180 210 1330 296 1330 468 1180 554 1030 468 1030 296Z"/>
+        <path pathLength="1" d="M1180 210v172M1180 382 1330 468M1180 382 1030 468"/>
+      </g>
+      <g class="dg" style="animation-delay:4.6s">
+        <path pathLength="1" d="M690 620h150v150H690Z"/>
+        <path pathLength="1" d="M690 645h150M690 670h150M690 695h150M690 720h150M690 745h150"/>
+        <path pathLength="1" d="M865 620v150"/>
+      </g>
+      <g class="dg" style="animation-delay:6.9s">
+        <circle pathLength="1" cx="1240" cy="700" r="46"/>
+        <path pathLength="1" d="M1240 654v92M1194 700h92"/>
+        <path pathLength="1" d="M1286 668 1400 596"/>
+      </g>
+      <g class="dg" style="animation-delay:9.2s">
+        <path pathLength="1" d="M520 90h560"/>
+        <path pathLength="1" d="M520 78v24M800 78v24M1080 78v24"/>
+        <path pathLength="1" d="M300 470h180v300H300Z"/>
+      </g>
+    </svg>
+    </div>
+    <div class="inner">
+      <div class="wins">
+
+        <div class="winwrap c1 rev">
+          <span class="glow" aria-hidden="true"></span>
+          <a class="win" href="DecisionMaker.html">
+            <span class="bezel">
+              <span class="screen">
+                <video src="media/reels/quest.mp4" poster="media/reels/quest.jpg" muted loop playsinline autoplay preload="metadata" aria-label="פגישת אישור על משקפי Quest"></video>
+                <span class="cix ltr">01</span>
+                <span class="wbadge flag">הדגל</span>
+                <span class="center">
+                  <span class="oneline">
+                    <b>פגישת</b> <b>אישור</b> <b>בקנה</b> <b>מידה</b> <b>1:1</b>
+                  </span>
+                  <span class="uline"></span>
+                </span>
+              </span>
+            </span>
+            <span class="wbody">
+              <span class="ribbon"><span class="rname ltr">oYmer DecisionMaker</span><span class="press">לחצו לעמוד המלא <i class="arw ltr">←</i></span></span>
+            </span>
+          </a>
+        </div>
+
+        <div class="winwrap c2 rev">
+          <span class="glow" aria-hidden="true"></span>
+          <a class="win" href="BIMViewer.html">
+            <span class="bezel">
+              <span class="screen">
+                <video src="media/viewer/reel-1.mp4" poster="media/viewer/reel-1.jpg" muted loop playsinline autoplay preload="metadata" aria-label="המודל נפתח בדפדפן"></video>
+                <span class="cix ltr">02</span>
+                <span class="wbadge free">פתוח</span>
+                <span class="center">
+                  <span class="oneline">
+                    <b>המודל</b> <b>של</b> <b>רוויט</b> <b>בדפדפן</b> <b>ובמשקפיים</b>
+                  </span>
+                  <span class="uline"></span>
+                </span>
+              </span>
+            </span>
+            <span class="wbody">
+              <span class="ribbon"><span class="rname ltr">oYmer Viewer</span><span class="press">לחצו לעמוד המלא <i class="arw ltr">←</i></span></span>
+            </span>
+          </a>
+        </div>
+
+        <div class="winwrap c3 rev">
+          <span class="glow" aria-hidden="true"></span>
+          <a class="win" href="Lab3D.html">
+            <span class="bezel">
+              <span class="screen">
+                <video src="media/lab/kitchen-lab.mp4" poster="media/lab/kitchen-lab-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="פרמטרים מזיזים גיאומטריה"></video>
+                <span class="cix ltr">03</span>
+                <span class="center">
+                  <span class="oneline">
+                    <b>יצירת</b> <b>משפחות</b> <b>דינמיות</b> <b>לרוויט</b>
+                  </span>
+                  <span class="uline"></span>
+                </span>
+              </span>
+            </span>
+            <span class="wbody">
+              <span class="ribbon"><span class="rname ltr">oYmer Family Creator</span><span class="press">לחצו לעמוד המלא <i class="arw ltr">←</i></span></span>
+            </span>
+          </a>
+        </div>
+
+        <div class="winwrap c4 rev">
+          <span class="glow" aria-hidden="true"></span>
+          <a class="win soonwin" href="#">
+            <span class="bezel">
+              <span class="screen">
+                <video src="media/lab/kitchen-revit.mp4" poster="media/lab/kitchen-revit-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="טיפוס משפחה נבנה בתוך Revit"></video>
+                <span class="cix ltr">04</span>
+                <span class="wbadge wip">בפיתוח</span>
+                <span class="center">
+                  <span class="oneline">
+                    <b>יצירת</b> <b>טיפוסים</b> <b>חדשים</b> <b>בתוך</b> <b>רוויט</b>
+                  </span>
+                  <span class="uline"></span>
+                </span>
+              </span>
+            </span>
+            <span class="wbody">
+              <span class="ribbon soon"><span class="rname ltr">oYmer Type Studio</span><span class="press">בקרוב <i class="arw ltr">←</i></span></span>
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /* entrance: cards rise in, and the one-liner assembles word by word once its card is in */
+  (function () {
+    var els = document.querySelectorAll(".rev");
+    function showAll() { Array.prototype.forEach.call(els, function (e) { e.classList.add("in"); }); }
+    if (!("IntersectionObserver" in window)) { showAll(); return; }
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var d = parseInt(en.target.dataset.i || "0", 10) * 90;
+        setTimeout(function () { en.target.classList.add("in"); }, d);
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    Array.prototype.forEach.call(els, function (e, i) { e.dataset.i = (i % 4); io.observe(e); });
+    setTimeout(showAll, 3000);
+  })();
+
+  /* pointer-tracked 3D tilt. the frame leans toward the cursor, the glow behind leans away,
+     so the panel reads as a solid object floating above its own light. */
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    var MAXX = 8, MAXY = 10;
+    Array.prototype.forEach.call(document.querySelectorAll(".winwrap"), function (wrap) {
+      var win = wrap.querySelector(".win"), glow = wrap.querySelector(".glow"), raf = 0;
+      function move(ev) {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          var r = wrap.getBoundingClientRect();
+          var px = (ev.clientX - r.left) / r.width - 0.5;
+          var py = (ev.clientY - r.top) / r.height - 0.5;
+          win.style.transform =
+            "translateY(-8px) rotateX(" + (-py * MAXX).toFixed(2) + "deg) rotateY(" +
+            (px * MAXY).toFixed(2) + "deg) translateZ(18px)";
+          if (glow) glow.style.transform = "translate(" + (px * -28).toFixed(1) + "px," +
+            (py * -22 + 12).toFixed(1) + "px) scale(1.08)";
+        });
+      }
+      wrap.addEventListener("mousemove", move);
+      wrap.addEventListener("mouseleave", function () {
+        win.style.transform = "";
+        if (glow) glow.style.transform = "";
+      });
+    });
+  })();
+</script>
+
+</div>
+<div class="allmark">02  DECISIONMAKER</div>
+<div class="allsec" id="sec-decision">
+<section class="bs bs-hero" dir="rtl" aria-label="oYmer DecisionMaker">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner oylp">
+    <h1 class="rev">o<span class="yflash">Y</span>mer DecisionMaker</h1>
+    <p class="sub rev">פגישת אישור בקנה מידה 1:1.</p>
+  </div>
+</section>
+
+<div class="suite bs" dir="rtl">
+  <section class="pipesec products c1" id="pipeline">
+    <div class="bimbg" aria-hidden="true">
+      <span class="plan"></span><span class="iso"></span>
+      <span class="dots d1"></span><span class="dots d2"></span>
+      <svg class="draw" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="dg" style="animation-delay:0s">
+          <path pathLength="1" d="M90 150h330v210H90Z"/>
+          <path pathLength="1" d="M250 150v210"/>
+          <path pathLength="1" d="M250 300a60 60 0 0 0 60-60"/>
+          <path pathLength="1" d="M90 400h330"/>
+          <path pathLength="1" d="M90 390v20M420 390v20M250 392v16"/>
+        </g>
+        <g class="dg" style="animation-delay:2.3s">
+          <path pathLength="1" d="M1180 210 1330 296 1330 468 1180 554 1030 468 1030 296Z"/>
+          <path pathLength="1" d="M1180 210v172M1180 382 1330 468M1180 382 1030 468"/>
+        </g>
+        <g class="dg" style="animation-delay:4.6s">
+          <path pathLength="1" d="M690 620h150v150H690Z"/>
+          <path pathLength="1" d="M690 645h150M690 670h150M690 695h150M690 720h150M690 745h150"/>
+          <path pathLength="1" d="M865 620v150"/>
+        </g>
+        <g class="dg" style="animation-delay:6.9s">
+          <circle pathLength="1" cx="1240" cy="700" r="46"/>
+          <path pathLength="1" d="M1240 654v92M1194 700h92"/>
+          <path pathLength="1" d="M1286 668 1400 596"/>
+        </g>
+        <g class="dg" style="animation-delay:9.2s">
+          <path pathLength="1" d="M520 90h560"/>
+          <path pathLength="1" d="M520 78v24M800 78v24M1080 78v24"/>
+          <path pathLength="1" d="M300 470h180v300H300Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="inner oylp">
+      <div class="phead rev">
+        <span class="no ltr">// DECISION MAKER</span>
+        <h2>מהמודל, אל הפגישה, ובחזרה אל המודל</h2>
+        <p class="lead">שלושה שלבים על ציר אחד. מה שהוחלט בפגישה לא נשאר במצגת - הוא נכתב בחזרה לתוך Revit.</p>
+      </div>
+      <div class="oyl-stack">
+
+      <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STEP_01</span>
+            <video src="media/lab/kitchen-revit.mp4" poster="media/lab/kitchen-revit-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RVT</b><b>WHITE MODEL</b><b class="on">EXPORT</b></div>
+            <h3>מייצאים את המודל</h3>
+            <p>כפתור אחד בסרגל של ריוויט: המודל יוצא כמודל לבן - גאומטריה ומזהים, בלי הכנה ידנית.</p>
+          </div>
+        </article>
+
+      <div class="oyl-down oyl-mono" aria-hidden="true">
+          <span>EXPORT</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+      <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STEP_02</span>
+            <video src="media/reels/quest.mp4" poster="media/reels/quest.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN VR - 1:1</span>
+            <div class="oyl-hud oyl-mono"><b>צובעים</b><b>מחליפים ריהוט</b><b>מזיזים קירות</b><b class="on">ההחלטה</b></div>
+            <h3>נכנסים למודל בקנה מידה 1:1</h3>
+            <p>הלקוח עומד בתוך הדירה שלו: צובע משטחים, מחליף ריהוט ומזיז אלמנטים - וההחלטה נסגרת שם, בפגישה.</p>
+          </div>
+        </article>
+
+      <div class="oyl-down oyl-mono" aria-hidden="true">
+          <span>WRITE BACK</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+      <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STEP_03</span>
+            <img src="media/lab/barrier-revit.jpg" alt="">
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">BACK IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>CHANGE-SET</b><b>SAVE AS</b><b class="on">WRITE-BACK</b></div>
+            <h3>כותבים בחזרה לריוויט</h3>
+            <p>ההחלטות חוזרות לתוך המודל - עותק חדש של הקובץ, עם המשטחים והאלמנטים שזזו. המקור לא נגע.</p>
+          </div>
+        </article>
+
+    </div>
+    </div>
+  </section>
+</div>
+
+</div>
+<div class="allmark">03  VIEWER</div>
+<div class="allsec" id="sec-viewer">
+<section class="bs bs-hero" dir="rtl" aria-label="oYmer Viewer">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner oylp">
+    <h1 class="rev">o<span class="yflash">Y</span>mer Viewer</h1>
+    <p class="sub rev">המודל של רוויט בדפדפן ובמשקפיים.</p>
+  </div>
+</section>
+
+<div class="suite bs" dir="rtl">
+  <section class="pipesec products c2" id="pipeline">
+    <div class="bimbg" aria-hidden="true">
+      <span class="plan"></span><span class="iso"></span>
+      <span class="dots d1"></span><span class="dots d2"></span>
+      <svg class="draw" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="dg" style="animation-delay:0s">
+          <path pathLength="1" d="M90 150h330v210H90Z"/>
+          <path pathLength="1" d="M250 150v210"/>
+          <path pathLength="1" d="M250 300a60 60 0 0 0 60-60"/>
+          <path pathLength="1" d="M90 400h330"/>
+          <path pathLength="1" d="M90 390v20M420 390v20M250 392v16"/>
+        </g>
+        <g class="dg" style="animation-delay:2.3s">
+          <path pathLength="1" d="M1180 210 1330 296 1330 468 1180 554 1030 468 1030 296Z"/>
+          <path pathLength="1" d="M1180 210v172M1180 382 1330 468M1180 382 1030 468"/>
+        </g>
+        <g class="dg" style="animation-delay:4.6s">
+          <path pathLength="1" d="M690 620h150v150H690Z"/>
+          <path pathLength="1" d="M690 645h150M690 670h150M690 695h150M690 720h150M690 745h150"/>
+          <path pathLength="1" d="M865 620v150"/>
+        </g>
+        <g class="dg" style="animation-delay:6.9s">
+          <circle pathLength="1" cx="1240" cy="700" r="46"/>
+          <path pathLength="1" d="M1240 654v92M1194 700h92"/>
+          <path pathLength="1" d="M1286 668 1400 596"/>
+        </g>
+        <g class="dg" style="animation-delay:9.2s">
+          <path pathLength="1" d="M520 90h560"/>
+          <path pathLength="1" d="M520 78v24M800 78v24M1080 78v24"/>
+          <path pathLength="1" d="M300 470h180v300H300Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="inner oylp">
+      <div class="phead rev">
+        <span class="no ltr">// VIEWER</span>
+        <h2>לפתוח, להסתובב, להחליף</h2>
+        <p class="lead">המודל נפתח בדפדפן ובמשקפיים בלי רישיון Revit לצופה - ומשם אפשר לבחון משפחה ולהחליף גימור.</p>
+      </div>
+      <div class="oyl-pairs oyl-pairs--rev">
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">SRC_01</span>
+            <img src="media/lab/barrier-revit.jpg" alt="">
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RVT</b><b>WHITE MODEL</b><b class="on">EXPORT</b></div>
+            <h3>המודל בריוויט</h3>
+            <p>המודל כפי שהוא בריוויט - אותו קובץ, בלי הכנה ובלי ייצוא ידני.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>VIEW MODEL</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">VIEW_01</span>
+            <video src="media/viewer/reel-1.mp4" poster="media/viewer/reel-1.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE VIEWER</span>
+            <div class="oyl-hud oyl-mono"><b>WEBXR</b><b>1:1</b><b class="on">STAND-IN</b></div>
+            <h3>המודל בצפייה</h3>
+            <p>נפתח בדפדפן ובמשקפיים, בקנה מידה 1:1, בלי התקנה.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">SRC_02</span>
+            <video src="media/lab/kitchen-revit.mp4" poster="media/lab/kitchen-revit-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>FAMILY</b><b class="on">FLEXES</b></div>
+            <h3>המשפחה בריוויט</h3>
+            <p>ארון המטבח כמשפחה פרמטרית - הסוגים והמידות שלה.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>VIEW FAMILY</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">VIEW_02</span>
+            <video src="media/lab/kitchen-lab.mp4?v=3" poster="media/lab/kitchen-lab-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE VIEWER</span>
+            <div class="oyl-hud oyl-mono"><b>FAMILY</b><b>ORBIT</b><b class="on">STAND-IN</b></div>
+            <h3>הארון בצפייה</h3>
+            <p>אותה משפחה, נפתחת לבד - מסתובבים סביבה ובודקים אותה לפני שהיא נכנסת.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">SRC_03</span>
+            <video src="media/viewer/reel-3.mp4" poster="media/viewer/reel-3.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>MATERIALS</b><b>CATALOG</b><b class="on">READ</b></div>
+            <h3>החומרים בקטלוג</h3>
+            <p>ספריית הגימורים - אותם חומרים שהפרויקט מכיר.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>APPLY MATERIALS</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media oyl-fit">
+            <span class="oyl-id oyl-mono">VIEW_03</span>
+            <video src="media/lab/ai-reel.mp4" poster="media/lab/ai-reel-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE VIEWER</span>
+            <div class="oyl-hud oyl-mono"><b>PAINT</b><b>LIVE</b><b class="on">STAND-IN</b></div>
+            <h3>צובעים בצפייה</h3>
+            <p>בוחרים גימור ונוגעים במשטח - הוא מתחלף מול העיניים, בתוך הצפייה.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+    </div>
+  </section>
+</div>
+
+</div>
+<div class="allmark">04  FAMILY CREATOR</div>
+<div class="allsec" id="sec-family">
+<section class="bs bs-hero" dir="rtl" aria-label="oYmer Family Creator">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner oylp">
+    <h1 class="rev">o<span class="yflash">Y</span>mer Family Creator</h1>
+    <p class="sub rev">יצירת משפחות דינמיות לרוויט.</p>
+  </div>
+</section>
+
+<div class="suite bs" dir="rtl">
+  <section class="pipesec products c3" id="pipeline">
+    <div class="bimbg" aria-hidden="true">
+      <span class="plan"></span><span class="iso"></span>
+      <span class="dots d1"></span><span class="dots d2"></span>
+      <svg class="draw" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="dg" style="animation-delay:0s">
+          <path pathLength="1" d="M90 150h330v210H90Z"/>
+          <path pathLength="1" d="M250 150v210"/>
+          <path pathLength="1" d="M250 300a60 60 0 0 0 60-60"/>
+          <path pathLength="1" d="M90 400h330"/>
+          <path pathLength="1" d="M90 390v20M420 390v20M250 392v16"/>
+        </g>
+        <g class="dg" style="animation-delay:2.3s">
+          <path pathLength="1" d="M1180 210 1330 296 1330 468 1180 554 1030 468 1030 296Z"/>
+          <path pathLength="1" d="M1180 210v172M1180 382 1330 468M1180 382 1030 468"/>
+        </g>
+        <g class="dg" style="animation-delay:4.6s">
+          <path pathLength="1" d="M690 620h150v150H690Z"/>
+          <path pathLength="1" d="M690 645h150M690 670h150M690 695h150M690 720h150M690 745h150"/>
+          <path pathLength="1" d="M865 620v150"/>
+        </g>
+        <g class="dg" style="animation-delay:6.9s">
+          <circle pathLength="1" cx="1240" cy="700" r="46"/>
+          <path pathLength="1" d="M1240 654v92M1194 700h92"/>
+          <path pathLength="1" d="M1286 668 1400 596"/>
+        </g>
+        <g class="dg" style="animation-delay:9.2s">
+          <path pathLength="1" d="M520 90h560"/>
+          <path pathLength="1" d="M520 78v24M800 78v24M1080 78v24"/>
+          <path pathLength="1" d="M300 470h180v300H300Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="inner oylp">
+      <div class="phead rev">
+        <span class="no ltr">// FAMILY GENERATOR</span>
+        <h2>משפחות רוויט דינמיות</h2>
+        <p class="lead">מהאובייקט במעבדה אל משפחת Revit אמיתית - פרמטרית, מדידה, מוכנה לפרויקט.</p>
+      </div>
+      <div class="oyl-pairs oyl-pairs--rev">
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">FAM_01</span>
+            <video src="media/lab/kitchen-revit.mp4" poster="media/lab/kitchen-revit-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>FAMILY TYPES</b><b class="on">FLEXES</b></div>
+            <h3>המטבח בריוויט</h3>
+            <p>הארון התחתון בתוך ריוויט: פותחים את טבלת הפרמטרים, משנים - והמשפחה זזה.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME PARAMETER</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">LAB_01</span>
+            <video src="media/lab/kitchen-lab.mp4?v=3" poster="media/lab/kitchen-lab-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE LAB</span>
+            <div class="oyl-hud oyl-mono"><b>מידות</b><b>מגירות</b><b>חזיתות</b><b class="on">ידיות</b></div>
+            <h3>המטבח במעבדה</h3>
+            <p>הסליידרים של המעבדה על המסך, וכל אחד מזיז גאומטריה אמיתית.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">FAM_02</span>
+            <img src="media/lab/desk-revit.jpg" alt="">
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>4 TYPES</b><b class="on">FLEXES</b></div>
+            <h3>השולחן בריוויט</h3>
+            <p>ארבעה סוגים של אותה משפחה, זה לצד זה. אין במשפחה מספר אחד מת.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME PARAMETER</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">LAB_02</span>
+            <video src="media/lab/desk-lab.mp4?v=4" poster="media/lab/desk-lab-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE LAB</span>
+            <div class="oyl-hud oyl-mono"><b>אורך</b><b>רוחב</b><b class="on">מדפים</b></div>
+            <h3>השולחן במעבדה</h3>
+            <p>אותם פרמטרים בדיוק, אחד אחרי השני: אורך, רוחב ומדף.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">FAM_03</span>
+            <img src="media/lab/barrier-revit.jpg" alt="">
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>FAAC B680H</b><b>BEAM LENGTH</b><b class="on">OPEN</b></div>
+            <h3>המחסום בריוויט</h3>
+            <p>דגם יצרן אמיתי, וטבלת הפרמטרים לצידו - כולל תיבת הסימון שמרימה את הזרוע.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME PARAMETER</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">LAB_03</span>
+            <video src="media/lab/barrier-lab.mp4?v=3" poster="media/lab/barrier-lab-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN THE LAB</span>
+            <div class="oyl-hud oyl-mono"><b>זרוע</b><b>ארון</b><b class="on">OPEN</b></div>
+            <h3>המחסום במעבדה</h3>
+            <p>אורך הזרוע, מידות הארון, ואז הזרוע נפתחת - הכל מאותה משפחה.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+    </div>
+  </section>
+</div>
+
+</div>
+<div class="allmark">05  TYPE STUDIO</div>
+<div class="allsec" id="sec-type">
+<section class="bs bs-hero" dir="rtl" aria-label="oYmer Type Studio">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner oylp">
+    <h1 class="rev">o<span class="yflash">Y</span>mer Type Studio</h1>
+    <p class="sub rev">יצירת טיפוסים חדשים בתוך רוויט.</p>
+  </div>
+</section>
+
+<div class="suite bs" dir="rtl">
+  <section class="pipesec products c4" id="pipeline">
+    <div class="bimbg" aria-hidden="true">
+      <span class="plan"></span><span class="iso"></span>
+      <span class="dots d1"></span><span class="dots d2"></span>
+      <svg class="draw" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="dg" style="animation-delay:0s">
+          <path pathLength="1" d="M90 150h330v210H90Z"/>
+          <path pathLength="1" d="M250 150v210"/>
+          <path pathLength="1" d="M250 300a60 60 0 0 0 60-60"/>
+          <path pathLength="1" d="M90 400h330"/>
+          <path pathLength="1" d="M90 390v20M420 390v20M250 392v16"/>
+        </g>
+        <g class="dg" style="animation-delay:2.3s">
+          <path pathLength="1" d="M1180 210 1330 296 1330 468 1180 554 1030 468 1030 296Z"/>
+          <path pathLength="1" d="M1180 210v172M1180 382 1330 468M1180 382 1030 468"/>
+        </g>
+        <g class="dg" style="animation-delay:4.6s">
+          <path pathLength="1" d="M690 620h150v150H690Z"/>
+          <path pathLength="1" d="M690 645h150M690 670h150M690 695h150M690 720h150M690 745h150"/>
+          <path pathLength="1" d="M865 620v150"/>
+        </g>
+        <g class="dg" style="animation-delay:6.9s">
+          <circle pathLength="1" cx="1240" cy="700" r="46"/>
+          <path pathLength="1" d="M1240 654v92M1194 700h92"/>
+          <path pathLength="1" d="M1286 668 1400 596"/>
+        </g>
+        <g class="dg" style="animation-delay:9.2s">
+          <path pathLength="1" d="M520 90h560"/>
+          <path pathLength="1" d="M520 78v24M800 78v24M1080 78v24"/>
+          <path pathLength="1" d="M300 470h180v300H300Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="inner oylp">
+      <div class="phead rev">
+        <span class="no ltr">// TYPE STUDIO</span>
+        <h2>טיפוס חדש, בלי להקליד פרמטרים</h2>
+        <p class="lead">בוחרים משפחה קיימת בפרויקט, מזיזים סרגלים ורואים את השינוי חי - ולחיצה אחת מחייבת אותו.</p>
+      </div>
+      <div class="oyl-pairs oyl-pairs--rev">
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">TYPE_01</span>
+            <img src="media/lab/desk-revit.jpg" alt="">
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>NEW TYPE</b><b class="on">ONE CLICK</b></div>
+            <h3>הסוג החדש בריוויט</h3>
+            <p>טיפוס חדש נכתב למשפחה - סוג אחד חדש, ושום דבר אחר במודל לא זז.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME TYPE</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STUDIO_01</span>
+            <video src="media/lab/desk-lab.mp4?v=4" poster="media/lab/desk-lab-poster.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN TYPE STUDIO</span>
+            <div class="oyl-hud oyl-mono"><b>מידות</b><b>תצוגה חיה</b><b class="on">ללא הקלדה</b></div>
+            <h3>השולחן בסטודיו</h3>
+            <p>גוררים מידה ורואים את הטיפוס נבנה - בלי להקליד פרמטר אחד.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">TYPE_02</span>
+            <div class="oyl-ph"><em></em><strong>הדלת בריוויט</strong><span class="oyl-mono">TO BE CAPTURED</span></div>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>NEW TYPE</b><b class="on">QUEUED</b></div>
+            <h3>הדלת בריוויט</h3>
+            <p>אותו מסלול, משפחה אחרת: בוחרים דלת קיימת ויוצרים ממנה סוג חדש.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME TYPE</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STUDIO_02</span>
+            <div class="oyl-ph"><em></em><strong>הדלת בסטודיו</strong><span class="oyl-mono">TO BE CAPTURED</span></div>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN TYPE STUDIO</span>
+            <div class="oyl-hud oyl-mono"><b>רוחב</b><b>גובה</b><b class="on">QUEUED</b></div>
+            <h3>הדלת בסטודיו</h3>
+            <p>סרגלים לרוחב ולגובה, תצוגה חיה, ושם שנלמד מהמוסכמה של המשפחה עצמה.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">TYPE_03</span>
+            <div class="oyl-ph"><em></em><strong>החלון בריוויט</strong><span class="oyl-mono">TO BE CAPTURED</span></div>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN REVIT</span>
+            <div class="oyl-hud oyl-mono"><b>.RFA</b><b>NEW TYPE</b><b class="on">QUEUED</b></div>
+            <h3>החלון בריוויט</h3>
+            <p>הסוג נכתב לקובץ, נשמר בשם לפי המוסכמה, ומוכן לשיבוץ במודל.</p>
+          </div>
+        </article>
+
+        <div class="oyl-flow oyl-mono" aria-hidden="true">
+          <span>SAME TYPE</span>
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+          </svg>
+        </div>
+
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">STUDIO_03</span>
+            <div class="oyl-ph"><em></em><strong>החלון בסטודיו</strong><span class="oyl-mono">TO BE CAPTURED</span></div>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">IN TYPE STUDIO</span>
+            <div class="oyl-hud oyl-mono"><b>סנדבוקס</b><b class="on">QUEUED</b></div>
+            <h3>החלון בסטודיו</h3>
+            <p>תצוגה מקדימה בארגז חול - ריוויט נשאר נקי עד הרגע שלוחצים.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+    </div>
+  </section>
+</div>
+
+</div>
+<div class="allmark">06  VR TOURS</div>
+<div class="allsec" id="sec-tours">
+
+<style>
+.oymer-reelstrip{position:relative;margin-top:44px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%)}
+.oymer-reeltrack{display:flex;width:max-content;animation:oymer-reelscroll 44s linear infinite}
+.oymer-reelstrip:hover .oymer-reeltrack,.oymer-reelstrip:focus-within .oymer-reeltrack{animation-play-state:paused}
+.oymer-reelcard{flex:0 0 auto;margin:0 0 0 18px;width:clamp(210px,22vw,300px)}
+.oymer-reelcard video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;
+  background:#0b1220;box-shadow:0 10px 26px rgba(2,6,23,.45)}
+.oymer-reelcard figcaption{margin-top:9px;font-size:.82rem;line-height:1.45;color:rgba(224,242,254,.78);text-align:right}
+@keyframes oymer-reelscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.oymer-reeltrack{animation:none}}
+@media (max-width:640px){
+  /* the strip auto-scrolls on phones too. it used to be a manual swipe carousel
+     (animation:none + overflow-x scroll + clones hidden), which just read as "not moving".
+     clones stay visible so the -50% loop still joins seamlessly. */
+  .oymer-reelcard{width:62vw}
+  .oymer-reeltrack{animation-duration:30s}
+}
+/* pieces of the editor UI, angled behind the hero. each panel is an independent
+   layer, so a missing crop just drops that one and the gradient stays intact. */
+.oymer-herobg{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.ohb{position:absolute;display:block;background-repeat:no-repeat;background-size:100% 100%;
+  border-radius:10px;filter:brightness(1.14) saturate(1.08);
+  box-shadow:0 22px 55px rgba(2,6,23,.5)}
+.ohb--scenes{left:2.5%;top:28%;width:200px;height:411px;opacity:.58;
+  background-image:url("media/ui-scenes.jpg");
+  transform:perspective(1300px) rotateY(27deg) rotate(-5deg);
+  -webkit-mask-image:linear-gradient(to right,#000 42%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 42%,transparent 100%)}
+.ohb--props{right:2.5%;top:34%;width:210px;height:435px;opacity:.58;
+  background-image:url("media/ui-props.jpg");
+  transform:perspective(1300px) rotateY(-27deg) rotate(5deg);
+  -webkit-mask-image:linear-gradient(to left,#000 42%,transparent 100%);
+  mask-image:linear-gradient(to left,#000 42%,transparent 100%)}
+.ohb--bar{right:1%;top:3%;width:430px;height:24px;opacity:.46;
+  background-image:url("media/ui-bar.jpg");
+  transform:perspective(1000px) rotateX(32deg) rotate(-4deg);
+  -webkit-mask-image:linear-gradient(to left,#000 30%,transparent 100%);
+  mask-image:linear-gradient(to left,#000 30%,transparent 100%)}
+/* continuation of the same panels down into the white section. lower opacity and a
+   softer shadow, since these sit on white rather than on the dark gradient. */
+.ohb--bar2{left:5%;top:112%;width:360px;height:20px;opacity:.20;
+  background-image:url("media/ui-bar.jpg");
+  transform:perspective(900px) rotateX(-28deg) rotate(3deg);
+  box-shadow:0 14px 34px rgba(15,23,42,.14);
+  -webkit-mask-image:linear-gradient(to right,#000 34%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 34%,transparent 100%)}
+.ohb--scenes2{left:3%;top:128%;width:170px;height:349px;opacity:.22;
+  background-image:url("media/ui-scenes.jpg");
+  transform:perspective(1300px) rotateY(24deg) rotate(4deg);
+  box-shadow:0 16px 40px rgba(15,23,42,.15);
+  -webkit-mask-image:linear-gradient(to right,#000 38%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 38%,transparent 100%)}
+.ohb--props2{right:3%;top:152%;width:180px;height:373px;opacity:.22;
+  background-image:url("media/ui-props.jpg");
+  transform:perspective(1300px) rotateY(-24deg) rotate(-4deg);
+  box-shadow:0 16px 40px rgba(15,23,42,.15);
+  -webkit-mask-image:linear-gradient(to left,#000 38%,transparent 100%);
+  mask-image:linear-gradient(to left,#000 38%,transparent 100%)}
+@media (max-width:900px){
+  .ohb--bar,.ohb--bar2,.ohb--scenes2,.ohb--props2{display:none}
+  .ohb--scenes,.ohb--props{opacity:.3;width:150px;height:308px}
+  .ohb--props{height:311px}
+}
+
+/* editor palette, sampled from the tour editor UI:
+   bases #0b0b1c / #12122a / #0c182b, accents cyan #02f2ff, orange #ff7a00,
+   yellow #dfd60e, magenta #e32c89 */
+.oymer-hero{background:
+  radial-gradient(900px 430px at 16% 10%, rgba(2,242,255,.13), transparent 60%),
+  radial-gradient(780px 420px at 86% 82%, rgba(227,44,137,.10), transparent 62%),
+  linear-gradient(140deg,#0b0b1c 0%,#0d0d1f 44%,#0c182b 100%)}
+/* hero lockup: the oYmer wordmark (tagline stripped, recoloured white, orange kept)
+   with "VR Tours" sitting where "VR for Architects" was - right-aligned under MER. */
+/* the Y in the title flashes orange, like the wordmark lab's orange-flash */
+.oymer-yflash{color:#ff7a00;animation:oymer-yflash 2.6s ease-in-out infinite}
+@keyframes oymer-yflash{
+  0%,100%{color:#ff7a00;text-shadow:0 0 14px rgba(255,122,0,.45)}
+  50%    {color:#ffbe73;text-shadow:0 0 30px rgba(255,122,0,.95),0 0 62px rgba(255,122,0,.45)}
+}
+@media (prefers-reduced-motion:reduce){.oymer-yflash{animation:none}}
+/* intro sentence in its own angled frame, tilted the other way to the feature card */
+.oymer-intro{position:relative;margin:0 0 38px;padding:26px 32px;border-radius:16px;
+  transform:rotate(1.4deg);
+  background:linear-gradient(150deg,#12122a 0%,#0d0d1f 58%,#0c182b 100%);
+  border:1px solid rgba(2,242,255,.28);
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.06),
+             0 16px 40px rgba(11,11,28,.26),
+             0 0 28px rgba(2,242,255,.11);
+  font-size:1.14rem;line-height:1.9;color:#dbe6f5;text-align:right}
+@media (max-width:640px){.oymer-intro{transform:none;padding:22px 20px}}
+.oymer-feat{position:relative;margin:6px 0 52px;padding:30px 32px 30px;border-radius:16px;
+  transform:rotate(-1.5deg);
+  background:linear-gradient(150deg,#12122a 0%,#0d0d1f 58%,#0c182b 100%);
+  border:1px solid rgba(2,242,255,.34);
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.07),
+             0 18px 46px rgba(11,11,28,.30),
+             0 0 32px rgba(2,242,255,.14)}
+.oymer-feat__kicker{display:inline-block;margin-bottom:16px;font-size:.78rem;font-weight:700;
+  letter-spacing:.19em;color:#02f2ff;text-shadow:0 0 14px rgba(2,242,255,.55)}
+.oymer-feat ul{list-style:none;padding:0;margin:0;display:grid;gap:15px}
+.oymer-feat li{display:flex;gap:13px;align-items:flex-start;font-size:1.06rem;line-height:1.72;
+  color:#dbe6f5}
+.oymer-feat__tick{color:#ff7a00;font-weight:700;flex-shrink:0;
+  text-shadow:0 0 12px rgba(255,122,0,.55)}
+@media (max-width:640px){.oymer-feat{transform:none;padding:24px 22px}}
+/* editor-style CTA: chamfered corners like the toolbar buttons, cyan on dark navy.
+   outer layer is the 2px border, inner layer the fill - clip-path can't render a
+   real border, so it's faked by stacking two clipped boxes. */
+.oymer-cta{display:inline-block;padding:2px;text-decoration:none;
+  background:linear-gradient(160deg,rgba(2,242,255,.85),rgba(2,242,255,.45));
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  box-shadow:0 0 30px rgba(2,242,255,.34),0 14px 34px rgba(11,11,28,.30);
+  transition:box-shadow .22s ease,transform .22s ease}
+.oymer-cta:hover{box-shadow:0 0 44px rgba(2,242,255,.55),0 16px 38px rgba(11,11,28,.34);
+  transform:translateY(-2px)}
+.oymer-cta__in{display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:20px 54px;font-size:1.24rem;font-weight:700;letter-spacing:.045em;color:#02f2ff;
+  background:linear-gradient(160deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(17px 0,100% 0,100% calc(100% - 17px),calc(100% - 17px) 100%,0 100%,0 17px);
+  text-shadow:0 0 16px rgba(2,242,255,.65)}
+.oymer-cta:hover .oymer-cta__in{color:#8bf9ff}
+@media (max-width:640px){.oymer-cta__in{padding:17px 30px;font-size:1.08rem}}
+/* the FREE sign - sits on the hero's bottom edge, half in / half out.
+   orange is the editor's attention colour (the + button, the active NAV tab). */
+.oymer-free{position:absolute;left:50%;bottom:-62px;z-index:20;padding:2px;
+  background:linear-gradient(150deg,rgba(255,122,0,.95),rgba(255,122,0,.5));
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48);
+  transform:translateX(-50%) rotate(-7deg);animation:oymer-freeglow 3.2s ease-in-out infinite}
+.oymer-free__in{display:block;padding:16px 48px 18px;
+  font-size:3rem;font-weight:800;line-height:1;color:#ff7a00;
+  text-shadow:0 0 26px rgba(255,122,0,.8);
+  background:linear-gradient(150deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(21px 0,100% 0,100% calc(100% - 21px),calc(100% - 21px) 100%,0 100%,0 21px)}
+@keyframes oymer-freeglow{
+  0%,100%{box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48)}
+  50%    {box-shadow:0 0 64px rgba(255,122,0,.62),0 18px 42px rgba(11,11,28,.48)}}
+@media (prefers-reduced-motion:reduce){.oymer-free{animation:none}}
+@media (max-width:640px){
+  .oymer-free{bottom:-45px;transform:translateX(-50%) rotate(-5deg)}
+  .oymer-free__in{padding:12px 32px 14px;font-size:2.1rem}
+}
+/* the tutorial CTA - same chamfered shape as the editor CTA, in the editor's
+   orange (its attention colour) so the two buttons read as a pair, not a clone. */
+.oymer-cta--tut{background:linear-gradient(160deg,rgba(255,122,0,.9),rgba(255,122,0,.45));
+  box-shadow:0 0 30px rgba(255,122,0,.30),0 14px 34px rgba(11,11,28,.30);
+  border:0;cursor:pointer;font:inherit}
+.oymer-cta--tut:hover{box-shadow:0 0 44px rgba(255,122,0,.5),0 16px 38px rgba(11,11,28,.34)}
+.oymer-cta--tut .oymer-cta__in{color:#ff9a3c;text-shadow:0 0 16px rgba(255,122,0,.6)}
+.oymer-cta--tut:hover .oymer-cta__in{color:#ffbe7a}
+.oymer-ctarow{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:center}
+/* neon frame around the live demo, same cyan as the editor chrome */
+.oymer-demo{border:1px solid rgba(2,242,255,.45)!important;
+  box-shadow:inset 0 0 0 1px rgba(2,242,255,.10),
+             0 0 34px rgba(2,242,255,.22),
+             0 18px 46px rgba(11,11,28,.28)!important}
+</style>
+<section class="relative oymer-hero" style="min-height:520px;display:flex;flex-direction:column;justify-content:center;padding:138px 0 56px" dir="rtl" aria-label="oYmer VR Tours">
+  <div class="oymer-herobg" aria-hidden="true"><span class="ohb ohb--scenes"></span><span class="ohb ohb--bar"></span><span class="ohb ohb--props"></span><span class="ohb ohb--bar2"></span><span class="ohb ohb--scenes2"></span><span class="ohb ohb--props2"></span></div>
+  <div class="container mx-auto px-6 relative z-10 text-center" style="opacity: 0; transform: translateY(30px);">
+    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">o<span class="oymer-yflash">Y</span>mer VR Tours</h1>
+    <p class="text-xl text-sky-100 max-w-3xl mx-auto leading-relaxed">צור סיור 360° מטלפון/מודל לדפדפן או ל VR</p>
+  </div>
+  <div class="oymer-reelstrip" dir="ltr">
+    <div class="oymer-reeltrack">
+        <figure class="oymer-reelcard">
+          <video class="oymer-reel" src="media/reels/guided-open.mp4" poster="media/reels/guided-open.jpg" muted loop playsinline autoplay preload="auto" aria-label="סיור מודרך - נקודת פתיחה"></video>
+          <figcaption dir="rtl">סיור מודרך - עוצרים בכל נקודה ומסבירים</figcaption>
+        </figure>
+        <figure class="oymer-reelcard">
+          <video class="oymer-reel" src="media/reels/guided-rooms.mp4" poster="media/reels/guided-rooms.jpg" muted loop playsinline autoplay preload="auto" aria-label="שמות חדרים בעברית בתוך הסיור"></video>
+          <figcaption dir="rtl">שמות החדרים בעברית, בתוך הסיור עצמו</figcaption>
+        </figure>
+        <figure class="oymer-reelcard">
+          <video class="oymer-reel" src="media/reels/guided-path.mp4" poster="media/reels/guided-path.jpg" muted loop playsinline autoplay preload="auto" aria-label="חיצי ניווט לאורך המסלול"></video>
+          <figcaption dir="rtl">חיצי ניווט - הלקוח לא הולך לאיבוד</figcaption>
+        </figure>
+        <figure class="oymer-reelcard">
+          <video class="oymer-reel" src="media/reels/quest.mp4" poster="media/reels/quest.jpg" muted loop playsinline autoplay preload="auto" aria-label="הסיור על משקפי Quest"></video>
+          <figcaption dir="rtl">על משקפי Quest - בקנה מידה 1:1</figcaption>
+        </figure>
+        <figure class="oymer-reelcard oymer-reelcard--clone" aria-hidden="true">
+          <video class="oymer-reel" src="media/reels/guided-open.mp4" poster="media/reels/guided-open.jpg" muted loop playsinline autoplay preload="auto" aria-label="סיור מודרך - נקודת פתיחה"></video>
+          <figcaption dir="rtl">סיור מודרך - עוצרים בכל נקודה ומסבירים</figcaption>
+        </figure>
+        <figure class="oymer-reelcard oymer-reelcard--clone" aria-hidden="true">
+          <video class="oymer-reel" src="media/reels/guided-rooms.mp4" poster="media/reels/guided-rooms.jpg" muted loop playsinline autoplay preload="auto" aria-label="שמות חדרים בעברית בתוך הסיור"></video>
+          <figcaption dir="rtl">שמות החדרים בעברית, בתוך הסיור עצמו</figcaption>
+        </figure>
+        <figure class="oymer-reelcard oymer-reelcard--clone" aria-hidden="true">
+          <video class="oymer-reel" src="media/reels/guided-path.mp4" poster="media/reels/guided-path.jpg" muted loop playsinline autoplay preload="auto" aria-label="חיצי ניווט לאורך המסלול"></video>
+          <figcaption dir="rtl">חיצי ניווט - הלקוח לא הולך לאיבוד</figcaption>
+        </figure>
+        <figure class="oymer-reelcard oymer-reelcard--clone" aria-hidden="true">
+          <video class="oymer-reel" src="media/reels/quest.mp4" poster="media/reels/quest.jpg" muted loop playsinline autoplay preload="auto" aria-label="הסיור על משקפי Quest"></video>
+          <figcaption dir="rtl">על משקפי Quest - בקנה מידה 1:1</figcaption>
+        </figure>
+    </div>
+  </div>
+  <div class="oymer-free"><span class="oymer-free__in">חינם</span></div>
+</section>
+<script>
+(function () {
+  var reels = document.querySelectorAll('video.oymer-reel');
+  if (!reels.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); }
+      else { e.target.pause(); }
+    });
+  }, { threshold: 0.2 });
+  Array.prototype.forEach.call(reels, function (v) {
+    v.setAttribute('webkit-playsinline', '');   // older iOS still reads the prefixed one
+    io.observe(v);
+  });
+  // iOS can refuse the initial muted autoplay anyway (Low Power Mode is the usual reason).
+  // retry once on the first user gesture - by then the page is allowed to start them.
+  var kick = function () {
+    Array.prototype.forEach.call(reels, function (v) {
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+  };
+  document.addEventListener('touchstart', kick, { once: true, passive: true });
+  document.addEventListener('click', kick, { once: true });
+})();
+</script>
+<section class="oymer-ai" dir="rtl" aria-label="AI Design Inside VR">
+  <style>
+  .oymer-ai{position:relative;padding:88px 0;overflow:hidden;
+    background:
+      radial-gradient(760px 380px at 82% 12%, rgba(2,242,255,.14), transparent 62%),
+      radial-gradient(680px 360px at 12% 88%, rgba(255,122,0,.10), transparent 64%),
+      linear-gradient(150deg,#0b0b1c 0%,#0d0d1f 46%,#0c182b 100%)}
+  .oymer-ai .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:2;
+    display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center}
+  .oymer-ai .kick{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:800;
+    letter-spacing:.2em;color:#c9f7ff;background:rgba(2,242,255,.10);border:1px solid rgba(2,242,255,.36);
+    padding:7px 15px;border-radius:999px;margin-bottom:22px;direction:ltr}
+  .oymer-ai .kick i{width:7px;height:7px;border-radius:50%;background:#02f2ff;
+    animation:oymerAiPulse 1.9s infinite;display:block}
+  @keyframes oymerAiPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+  .oymer-ai h2{margin:0;color:#fff;font-weight:800;line-height:1.08;letter-spacing:-.03em;
+    font-size:clamp(30px,4.2vw,52px)}
+  .oymer-ai h2 em{font-style:normal;color:#ff7a00}
+  .oymer-ai p{color:#bcd7ea;font-size:clamp(15px,1.5vw,18px);line-height:1.8;margin:18px 0 0;max-width:52ch}
+  .oymer-ai ul{list-style:none;margin:24px 0 0;padding:0;display:flex;gap:9px;flex-wrap:wrap}
+  .oymer-ai li{font-size:12.5px;font-weight:700;color:#dff4ff;background:rgba(2,242,255,.10);
+    border:1px solid rgba(2,242,255,.30);border-radius:999px;padding:6px 14px}
+  .oymer-ai .shot{position:relative;border-radius:18px;overflow:hidden;background:#04060f;
+    border:1px solid rgba(2,242,255,.35);box-shadow:0 30px 70px rgba(2,6,23,.6)}
+  .oymer-ai .shot video{display:block;width:100%;aspect-ratio:16/10;object-fit:contain;background:#04060f}
+  .oymer-ai .shot .tag{position:absolute;top:14px;right:14px;font-size:10.5px;font-weight:800;
+    letter-spacing:.12em;color:#04121a;background:#02f2ff;border-radius:999px;padding:5px 12px;direction:ltr}
+  .oymer-ai .shot::after{content:"";position:absolute;left:0;right:0;top:0;height:34%;pointer-events:none;
+    background:linear-gradient(to bottom,transparent,rgba(2,242,255,.12),transparent);
+    animation:oymerAiSweep 5.5s linear infinite}
+  @keyframes oymerAiSweep{0%{top:-34%}100%{top:100%}}
+  @media (prefers-reduced-motion:reduce){.oymer-ai .shot::after,.oymer-ai .kick i{animation:none}}
+  @media (max-width:900px){.oymer-ai .wrap{grid-template-columns:1fr;gap:30px}}
+  </style>
+  <div class="wrap">
+    <div>
+      <span class="kick"><i></i>AI DESIGN INSIDE VR</span>
+      <h2>ה-AI בתוך החדר. <em>בזמן אמת.</em></h2>
+      <p>עומדים מול הקיר, אומרים איך הוא צריך להיראות - והוא משתנה סביבכם, בזמן אמת, בלי לצאת מה-VR.</p>
+      <ul><li>בתוך המשקפיים</li><li>בלי לצאת מהסיור</li><li>הלקוח רואה מיד</li></ul>
+    </div>
+    <div class="shot">
+      <span class="tag">LIVE IN HEADSET</span>
+      <video src="media/lab/ai-reel.mp4" poster="media/lab/ai-reel-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="AI משנה את החדר בזמן אמת"></video>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+<nav class="allnav" dir="rtl"><b>קפיצה</b><a href="#sec-suite">BIM VR Suite</a><a href="#sec-decision">DecisionMaker</a><a href="#sec-viewer">Viewer</a><a href="#sec-family">Family Creator</a><a href="#sec-type">Type Studio</a><a href="#sec-tours">VR Tours</a></nav>
+<script>
+  (function () {
+    var els = document.querySelectorAll(".rev");
+    function showAll() { Array.prototype.forEach.call(els, function (e) { e.classList.add("in"); }); }
+    if (!("IntersectionObserver" in window)) { showAll(); return; }
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var d = parseInt(en.target.dataset.i || "0", 10) * 90;
+        setTimeout(function () { en.target.classList.add("in"); }, d);
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    Array.prototype.forEach.call(els, function (e, i) { e.dataset.i = (i % 4); io.observe(e); });
+    setTimeout(showAll, 3000);
+  })();
+
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    var MAXX = 8, MAXY = 10;
+    Array.prototype.forEach.call(document.querySelectorAll(".winwrap"), function (wrap) {
+      var win = wrap.querySelector(".win"), glow = wrap.querySelector(".glow"), raf = 0;
+      if (!win) return;
+      wrap.addEventListener("mousemove", function (ev) {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          var r = wrap.getBoundingClientRect();
+          var px = (ev.clientX - r.left) / r.width - 0.5;
+          var py = (ev.clientY - r.top) / r.height - 0.5;
+          win.style.transform = "translateY(-8px) rotateX(" + (-py * MAXX).toFixed(2) +
+            "deg) rotateY(" + (px * MAXY).toFixed(2) + "deg) translateZ(18px)";
+          if (glow) glow.style.transform = "translate(" + (px * -28).toFixed(1) + "px," +
+            (py * -22 + 12).toFixed(1) + "px) scale(1.08)";
+        });
+      });
+      wrap.addEventListener("mouseleave", function () {
+        win.style.transform = ""; if (glow) glow.style.transform = "";
+      });
+    });
+  })();
+</script>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll(".allnav a"));
+  var secs=links.map(function(a){return document.getElementById(a.getAttribute("href").slice(1));});
+  function mark(){
+    var y=window.scrollY+120,best=0;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) best=i; });
+    links.forEach(function(a,i){ a.classList.toggle("on", i===best); });
+  }
+  window.addEventListener("scroll",mark,{passive:true}); mark();
+  links.forEach(function(a){
+    a.addEventListener("click",function(e){
+      e.preventDefault();
+      var t=document.getElementById(a.getAttribute("href").slice(1));
+      if(t) window.scrollTo({top:t.offsetTop,behavior:"smooth"});
+    });
+  });
+})();
+</script>
+<script src="oymer.js?v=19"></script>
+<script src="menu-preview.js?v=2"></script>
+</body>
+</html>

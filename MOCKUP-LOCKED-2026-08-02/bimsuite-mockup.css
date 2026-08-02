@@ -1,0 +1,335 @@
+/* oYmer BIM VR Suite - plum hero (same box as every other hero) + four colored 3D panels.
+   Each window is a lit bezel with a screen recessed into it, its own hue, and a centered one-liner. */
+
+.bs, .suite{
+  --plum1:#191130; --plum2:#221743; --plum3:#2b1e52;
+  --vio:#8b6cf0; --vio-lt:#c3b3ff;
+  --orange:#ff7a00; --orange-ink:#1a0f00;
+  --ink:#181329; --body:#544d68; --mut:#8f889f;
+  --ground:#f7f5fb; --rule:#e6e2f0; --rule2:#d3cde4;
+}
+
+/* ============================ hero ============================ */
+.bs-hero{
+  position:relative; min-height:520px; display:flex; flex-direction:column; justify-content:center;
+  padding:138px 0 56px; overflow:hidden;
+  background:
+    radial-gradient(880px 420px at 18% 8%, rgba(139,108,240,.20), transparent 62%),
+    radial-gradient(760px 400px at 84% 88%, rgba(255,122,0,.07), transparent 64%),
+    linear-gradient(150deg,#191130 0%,#221743 46%,#2b1e52 100%);
+}
+.bs-herobg{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.bs-herobg .p{
+  position:absolute;display:block;background-repeat:no-repeat;background-size:100% 100%;
+  border-radius:10px;filter:brightness(.92) saturate(.55) hue-rotate(-18deg);
+  box-shadow:0 22px 55px rgba(12,6,30,.55);
+}
+.bs-herobg .p1{left:2.5%;top:26%;width:196px;height:403px;opacity:.34;
+  background-image:url("media/ui-scenes.jpg");
+  transform:perspective(1300px) rotateY(27deg) rotate(-5deg);
+  -webkit-mask-image:linear-gradient(to right,#000 38%,transparent 100%);
+          mask-image:linear-gradient(to right,#000 38%,transparent 100%)}
+.bs-herobg .p2{right:2.5%;top:31%;width:206px;height:426px;opacity:.34;
+  background-image:url("media/ui-props.jpg");
+  transform:perspective(1300px) rotateY(-27deg) rotate(5deg);
+  -webkit-mask-image:linear-gradient(to left,#000 38%,transparent 100%);
+          mask-image:linear-gradient(to left,#000 38%,transparent 100%)}
+.bs-herobg .p3{right:1%;top:5%;width:420px;height:23px;opacity:.26;
+  background-image:url("media/ui-bar.jpg");transform:perspective(1000px) rotateX(34deg)}
+.bs-herobg .p4{left:1%;bottom:7%;width:420px;height:23px;opacity:.22;
+  background-image:url("media/ui-bar.jpg");transform:perspective(1000px) rotateX(-30deg)}
+@media (max-width:900px){.bs-herobg{display:none}}
+
+.bs-hero .inner{position:relative;z-index:10;max-width:1180px;margin:0 auto;padding:0 28px;text-align:center}
+.bs-hero h1{
+  font-family:"Rubik","Heebo",sans-serif;color:#fff;font-weight:800;
+  font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.03em;margin:0;
+}
+.yflash{color:var(--orange);animation:yfl 3.4s ease-in-out infinite}
+@keyframes yfl{0%,100%{color:#ff7a00}50%{color:#ffb266}}
+.bs-hero .sub{
+  color:#b4a9cf;font-family:"Rubik","Heebo",sans-serif;font-weight:500;
+  font-size:clamp(15px,1.5vw,19px);letter-spacing:.01em;margin:18px auto 0;
+}
+
+/* ============================ page ============================ */
+.suite{
+  background:var(--ground); color:var(--body); direction:rtl;
+  font-family:"Heebo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.suite .inner{max-width:1180px;margin:0 auto;padding:0 28px}
+.suite .ltr{direction:ltr;unicode-bidi:embed;display:inline-block}
+.suite a{text-decoration:none;color:inherit}
+
+.rev{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.2,.7,.2,1),transform .65s cubic-bezier(.2,.7,.2,1)}
+.rev.in{opacity:1;transform:none}
+
+.products{position:relative;padding:70px 0 120px;overflow:hidden}
+.products .inner{position:relative}
+.wins{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(470px,1fr));gap:52px 38px;
+  perspective:1500px;
+}
+@media (max-width:560px){.wins{grid-template-columns:1fr;gap:32px}}
+
+/* ============ animated BIM field: plan lines, iso wireframe, halftone dots, live drafting ============
+   sits directly in .products (not in .inner), so it runs the full width of the page. */
+.bimbg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bimbg > span{position:absolute;inset:-120px;display:block}
+
+/* lines that draw themselves, hold, then rub out - a drafter working behind the cards */
+.draw{position:absolute;inset:0;width:100%;height:100%;display:block}
+.draw g{fill:none;stroke:#181329;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.draw .dg path,.draw .dg circle{
+  stroke-dasharray:1;stroke-dashoffset:1;opacity:0;
+  animation:draftLine 13s cubic-bezier(.55,.05,.35,1) infinite;
+  animation-delay:inherit;
+}
+.draw .dg{animation:none}
+.draw .dg > *:nth-child(2){animation-delay:inherit;animation-duration:13.6s}
+.draw .dg > *:nth-child(3){animation-duration:14.2s}
+.draw .dg > *:nth-child(4){animation-duration:14.8s}
+.draw .dg > *:nth-child(5){animation-duration:15.4s}
+@keyframes draftLine{
+  0%  {stroke-dashoffset:1;opacity:0}
+  5%  {opacity:.34}
+  34% {stroke-dashoffset:0;opacity:.34}
+  72% {stroke-dashoffset:0;opacity:.34}
+  88% {stroke-dashoffset:0;opacity:0}
+  100%{stroke-dashoffset:1;opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .draw .dg path,.draw .dg circle{animation:none;stroke-dashoffset:0;opacity:.2}
+}
+
+/* floor-plan line work, drifting slowly to the left */
+.bimbg .plan{
+  opacity:.16;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'><g fill='none' stroke='%23181329' stroke-width='1.3'><rect x='24' y='24' width='96' height='74'/><rect x='142' y='24' width='94' height='48'/><rect x='24' y='120' width='212' height='116'/><path d='M120 60h22M72 98v22M236 96v24'/><path d='M158 120a34 34 0 0 1 34 34'/><path d='M24 250h212M250 24v212' stroke-dasharray='7 7' stroke-width='1'/><circle cx='192' cy='178' r='16'/></g></svg>");
+  background-size:260px 260px;
+  animation:bimDriftA 92s linear infinite;
+}
+/* isometric wireframe, drifting the other way and slower - gives the field depth */
+.bimbg .iso{
+  opacity:.13;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='170' height='196' viewBox='0 0 170 196'><g fill='none' stroke='%231f1a3a' stroke-width='1.1'><path d='M85 2 168 50 168 146 85 194 2 146 2 50Z'/><path d='M85 2 85 98M85 98 168 146M85 98 2 146'/></g></svg>");
+  background-size:170px 196px;
+  animation:bimDriftB 140s linear infinite reverse;
+}
+/* two dot grids of different weight = the halftone, densest toward the middle */
+.bimbg .dots{
+  background-image:radial-gradient(circle, rgba(24,19,41,.55) 1.5px, transparent 1.6px);
+}
+.bimbg .d1{
+  background-size:13px 13px;opacity:.30;
+  -webkit-mask-image:radial-gradient(70% 55% at 50% 46%, #000 0%, rgba(0,0,0,.35) 55%, transparent 82%);
+          mask-image:radial-gradient(70% 55% at 50% 46%, #000 0%, rgba(0,0,0,.35) 55%, transparent 82%);
+  animation:bimDriftC 60s linear infinite;
+}
+.bimbg .d2{
+  background-size:27px 27px;opacity:.22;
+  background-image:radial-gradient(circle, rgba(139,108,240,.75) 2.4px, transparent 2.5px);
+  -webkit-mask-image:linear-gradient(135deg, #000 0%, transparent 62%);
+          mask-image:linear-gradient(135deg, #000 0%, transparent 62%);
+  animation:bimDriftD 78s linear infinite reverse;
+}
+@keyframes bimDriftA{to{background-position:-260px 130px}}
+@keyframes bimDriftB{to{background-position:170px 196px}}
+@keyframes bimDriftC{to{background-position:-130px 65px}}
+@keyframes bimDriftD{to{background-position:135px -108px}}
+@media (prefers-reduced-motion:reduce){
+  .bimbg .plan,.bimbg .iso,.bimbg .dots{animation:none}
+}
+
+/* ---------------- one hue per window ---------------- */
+.suite .c1{--c:255,122,0;   --cd:196,88,0;   --con:#1a0f00}   /* DecisionMaker - orange  */
+.suite .c2{--c:139,108,240; --cd:92,64,190;  --con:#ffffff}   /* Viewer         - violet  */
+.suite .c3{--c:79,125,255;  --cd:44,82,196;  --con:#ffffff}   /* Family Creator - azure   */
+.suite .c4{--c:43,179,163;  --cd:22,124,113; --con:#052b27}   /* Type Studio    - teal    */
+
+/* ---------------- frame, lit from behind ---------------- */
+.winwrap{position:relative;transform-style:preserve-3d}
+.glow{
+  position:absolute;z-index:0;inset:20px 14px -30px 14px;border-radius:36px;
+  filter:blur(38px);opacity:.55;pointer-events:none;
+  background:radial-gradient(62% 62% at 50% 64%, rgba(var(--c),.92), rgba(var(--c),0) 72%);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1), filter .35s;
+}
+.winwrap:hover .glow{opacity:1;filter:blur(46px)}
+
+.win{
+  position:relative;z-index:1;display:flex;flex-direction:column;
+  border-radius:26px;will-change:transform;
+  /* the bezel material: lit from the top-right, falling into shadow bottom-left */
+  background:
+    linear-gradient(155deg,
+      rgba(var(--c),.30) 0%,
+      rgba(var(--c),.16) 34%,
+      rgba(255,255,255,.96) 62%,
+      rgba(var(--c),.10) 100%),
+    #ffffff;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.95),
+    inset 2px 0 0 rgba(255,255,255,.55),
+    inset 0 -2px 0 rgba(var(--cd),.30),
+    inset -2px 0 0 rgba(var(--cd),.16),
+    0 1px 2px rgba(24,19,41,.10),
+    0 12px 24px rgba(var(--cd),.16),
+    0 30px 56px rgba(24,19,41,.14);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+}
+.winwrap:hover .win{
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1),
+    inset 2px 0 0 rgba(255,255,255,.6),
+    inset 0 -2px 0 rgba(var(--cd),.38),
+    inset -2px 0 0 rgba(var(--cd),.2),
+    0 2px 3px rgba(24,19,41,.12),
+    0 24px 44px rgba(var(--cd),.26),
+    0 54px 92px rgba(24,19,41,.22);
+}
+.winwrap:hover .win:not([style*="rotate"]){transform:translateY(-8px)}
+
+/* the screen sits sunk into the bezel */
+.bezel{display:block;padding:14px 14px 0}
+.screen{
+  position:relative;display:block;background:#0f0a20;aspect-ratio:16/10;overflow:hidden;
+  border-radius:16px;
+  box-shadow:
+    inset 0 3px 10px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(var(--cd),.55),
+    0 1px 0 rgba(255,255,255,.8);
+}
+.screen video{display:block;width:100%;height:100%;object-fit:cover;
+  transition:transform .6s cubic-bezier(.2,.7,.2,1), filter .4s}
+.winwrap:hover .screen video{transform:scale(1.05)}
+.screen::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 50%, rgba(var(--cd),.06) 0%, rgba(10,6,22,.62) 62%, rgba(10,6,22,.88) 100%),
+    linear-gradient(200deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 34%);  /* glass sheen */
+}
+
+.cix{
+  position:absolute;top:14px;right:14px;z-index:3;
+  font-family:"Rubik",sans-serif;font-size:11px;font-weight:800;direction:ltr;letter-spacing:.08em;
+  color:#fff;background:rgba(var(--c),.42);border:1px solid rgba(var(--c),.75);
+  border-radius:8px;padding:4px 9px;backdrop-filter:blur(6px);
+}
+.wbadge{
+  position:absolute;top:14px;left:14px;z-index:3;
+  font-family:"Rubik",sans-serif;font-size:10.5px;font-weight:800;border-radius:999px;
+  padding:5px 12px;white-space:nowrap;backdrop-filter:blur(6px);
+}
+.wbadge.flag{background:rgb(var(--c));color:var(--con)}
+.wbadge.free{background:rgba(var(--c),.42);color:#fff;border:1px solid rgba(var(--c),.8)}
+.wbadge.wip{background:rgba(12,8,26,.5);color:#d8f2ee;border:1px dashed rgba(var(--c),.7)}
+
+/* ---------------- the centered one-liner ---------------- */
+.center{
+  position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:0 26px;pointer-events:none;
+}
+.pname{
+  font-family:"Rubik",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.2em;
+  color:rgba(var(--c),1);text-shadow:0 1px 10px rgba(0,0,0,.6);margin-bottom:14px;
+  opacity:0;transform:translateY(8px);transition:opacity .5s .05s ease, transform .5s .05s cubic-bezier(.2,.7,.2,1);
+}
+.winwrap.in .pname{opacity:1;transform:none}
+
+.oneline{
+  font-family:"Rubik","Heebo",sans-serif;color:#fff;font-weight:800;
+  font-size:clamp(21px,2.5vw,31px);line-height:1.25;letter-spacing:-.025em;
+  text-shadow:0 3px 26px rgba(6,3,16,.75);
+  display:block;
+}
+.oneline b{display:inline-block;font-weight:800;opacity:0;transform:translateY(16px) rotateX(-40deg);transform-origin:50% 100%}
+.winwrap.in .oneline b{animation:wordUp .62s cubic-bezier(.2,.75,.2,1) forwards}
+.winwrap.in .oneline b:nth-child(1){animation-delay:.18s}
+.winwrap.in .oneline b:nth-child(2){animation-delay:.27s}
+.winwrap.in .oneline b:nth-child(3){animation-delay:.36s}
+.winwrap.in .oneline b:nth-child(4){animation-delay:.45s}
+.winwrap.in .oneline b:nth-child(5){animation-delay:.54s}
+.winwrap.in .oneline b:nth-child(6){animation-delay:.63s}
+@keyframes wordUp{to{opacity:1;transform:none}}
+
+.uline{
+  display:block;height:3px;width:0;border-radius:2px;margin-top:16px;
+  background:linear-gradient(to left, rgba(var(--c),0), rgb(var(--c)), rgba(var(--c),0));
+  transition:width .5s cubic-bezier(.2,.7,.2,1);
+}
+.winwrap.in .uline{width:86px;transition-delay:.7s}
+.winwrap:hover .uline{width:190px;transition-delay:0s}
+
+@media (prefers-reduced-motion:reduce){
+  .yflash{animation:none}
+  .oneline b{opacity:1;transform:none;animation:none}
+  .pname{opacity:1;transform:none}
+}
+
+/* ---------------- bottom ribbon: the product name, asking to be pressed ---------------- */
+.wbody{display:block;padding:16px 14px 14px}
+.ribbon{
+  position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:linear-gradient(150deg, rgba(var(--cd),.98) 0%, rgba(var(--cd),.82) 100%);
+  color:#fff;border-radius:17px;padding:15px 20px 15px 22px;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(var(--cd),.30);
+  transition:box-shadow .22s, filter .22s;
+  animation:pressPulse 2.6s ease-out infinite;
+}
+/* a light sweeps across the ribbon every few seconds - the "press me" tell */
+.ribbon::after{
+  content:"";position:absolute;top:0;bottom:0;width:45%;z-index:1;pointer-events:none;
+  background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.34) 48%, transparent 100%);
+  animation:ribbonSweep 3.8s cubic-bezier(.5,0,.3,1) infinite;
+}
+@keyframes ribbonSweep{0%{right:-50%}55%,100%{right:105%}}
+@keyframes pressPulse{
+  0%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(var(--cd),.30), 0 0 0 0 rgba(var(--c),.5)}
+  70%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(var(--cd),.30), 0 0 0 13px rgba(var(--c),0)}
+  100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(var(--cd),.30), 0 0 0 0 rgba(var(--c),0)}
+}
+
+.rname{
+  position:relative;z-index:2;
+  font-family:"Rubik",sans-serif;font-weight:800;font-size:clamp(16px,1.7vw,19px);
+  letter-spacing:-.02em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.25);
+}
+.press{
+  position:relative;z-index:2;display:inline-flex;align-items:center;gap:9px;flex:0 0 auto;
+  font-family:"Rubik",sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.02em;
+  color:rgba(255,255,255,.9);
+}
+.press .arw{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:#fff;color:rgb(var(--cd));font-size:17px;font-style:normal;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  animation:arwNudge 1.7s ease-in-out infinite;
+  transition:transform .22s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes arwNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+
+.winwrap:hover .ribbon{
+  filter:brightness(1.1);animation-play-state:paused;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 12px 26px rgba(var(--cd),.42);
+}
+.winwrap:hover .press .arw{animation:none;transform:translateX(-8px)}
+
+/* the unshipped one does not beg */
+.ribbon.soon{
+  background:linear-gradient(150deg,#efeaf7 0%,#e6e0f2 100%);color:var(--mut);animation:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 3px 8px rgba(24,19,41,.08);
+}
+.ribbon.soon::after{animation:none;display:none}
+.ribbon.soon .rname{color:#6c6486;text-shadow:none}
+.ribbon.soon .press{color:#a49dba}
+.ribbon.soon .press .arw{background:#fff;color:var(--mut);animation:none;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.winwrap:hover .ribbon.soon{filter:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 14px rgba(24,19,41,.12)}
+.winwrap:hover .ribbon.soon .press .arw{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .ribbon{animation:none}
+  .ribbon::after,.press .arw{animation:none}
+}

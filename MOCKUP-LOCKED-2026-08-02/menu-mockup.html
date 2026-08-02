@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מוקאפ - תפריט המוצרים | omerdotan.com</title>
+<style>
+  :root{
+    --ink:#0f172a; --body:#334155; --mut:#64748b; --line:#e2e8f0;
+    --bg:#f8fafc; --sky:#0284c7; --sky-bg:#e0f2fe;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--body); direction:rtl;
+    font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:28px;color:var(--ink);margin:0 0 6px;font-weight:800}
+  .sub{font-size:15px;color:var(--mut);margin:0 0 28px}
+  .ltr{direction:ltr;unicode-bidi:embed;display:inline-block}
+
+  .cols{display:grid;grid-template-columns:minmax(320px,380px) 1fr;gap:28px;align-items:start}
+  @media (max-width:860px){ .cols{grid-template-columns:1fr} }
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;
+        box-shadow:0 1px 2px rgba(0,0,0,.04);overflow:visible}
+  .cap{display:flex;align-items:center;gap:8px;padding:14px 18px 12px;border-bottom:1px solid #f1f5f9}
+  .tag{font-size:11px;font-weight:800;letter-spacing:.06em;color:#0369a1;
+       background:var(--sky-bg);border-radius:999px;padding:4px 10px}
+  .cap h2{font-size:15px;margin:0;color:var(--ink);font-weight:700}
+
+  .bar{position:relative;height:56px;display:flex;align-items:center;
+       padding:0 14px;border-bottom:1px solid var(--line);background:#fff}
+  .navbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;
+          font-size:14px;font-weight:500;color:#334155;background:#f1f5f9;border:0;cursor:default;font-family:inherit}
+  .chev{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+  .panel{margin:12px 14px 16px;background:#fff;border:1px solid var(--line);
+         border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.10);padding:8px;text-align:right}
+  .grp{display:flex;align-items:center;justify-content:space-between;gap:8px;
+       padding:11px 14px 7px;border-radius:8px;cursor:pointer}
+  .grp:hover{background:#f8fafc}
+  .grp .nm{font-size:14px;font-weight:800;color:var(--ink)}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;
+       padding:10px 14px;border-radius:8px;color:#334155;font-size:14px;cursor:pointer}
+  .row:hover{background:#f1f5f9}
+  .row.ind{padding-right:28px;position:relative}
+  .row.ind::before{content:"";position:absolute;right:16px;top:0;bottom:0;width:1px;background:#e2e8f0}
+  .row .nm{direction:ltr;unicode-bidi:embed}
+  .sep{height:1px;background:#f1f5f9;margin:8px 10px}
+  .pill{font-size:10px;font-weight:800;border-radius:999px;padding:3px 8px;white-space:nowrap}
+  .pill.wip{background:#fffbeb;color:#b45309}
+  .pill.free{background:#ecfdf5;color:#047857}
+  .star{font-size:12px}
+
+  .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  .tbl th{text-align:right;font-size:11px;letter-spacing:.05em;color:var(--mut);
+          font-weight:800;padding:10px 14px;border-bottom:1px solid var(--line);background:#f8fafc}
+  .tbl td{padding:12px 14px;border-bottom:1px solid #f1f5f9;vertical-align:top;line-height:1.6}
+  .tbl tr:last-child td{border-bottom:0}
+  .tbl td.n{white-space:nowrap;font-weight:700;color:var(--ink)}
+  .ok{color:#047857;font-weight:700}
+  .wip{color:#b45309;font-weight:700}
+
+  .spec{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .spec h3{margin:0 0 8px;font-size:14px;color:var(--ink)}
+  .spec p{margin:0 0 10px;font-size:13.5px;line-height:1.7}
+  .spec b{color:var(--ink)}
+  .flag{margin-top:14px;padding:12px 14px;border-radius:10px;background:#fff7ed;border:1px solid #fed7aa;
+        font-size:13px;line-height:1.7;color:#7c2d12}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>תפריט "המוצרים שלנו" - המבנה שביקשת</h1>
+  <p class="sub">שלושה פריטים ראשיים. ה־<span class="ltr">BIM VR Suite</span> נפתח לארבעה, וכולם יושבים על עמוד אחד.</p>
+
+  <div class="cols">
+
+    <!-- ===== the menu ===== -->
+    <div class="card">
+      <div class="cap"><span class="tag">התפריט</span><h2>המוצרים שלנו</h2></div>
+      <div class="bar">
+        <button class="navbtn">המוצרים שלנו
+          <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="panel">
+        <div class="grp"><span class="nm ltr">oYmer BIM VR Suite</span></div>
+        <div class="row ind"><span class="nm">oYmer DecisionMaker</span><span class="star">⭐</span></div>
+        <div class="row ind"><span class="nm">oYmer Viewer</span></div>
+        <div class="row ind"><span class="nm">oYmer Family Creator</span></div>
+        <div class="row ind"><span class="nm">oYmer Type Studio</span><span class="pill wip">בפיתוח</span></div>
+        <div class="sep"></div>
+        <div class="row"><span class="nm">oYmer VR Tours</span></div>
+        <div class="row"><span class="nm">oYmer VR Labs</span></div>
+      </div>
+    </div>
+
+    <!-- ===== where each one lands ===== -->
+    <div class="card">
+      <div class="cap"><span class="tag">עמודים</span><h2>לאן כל פריט מוביל</h2></div>
+      <table class="tbl">
+        <tr><th>פריט</th><th>עמוד</th><th>מה חסר</th></tr>
+
+        <tr>
+          <td class="n ltr">BIM VR Suite</td>
+          <td><span class="wip">חדש</span></td>
+          <td>עמוד־בית לארבעת המוצרים. כל לחיצה פותחת עמוד מלא: מפרט, שיווק, ותוכנית.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">DecisionMaker</td>
+          <td><span class="ok">קיים</span><br><span class="ltr" style="color:#64748b;font-size:12px">DecisionMaker.html</span></td>
+          <td>ראשון בקבוצה. נשאר הדגל.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">Viewer</td>
+          <td><span class="ok">קיים</span><br><span class="ltr" style="color:#64748b;font-size:12px">BIMViewer.html</span></td>
+          <td>הסרטון צריך עדכון. להוסיף <b>צפיית משפחות ב־MR</b>.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">Family Creator</td>
+          <td><span class="ok">קיים</span><br><span style="color:#64748b;font-size:12px">מתוך תוכן ה־Lab</span></td>
+          <td>מצטרף ל־BIM - להוציא אותו מה־Lab לעמוד משלו.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">Type Studio</td>
+          <td><span class="wip">בפיתוח</span></td>
+          <td>בסוף - כפתור הורדה למצב <b>צפייה בלבד, חינם</b>.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">Tours</td>
+          <td><span class="ok">קיים</span><br><span class="ltr" style="color:#64748b;font-size:12px">VRTours.html</span></td>
+          <td>ללא שינוי.</td>
+        </tr>
+        <tr>
+          <td class="n ltr">Labs</td>
+          <td><span class="ok">קיים</span><br><span class="ltr" style="color:#64748b;font-size:12px">Lab3D.html</span></td>
+          <td>נשאר בחוץ כפריט עצמאי.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="spec">
+    <h3>עמוד ה־<span class="ltr">BIM VR Suite</span> - איך שתיארת אותו</h3>
+    <p><b>ארבעת המוצרים על עמוד אחד.</b> לחיצה על אחד מהם פותחת עמוד מלא עם מפרט, חומר שיווקי, ותוכנית.
+       כלומר העמוד הזה הוא לובי, לא תחליף לעמודי המוצר.</p>
+    <p><b>המצב החינמי</b> נכנס דרך ה־<span class="ltr">Type Studio</span>: בסוף התהליך יש כפתור להורדת מצב צפייה בלבד.</p>
+  </div>
+
+</div>
+</body>
+</html>
