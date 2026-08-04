@@ -328,6 +328,8 @@
   .oymer-ai .kick i{width:7px;height:7px;border-radius:50%;background:#02f2ff;
     animation:oymerAiPulse 1.9s infinite;display:block}
   @keyframes oymerAiPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+  /* the eyebrow pill and the chip row were dropped - nudge the remaining copy above the video's centre line */
+  .oymer-ai .copy{position:relative;top:-26px}
   .oymer-ai h2{margin:0;color:#fff;font-weight:800;line-height:1.08;letter-spacing:-.03em;
     font-size:clamp(30px,4.2vw,52px)}
   .oymer-ai h2 em{font-style:normal;color:#ff7a00}
@@ -348,11 +350,9 @@
   @media (max-width:900px){.oymer-ai .wrap{grid-template-columns:1fr;gap:30px}}
   </style>
   <div class="wrap">
-    <div>
-      <span class="kick"><i></i>AI DESIGN INSIDE VR</span>
+    <div class="copy">
       <h2>ה-AI בתוך החדר. <em>בזמן אמת.</em></h2>
       <p>עומדים מול הקיר, אומרים איך הוא צריך להיראות - והוא משתנה סביבכם, בזמן אמת, בלי לצאת מה-VR.</p>
-      <ul><li>בתוך המשקפיים</li><li>בלי לצאת מהסיור</li><li>הלקוח רואה מיד</li></ul>
     </div>
     <div class="shot">
       <span class="tag">LIVE IN HEADSET</span>
@@ -394,7 +394,7 @@
         <button class="oymer-demo__btn" type="button" id="oymer-demo-start">
           <span class="oymer-demo__play">&#9654;</span>
           <span class="oymer-demo__label">הפעלת הסיור</span>
-          <span class="oymer-demo__sub">שתי נקודות מהסיור, ברזולוציה מלאה - נפתח כאן בעמוד</span>
+          <span class="oymer-demo__sub">שלוש נקודות מהסיור, ברזולוציה מלאה - נפתח כאן בעמוד</span>
         </button>
       </div>
       <p style="text-align:center;margin:14px 0 44px;font-size:.9rem;color:#8ea0ba">הסיור רץ בתוך העמוד. <a href="https://soldiers-club-vr-tour.netlify.app/" target="_blank" rel="noopener" style="color:#02f2ff;text-decoration:none">לסיור המלא, כל התחנות &#8592;</a></p>
@@ -426,7 +426,7 @@
               (d.head || d.documentElement).appendChild(s);
             } catch (e) {}
           });
-          f.src = 'media/demo-tour.html?v=2';
+          f.src = 'media/demo-tour.html?v=3';
           box.appendChild(f);
         }, { once: true });
       })();
