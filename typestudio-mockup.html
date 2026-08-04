@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="bimsuite-mockup.css?v=23" rel="stylesheet">
+<link href="bimsuite-mockup.css?v=36" rel="stylesheet">
 <link href="suite-pipe.css?v=3" rel="stylesheet">
-<link href="oymer-pairs.css?v=1" rel="stylesheet">
+<link href="oymer-pairs.css?v=2" rel="stylesheet">
 </head>
 <body>
 <div class="min-h-screen" dir="rtl">
@@ -206,6 +206,13 @@
     </div>
     </div>
   </section>
+
+  <section class="backsuite c4" aria-label="חזרה לחבילה">
+    <a class="backsuite__link" href="bimsuite-mockup.html">
+      <span class="backsuite__arw ltr" aria-hidden="true">&#8594;</span>
+      <span class="backsuite__txt">חזרה אל <span class="ltr"><span class="oy">oYmer</span> BIM VR Suite<sup class="oyc">&#169;</sup></span></span>
+    </a>
+  </section>
 </main>
 
 </div>
@@ -222,7 +229,13 @@
         io.unobserve(en.target);
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
-    Array.prototype.forEach.call(els, function (e, i) { e.dataset.i = (i % 4); io.observe(e); });
+    var wi = 0, oi = 0;
+    Array.prototype.forEach.call(els, function (e) {
+      /* cards stagger among THEMSELVES. indexing across every .rev put the hero sub-line
+         at 0 and pushed Family Creator to 270ms while Type Studio wrapped back to 0. */
+      e.dataset.i = e.classList.contains("winwrap") ? (wi++ % 4) : (oi++ % 4);
+      io.observe(e);
+    });
     setTimeout(showAll, 3000);
   })();
 
@@ -255,5 +268,6 @@
 <script src="oymer.js?v=19"></script>
 
 <script src="menu-preview.js?v=3"></script>
+<script src="suite-morph.js?v=9"></script>
 </body>
 </html>

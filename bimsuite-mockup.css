@@ -38,20 +38,32 @@
   border-radius:10px;filter:brightness(.92) saturate(.55) hue-rotate(-18deg);
   box-shadow:0 22px 55px rgba(12,6,30,.55);
 }
+/* the panels are the suite's own tools, not the old VR-tour editor: the Family Creator's
+   parameter table on one side, the Viewer's element-info HUD on the other, and the
+   oYmer ribbon itself floating top and bottom. same treatment as before - tilted,
+   dimmed, edge-masked - only the source changed. */
 .bs-herobg .p1{left:2.5%;top:26%;width:196px;height:403px;opacity:.34;
-  background-image:url("media/ui-scenes.jpg");
+  background-image:url("media/hero-family.jpg");
   transform:perspective(1300px) rotateY(27deg) rotate(-5deg);
   -webkit-mask-image:linear-gradient(to right,#000 38%,transparent 100%);
           mask-image:linear-gradient(to right,#000 38%,transparent 100%)}
 .bs-herobg .p2{right:2.5%;top:31%;width:206px;height:426px;opacity:.34;
-  background-image:url("media/ui-props.jpg");
+  background-image:url("media/hero-viewer.jpg");
   transform:perspective(1300px) rotateY(-27deg) rotate(5deg);
   -webkit-mask-image:linear-gradient(to left,#000 38%,transparent 100%);
           mask-image:linear-gradient(to left,#000 38%,transparent 100%)}
-.bs-herobg .p3{right:1%;top:5%;width:420px;height:23px;opacity:.26;
-  background-image:url("media/ui-bar.jpg");transform:perspective(1000px) rotateX(34deg)}
-.bs-herobg .p4{left:1%;bottom:7%;width:420px;height:23px;opacity:.22;
-  background-image:url("media/ui-bar.jpg");transform:perspective(1000px) rotateX(-30deg)}
+/* the ribbon is 5:3, not a sliver - it gets a real panel and a gentler tilt so the
+   four button names stay readable as a ghost behind the title */
+.bs-herobg .p3{right:2%;top:6%;width:250px;height:150px;opacity:.30;
+  background-image:url("media/hero-ribbon.jpg");
+  transform:perspective(1100px) rotateX(20deg) rotate(-3deg);
+  -webkit-mask-image:radial-gradient(120% 120% at 50% 40%,#000 42%,transparent 100%);
+          mask-image:radial-gradient(120% 120% at 50% 40%,#000 42%,transparent 100%)}
+.bs-herobg .p4{left:2%;bottom:6%;width:230px;height:138px;opacity:.24;
+  background-image:url("media/hero-ribbon.jpg");
+  transform:perspective(1100px) rotateX(-18deg) rotate(3deg);
+  -webkit-mask-image:radial-gradient(120% 120% at 50% 60%,#000 42%,transparent 100%);
+          mask-image:radial-gradient(120% 120% at 50% 60%,#000 42%,transparent 100%)}
 @media (max-width:900px){.bs-herobg{display:none}}
 
 .bs-hero .inner{position:relative;z-index:10;max-width:1180px;margin:0 auto;padding:0 28px;text-align:center}
@@ -90,7 +102,9 @@
 
 /* ---------------- animated hero title (word-by-word rise + sheen) --------------- */
 .bs-title{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:0 .26em;direction:ltr}
-.bs-title .oyw{font-size:max(11.5px,.68em)}
+/* "oYmer" and "Suite" are the small words either side - "BIM VR" carries the title.
+   same proportion the suite tag already uses, so the two marks agree. */
+.bs-title .oyw,.bs-title .sm{font-size:max(11.5px,.68em)}
 .bs-title .w{
   display:inline-block;opacity:0;transform:translateY(30px) rotateX(-45deg);
   transform-origin:50% 100%;
@@ -129,9 +143,16 @@
   0%,100%{color:#ff7a00;text-shadow:0 0 18px rgba(255,122,0,.35)}
   50%{color:#ffb266;text-shadow:0 0 30px rgba(255,150,40,.75),0 0 60px rgba(255,122,0,.30)}
 }
+/* the sub-line now carries TWO latin acronyms. VR gets the same pulse in the suite violet,
+   so AI and VR read as a pair instead of one of them shouting over the other. */
+.bs-hero .ai.vr i{color:var(--vio-lt);animation:vrglow 2.8s ease-in-out infinite}
+@keyframes vrglow{
+  0%,100%{color:#8b6cf0;text-shadow:0 0 18px rgba(139,108,240,.35)}
+  50%{color:#c3b3ff;text-shadow:0 0 30px rgba(160,130,255,.75),0 0 60px rgba(139,108,240,.30)}
+}
 
 @media (prefers-reduced-motion:reduce){
-  .bs-title .w,.bs-hero .ai i{animation:none;opacity:1;transform:none}
+  .bs-title .w,.bs-hero .ai i,.bs-hero .ai.vr i{animation:none;opacity:1;transform:none}
   .bs-title .w{-webkit-text-fill-color:#fff;color:#fff}
   .bs-title .yflash{-webkit-text-fill-color:var(--orange)}
 }
@@ -230,6 +251,19 @@
 @media (prefers-reduced-motion:reduce){
   .bimbg .plan,.bimbg .iso,.bimbg .dots{animation:none}
 }
+
+/* ---- quiet field: the reels ARE the motion on a product page ----
+   nothing behind them drifts or draws itself, and every layer is taken down to a
+   watermark - just enough tooth to stop the ground reading as flat white paint.
+   half strength was still too present; these are roughly a quarter of that again. */
+.bimbg.quiet .plan,.bimbg.quiet .iso,.bimbg.quiet .dots{animation:none}
+.bimbg.quiet .draw .dg path,.bimbg.quiet .draw .dg circle{
+  animation:none;stroke-dashoffset:0;opacity:.045;
+}
+.bimbg.quiet .plan{opacity:.022}
+.bimbg.quiet .iso{opacity:.016}
+.bimbg.quiet .d1{opacity:.045}
+.bimbg.quiet .d2{opacity:.03}
 
 /* ---------------- one hue per window ---------------- */
 .suite .c1{--c:255,122,0;   --cd:196,88,0;   --con:#1a0f00}   /* DecisionMaker - orange  */
@@ -357,12 +391,25 @@
   .pname{opacity:1;transform:none}
 }
 
-/* ---------------- bottom ribbon: the product name, asking to be pressed ---------------- */
-.wbody{display:block;padding:16px 14px 14px}
+/* ---------------- the product name, centred ABOVE its window ---------------- */
+/* the name is the label of the whole panel, so it sits on the bezel above the screen -
+   not squeezed into the press strip. the strip below now says one thing only. */
+.wtop{display:block;text-align:center;padding:18px 20px 6px}
+.wtop .rname{
+  font-family:"Rubik",sans-serif;font-weight:800;font-size:clamp(21px,2.3vw,27px);
+  letter-spacing:-.025em;color:rgb(var(--cd));text-shadow:none;
+}
+.wtop .oy{opacity:.72}
+.wtop .oyc{opacity:.6}
+
+/* ---------------- bottom strip: the one instruction, asking to be pressed ---------------- */
+/* deliberately slim. the text keeps its size - it is the FRAME that gives way, so the
+   screen owns more of the panel than its chrome does. */
+.wbody{display:block;padding:9px 14px 11px}
 .ribbon{
-  position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  position:relative;display:flex;align-items:center;justify-content:center;gap:14px;
   background:linear-gradient(150deg, rgba(var(--cd),.98) 0%, rgba(var(--cd),.82) 100%);
-  color:#fff;border-radius:17px;padding:15px 20px 15px 22px;overflow:hidden;
+  color:#fff;border-radius:13px;padding:7px 20px;overflow:hidden;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(var(--cd),.30);
   transition:box-shadow .22s, filter .22s;
   animation:pressPulse 2.6s ease-out infinite;
@@ -387,12 +434,12 @@
 }
 .press{
   position:relative;z-index:2;display:inline-flex;align-items:center;gap:9px;flex:0 0 auto;
-  font-family:"Rubik",sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.02em;
-  color:rgba(255,255,255,.9);
+  font-family:"Rubik",sans-serif;font-weight:700;font-size:14px;letter-spacing:.02em;
+  color:rgba(255,255,255,.92);
 }
 .press .arw{
-  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
-  background:#fff;color:rgb(var(--cd));font-size:17px;font-style:normal;
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:#fff;color:rgb(var(--cd));font-size:15px;font-style:normal;
   box-shadow:0 2px 6px rgba(0,0,0,.2);
   animation:arwNudge 1.7s ease-in-out infinite;
   transition:transform .22s cubic-bezier(.2,.7,.2,1);
@@ -417,7 +464,115 @@
 .winwrap:hover .ribbon.soon{filter:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 14px rgba(24,19,41,.12)}
 .winwrap:hover .ribbon.soon .press .arw{transform:none}
 
+/* ---- the four strips must never beat together ----
+   measured: pressPulse, ribbonSweep and arwNudge were all at currentTime 0 on every
+   window - spread 0ms across the grid. four ribbons throbbing in exact unison reads as
+   one redundant page-wide pulse, and it lands right as the returning card settles.
+   negative delays start each window mid-cycle, so they are permanently out of phase
+   and nothing has to wait to begin. quarter-cycle apart: 2.6s / 3.8s / 1.7s. */
+.suite .c2 .ribbon{animation-delay:-.65s}
+.suite .c3 .ribbon{animation-delay:-1.30s}
+.suite .c4 .ribbon{animation-delay:-1.95s}
+.suite .c2 .ribbon::after{animation-delay:-.95s}
+.suite .c3 .ribbon::after{animation-delay:-1.90s}
+.suite .c4 .ribbon::after{animation-delay:-2.85s}
+.suite .c2 .press .arw{animation-delay:-.42s}
+.suite .c3 .press .arw{animation-delay:-.85s}
+.suite .c4 .press .arw{animation-delay:-1.27s}
+
 @media (prefers-reduced-motion:reduce){
   .ribbon{animation:none}
   .ribbon::after,.press .arw{animation:none}
 }
+
+/* ==================================================================================
+   back to the suite - the visible way out at the end of a product page
+   ==================================================================================
+   the suite tag up in the hero is the elegant way back, but it only announces itself
+   on hover, and touch has no hover. this one is always visible and needs no pointer,
+   so a phone visitor is never stranded on a product page. */
+.backsuite{background:var(--ground);padding:0 0 78px;text-align:center}
+/* no frame, no pill - it reads as a title, in the same Rubik weight and hue as the
+   name above each window. .suite a{color:inherit} outranks a single class, so this
+   has to be at least as specific or the label falls back to the body grey. */
+.suite .backsuite__link,.backsuite__link{
+  display:inline-flex;align-items:baseline;gap:14px;
+  font-family:"Rubik","Heebo",sans-serif;font-weight:800;
+  font-size:clamp(21px,2.3vw,27px);letter-spacing:-.025em;
+  color:rgb(var(--cd));background:none;box-shadow:none;padding:0;
+  transition:color .22s ease, transform .22s cubic-bezier(.2,.7,.2,1);
+}
+.backsuite__link:hover{color:rgb(var(--c));transform:translateY(-2px)}
+/* the page's own arrow language, mirrored: the ribbon's arw points forward (left, in
+   RTL), so the way back points the other way. bare glyph - a disc would be a frame. */
+.backsuite__arw{
+  font-size:.86em;line-height:1;flex:0 0 auto;opacity:.75;
+  transition:transform .22s cubic-bezier(.2,.7,.2,1), opacity .22s ease;
+}
+.backsuite__link:hover .backsuite__arw{transform:translateX(6px);opacity:1}
+.backsuite__txt .oy{font-size:max(11.5px,.68em);opacity:.75}
+.backsuite__txt .oyc{opacity:.6}
+
+/* the return fold: the REAL document turns away, so what folds is the screen you were
+   actually looking at. perspective goes on the parent of the transformed element, and
+   the pivot is set inline from JS to the centre of the visible area, because the page
+   is scrolled and much taller than the viewport.
+   deliberately NOT touching overflow here - hiding the scrollbar mid-fold reflows the
+   page by its width and shows up as a jump on the first frame. */
+html.morphing body{perspective:1600px}
+html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
+
+/* ==================================================================================
+   the window flips into its own page  (see suite-morph.js)
+   ================================================================================== */
+/* each product page's hero wears its own hue over the plum - this is the colour the
+   transition washes INTO, so the last frame of the flip and the loaded page agree. */
+/* deliberately a LONG way from the plum. the first pass sat at #121233->#1e2b66, which
+   is still a purple-navy - next to the hub's plum it read as "no colour change at all".
+   this is unmistakably the Family Creator azure. */
+.bs-hero.hue-c3,.mh-wash.hue-c3{
+  background:
+    radial-gradient(920px 460px at 18% 6%, rgba(79,125,255,.55), transparent 62%),
+    radial-gradient(780px 420px at 86% 92%, rgba(0,208,255,.20), transparent 64%),
+    linear-gradient(150deg,#081230 0%,#0d2a6e 46%,#123f96 100%);
+}
+
+/* z-index 45 keeps the fixed white header (z-50) on top the whole way, exactly as it
+   sits on both the page we leave and the page we land on. */
+#morph{
+  position:fixed;inset:0;z-index:45;pointer-events:none;
+  perspective:1600px;visibility:hidden;
+}
+#morph.on{visibility:visible}
+#morph .mface{
+  position:fixed;transform-origin:50% 50%;will-change:transform;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+}
+#morph .mcard{border-radius:26px}
+#morph .mcard .win{width:100%;height:100%;transform:none!important}
+/* width/height are set from clientWidth/clientHeight in JS - 100vw counts the scrollbar
+   and the destination's content box does not, which knocked the landing 7px off centre */
+/* the ground is HARDCODED, not var(--ground): #morph is a child of <body>, outside
+   .bs/.suite, so the variable never resolved and everything below the hero band was
+   transparent - you were seeing the hub's own cards through the "page" mid-flip. */
+#morph .mhero{left:0;top:0;background:#f7f5fb;overflow:hidden}
+#morph .mh-band{width:100%}
+#morph .mh-wash{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none}
+#morph .mh-band .inner{position:relative;z-index:10}
+/* the cloned card is detached from .winwrap.in, so its reveal states never resolved -
+   force the finished look, otherwise the front face flips over holding a blank screen */
+#morph .oneline b{opacity:1;transform:none;animation:none}
+#morph .uline{width:86px;transition:none}
+#morph .rev{opacity:1;transform:none}
+#morph .mh-suite{display:inline-block;margin:0 0 16px}
+
+/* the page we hand over to skips its own entrance, so the landing is a continuation
+   of the flip rather than a second animation starting from zero */
+.fromsuite .rev{opacity:1!important;transform:none!important;transition:none!important}
+.fromsuite .bs-title .w{opacity:1!important;transform:none!important;animation:none!important}
+/* and the same coming the other way: arriving back at the suite, the windows are
+   already there - only the one we folded out of gets to move. */
+.fromproduct .rev{opacity:1!important;transform:none;transition:none!important}
+.fromproduct .oneline b{opacity:1!important;transform:none!important;animation:none!important}
+.fromproduct .uline{width:86px!important}
+.fromproduct .bs-title .w{opacity:1!important;transform:none!important;animation:none!important}

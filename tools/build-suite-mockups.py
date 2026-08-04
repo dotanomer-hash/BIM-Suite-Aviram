@@ -1,7 +1,22 @@
 # -*- coding: utf-8 -*-
-# Builds every suite mockup page: real site header + generated body + shared suite CSS.
-# Run from omerdotan-site/:  python tools/build-suite-mockups.py
+# ############################################################################
+# ##  STALE - DO NOT RUN.  Verified 2026-08-05 by building and diffing.      ##
+# ##                                                                        ##
+# ##  This script predates the 2026-08-02 paired-windows work. Running it   ##
+# ##  silently DESTROYS, in all four product pages:                         ##
+# ##    - the whole oyl-pairs / oyl-panel / oyl-stack layout                ##
+# ##    - the <link> to oymer-pairs.css                                     ##
+# ##    - the bs-suitetag backlink and the (c) mark in every <h1>           ##
+# ##  and in all-mockup.html, ~440 lines of inline CSS incl. the menu.      ##
+# ##  It also rolls the stylesheet cache-buster back to v=11.               ##
+# ##                                                                        ##
+# ##  The built .html files are now the source of truth. Edit them by hand  ##
+# ##  (or with a patch script applied to all copies at once), not here.     ##
+# ##  Only bimsuite-mockup.body.html is still a live source - it is the     ##
+# ##  hub body, mirrored into bimsuite-mockup.html and all-mockup.html.     ##
+# ############################################################################
 import io, os
+raise SystemExit("build-suite-mockups.py is STALE - see the header. Refusing to run.")
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(HERE)

@@ -10,7 +10,15 @@
 .oylp .oyl-mono{font-family:'Share Tech Mono','Rajdhani',ui-monospace,monospace;letter-spacing:.12em}
 
 /* ---- the window ---- */
-.oylp .oyl-panel{position:relative;background:linear-gradient(160deg,#12122a 0%,#0c182b 100%);
+/* the panel wears its page's product hue, the same palette the hero is painted in.
+   driven off --c/--cd, which the .c1-.c4 section already sets, so each product page
+   gets its own colour for free. the fallbacks keep it azure if a page forgets. */
+.oylp .oyl-panel{position:relative;
+  background:
+    linear-gradient(160deg, rgba(var(--cd,44,82,196),.50) 0%,
+                            rgba(var(--c,79,125,255),.18) 58%,
+                            rgba(var(--cd,44,82,196),.34) 100%),
+    linear-gradient(160deg,#081230 0%,#0b1c46 100%);
   border:1px solid var(--cy-dim);
   clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
   transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
@@ -55,8 +63,10 @@
 /* ---- the connector ---- */
 .oylp .oyl-flow{position:relative;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:12px}
-.oylp .oyl-flow span{font-size:.68rem;color:var(--cy);opacity:.95;white-space:nowrap;
-  text-shadow:0 0 12px rgba(2,242,255,.55)}
+/* this label sits BETWEEN the panels, on the page's light ground - the cyan glow it
+   used to carry was near-invisible there. black and heavy, so it actually reads. */
+.oylp .oyl-flow span{font-size:.72rem;font-weight:800;color:#0b0a18;opacity:1;
+  white-space:nowrap;text-shadow:none}
 .oylp .oyl-arw{display:block;width:100%;height:34px;overflow:visible}
 .oylp .oyl-arw__boltGlow{fill:none;stroke:rgba(255,122,0,.5);stroke-width:8;stroke-linecap:round;
   filter:blur(4px);stroke-dasharray:34 16;animation:oylp-bolt 1.4s linear infinite}
