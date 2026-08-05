@@ -19,6 +19,11 @@
   "use strict";
 
   var PRODUCTS = {
+    "viewer-mockup.html": {
+      hue: "c2", name: 'Viewer', sub: 'המודל של רוויט בדפדפן ובמשקפיים.',
+      ix: '02', video: 'media/viewer/reel-1.mp4', poster: 'media/viewer/reel-1.jpg',
+      oneline: 'המודל של רוויט בדפדפן ובמשקפיים'
+    },
     "decisionmaker-mockup.html": {
       hue: "c1",
       name: 'DecisionMaker',

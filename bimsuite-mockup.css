@@ -535,6 +535,13 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
    ================================================================================== */
 /* each product page's hero wears its own hue over the plum - this is the colour the
    transition washes INTO, so the last frame of the flip and the loaded page agree. */
+.bs-hero.hue-c2,.mh-wash.hue-c2{
+  background:
+    radial-gradient(920px 460px at 18% 6%, rgba(139,108,240,.52), transparent 62%),
+    radial-gradient(780px 420px at 86% 92%, rgba(190,160,255,.18), transparent 64%),
+    linear-gradient(150deg,#140d30 0%,#2a1a6e 46%,#3f29a4 100%);
+}
+
 /* DecisionMaker wears its own orange over the plum - same idea as the azure below.
    the flag product gets the warmest hero in the suite. */
 .bs-hero.hue-c1,.mh-wash.hue-c1{
