@@ -25,6 +25,15 @@ WORK   = os.path.join(os.environ.get("TEMP", "/tmp"), "oymer-preview-sync")
 MAX_BYTES = 20 * 1024 * 1024
 
 
+def head_etag(url):
+    """The ETag changes on every Pages deploy - the only reliable 'is it live yet'."""
+    try:
+        rq = urllib.request.Request(url + "?cb=%d" % time.time(), method="HEAD")
+        return urllib.request.urlopen(rq, timeout=15).headers.get("ETag")
+    except Exception:
+        return None
+
+
 def run(cmd, cwd, quiet=False):
     r = subprocess.run(cmd, cwd=cwd, shell=isinstance(cmd, str),
                        capture_output=True, text=True)
@@ -35,6 +44,8 @@ def run(cmd, cwd, quiet=False):
 
 def main():
     msg = sys.argv[1] if len(sys.argv) > 1 else "Mockup package update"
+
+    before_etag = head_etag(PREVIEW_URL + "/bimsuite-mockup.html")   # baseline, before we push
 
     branch = run("git rev-parse --abbrev-ref HEAD", SITE)
     if branch != BRANCH:
@@ -90,27 +101,26 @@ def main():
         print("preview : pushed %s" % run("git rev-parse --short HEAD", WORK))
 
     # ---- 3. do not hand over a link until it actually serves this build ------
-    want = re.search(r"bimsuite-mockup\.css\?v=(\d+)",
-                     io.open(os.path.join(SITE, "bimsuite-mockup.html"),
-                             encoding="utf-8").read())
-    want = want.group(0) if want else None
-    if want:
-        print("waiting for Pages to serve %s ..." % want)
-        for _ in range(30):
-            try:
-                html = urllib.request.urlopen(
-                    PREVIEW_URL + "/bimsuite-mockup.html?cb=%d" % time.time(),
-                    timeout=15).read().decode("utf-8", "replace")
-                if want in html:
-                    print("live    : confirmed")
-                    break
-            except Exception:
-                pass
-            time.sleep(10)
-        else:
-            print("WARNING: Pages did not serve %s in 5 min - link may be stale" % want)
+    # The first version gated on "bimsuite-mockup.css?v=NN" read out of the local HTML.
+    # That is a FALSE PASS whenever the number did not change between publishes - the
+    # check matched the PREVIOUS deploy and printed "confirmed" instantly. Gate on the
+    # ETag instead: it changes on every deploy, whatever we edited.
+    print("waiting for Pages to redeploy ...")
+    for _ in range(36):
+        etag = head_etag(PREVIEW_URL + "/bimsuite-mockup.html")
+        if etag and etag != before_etag:
+            print("live    : confirmed (etag %s -> %s)" % (before_etag, etag))
+            break
+        time.sleep(10)
+    else:
+        print("WARNING: Pages did not redeploy in 6 min - the link may be stale")
 
-    print("\n" + PREVIEW_URL + "/bimsuite-mockup.html")
+    # GitHub Pages sends Cache-Control: max-age=600 on HTML, so a browser that saw the
+    # page in the last 10 minutes keeps serving the OLD one - and the old one still
+    # references the old ?v= stylesheet, so bumping CSS versions cannot reach it. A
+    # unique query on the page URL forces a fresh fetch.
+    stamp = run("git rev-parse --short HEAD", WORK)
+    print("\n" + PREVIEW_URL + "/bimsuite-mockup.html?v=" + stamp)
 
 
 if __name__ == "__main__":
