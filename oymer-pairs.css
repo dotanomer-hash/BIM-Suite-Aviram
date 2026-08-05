@@ -92,7 +92,7 @@
    and translucent on purpose, so the drawing underneath still reads through it. the
    blur is what buys legibility over a busy screenshot without going opaque. */
 .oylp .dm-approval{
-  position:absolute;left:-4.4%;right:auto;width:18.5%;top:6px;z-index:6;
+  position:absolute;left:-3.0%;right:auto;width:18.5%;top:6px;z-index:6;
   display:grid;grid-template-columns:1fr;gap:0;align-items:start;
   font-size:.66rem;line-height:1.3;letter-spacing:0;
   background:linear-gradient(160deg, rgba(255,255,255,.80) 0%,
