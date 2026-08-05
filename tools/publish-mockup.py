@@ -91,29 +91,37 @@ def main():
             copied += 1
     print("mirrored: %d files (%d skipped as too large or hidden)" % (copied, skipped))
 
-    if not run("git status --porcelain", WORK):
+    # stage FIRST, then ask what is actually staged. `git status --porcelain` can report
+    # line-ending churn that `git add` then normalises away, which made the commit fail
+    # with "nothing to commit" and abort the whole publish.
+    run(["git", "add", "-A"], WORK)
+    if not run("git diff --cached --name-only", WORK):
         print("preview : already current, nothing to push")
+        pushed = False
     else:
-        run(["git", "add", "-A"], WORK)
         run(["git", "commit", "-m", "Preview: " + msg +
              "\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>"], WORK)
         run(["git", "push", "-q", "origin", "HEAD"], WORK)
         print("preview : pushed %s" % run("git rev-parse --short HEAD", WORK))
+        pushed = True
 
     # ---- 3. do not hand over a link until it actually serves this build ------
     # The first version gated on "bimsuite-mockup.css?v=NN" read out of the local HTML.
     # That is a FALSE PASS whenever the number did not change between publishes - the
     # check matched the PREVIOUS deploy and printed "confirmed" instantly. Gate on the
     # ETag instead: it changes on every deploy, whatever we edited.
-    print("waiting for Pages to redeploy ...")
-    for _ in range(36):
-        etag = head_etag(PREVIEW_URL + "/bimsuite-mockup.html")
-        if etag and etag != before_etag:
-            print("live    : confirmed (etag %s -> %s)" % (before_etag, etag))
-            break
-        time.sleep(10)
+    if not pushed:
+        print("live    : unchanged, nothing was deployed")
     else:
-        print("WARNING: Pages did not redeploy in 6 min - the link may be stale")
+        print("waiting for Pages to redeploy ...")
+        for _ in range(36):
+            etag = head_etag(PREVIEW_URL + "/bimsuite-mockup.html")
+            if etag and etag != before_etag:
+                print("live    : confirmed (etag %s -> %s)" % (before_etag, etag))
+                break
+            time.sleep(10)
+        else:
+            print("WARNING: Pages did not redeploy in 6 min - the link may be stale")
 
     # GitHub Pages sends Cache-Control: max-age=600 on HTML, so a browser that saw the
     # page in the last 10 minutes keeps serving the OLD one - and the old one still
