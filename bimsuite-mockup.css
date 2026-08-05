@@ -591,7 +591,14 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
    transparent - you were seeing the hub's own cards through the "page" mid-flip. */
 #morph .mhero{left:0;top:0;background:#f7f5fb;overflow:hidden}
 #morph .mh-band{width:100%}
-#morph .mh-wash{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none}
+/* z-index 0, NOT 1. The wash is a LATER sibling than .bs-herobg and its hue gradients
+   are fully opaque, so at z-index 1 it finished the flip painted straight OVER the four
+   hero side panels - the product hero landed clean, and the panels only "appeared" when
+   the real page took over. On the real page the hue is the section's own background,
+   i.e. BEHIND the panels; this puts the clone in the same order. .inner is z-index 10,
+   so the title and tag still sit on top of both. */
+#morph .mh-wash{position:absolute;inset:0;z-index:0;opacity:0;pointer-events:none}
+#morph .mhero .bs-herobg{z-index:1}
 #morph .mh-band .inner{position:relative;z-index:10}
 /* the cloned card is detached from .winwrap.in, so its reveal states never resolved -
    force the finished look, otherwise the front face flips over holding a blank screen */
