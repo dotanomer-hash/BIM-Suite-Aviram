@@ -36,10 +36,10 @@ def head_etag(url):
 
 def run(cmd, cwd, quiet=False):
     r = subprocess.run(cmd, cwd=cwd, shell=isinstance(cmd, str),
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode and not quiet:
         sys.exit("FAILED: %s\n%s%s" % (cmd, r.stdout, r.stderr))
-    return r.stdout.strip()
+    return (r.stdout or "").strip()
 
 
 def main():
