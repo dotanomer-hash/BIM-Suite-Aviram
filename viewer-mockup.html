@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="bimsuite-mockup.css?v=45" rel="stylesheet">
+<link href="bimsuite-mockup.css?v=46" rel="stylesheet">
 <link href="suite-pipe.css?v=4" rel="stylesheet">
 <link href="oymer-pairs.css?v=18" rel="stylesheet">
 <script>if(location.search.indexOf("from=suite")>-1)document.documentElement.className+=" fromsuite";</script>
@@ -190,26 +190,57 @@
    down, so this hero no longer matched the other product pages. Absolute + zero size
    until measured means it cannot move anything. */
 (function(){
+  /* MEASURED, not guessed - both entry paths were probed and they disagreed:
+     arriving straight from the menu the tag and the h1 still carried the entrance
+     transform matrix(1,0,0,1,0,24), while arriving from the suite `.fromsuite` had
+     already killed it. getBoundingClientRect INCLUDES that transform, the svg's
+     containing block does not, so the rays landed 24px low on one route and correct
+     on the other. offsetLeft/offsetTop are layout positions and ignore transforms
+     entirely, so both routes now compute the same numbers. */
+  function boxIn(el, root){
+    var x=0, y=0, n=el;
+    while(n && n!==root){ x+=n.offsetLeft; y+=n.offsetTop; n=n.offsetParent; }
+    return {left:x, top:y, width:el.offsetWidth, height:el.offsetHeight};
+  }
+  /* the plane of the BOTTOM OF THE TEXT, not the bottom of the h1 box - the line box
+     carries half-leading plus the font's descent below the glyphs (measured here:
+     box bottom 288.0 vs ink bottom 283.7, so the rays used to overshoot by 4.3px). */
+  function inkBottom(el){
+    var cs=getComputedStyle(el);
+    var fs=parseFloat(cs.fontSize)||16;
+    var lh=parseFloat(cs.lineHeight)||fs*1.2;
+    var lastLineTop=el.offsetHeight-parseFloat(cs.paddingBottom||0)-lh;
+    var half=(lh-fs)/2, asc=fs*0.8, desc=fs*0.02;
+    try{
+      var c=document.createElement('canvas').getContext('2d');
+      c.font=cs.fontStyle+' '+cs.fontWeight+' '+fs+'px '+cs.fontFamily;
+      var m=c.measureText(el.textContent.trim()||'M');
+      if(m.fontBoundingBoxAscent){ asc=m.fontBoundingBoxAscent; desc=m.actualBoundingBoxDescent||0; }
+    }catch(e){}
+    return lastLineTop+half+asc+desc;
+  }
   function draw(){
-    var inner=document.querySelector('.bs-hero .inner'),
-        tag=document.querySelector('.bs-suitetag'),
+    var tag=document.querySelector('.bs-suitetag'),
         h1=document.querySelector('.bs-hero h1'),
         svg=document.querySelector('.bs-lineage');
-    if(!inner||!tag||!h1||!svg) return;
-    var I=inner.getBoundingClientRect(), t=tag.getBoundingClientRect(), b=h1.getBoundingClientRect();
-    var L=Math.min(t.left,b.left), R=Math.max(t.right,b.right), T=t.bottom, B=b.bottom;
+    if(!tag||!h1||!svg) return;
+    var root=svg.offsetParent||document.querySelector('.bs-hero .inner');
+    if(!root) return;
+    var t=boxIn(tag,root), b=boxIn(h1,root);
+    var L=Math.min(t.left,b.left), R=Math.max(t.left+t.width,b.left+b.width);
+    var T=t.top+t.height, B=b.top+inkBottom(h1);
     var w=R-L, h=B-T;
     if(w<=0||h<=4){ svg.style.display='none'; return; }
     svg.style.display='block';
-    svg.style.left=(L-I.left)+'px'; svg.style.top=(T-I.top)+'px';
+    svg.style.left=L+'px'; svg.style.top=T+'px';
     svg.style.width=w+'px'; svg.style.height=h+'px';
     svg.setAttribute('viewBox','0 0 '+w+' '+h);
     svg.setAttribute('preserveAspectRatio','none');
     var N=5, d='';
     for(var i=0;i<N;i++){
       var f=i/(N-1);
-      d+='<path d="M'+((t.left-L)+(t.width)*f).toFixed(1)+' 0 L'
-                    +((b.left-L)+(b.width)*f).toFixed(1)+' '+h.toFixed(1)+'"/>';
+      d+='<path d="M'+((t.left-L)+t.width*f).toFixed(1)+' 0 L'
+                    +((b.left-L)+b.width*f).toFixed(1)+' '+h.toFixed(1)+'"/>';
     }
     svg.innerHTML=d;
   }
