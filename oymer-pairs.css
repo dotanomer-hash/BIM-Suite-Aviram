@@ -63,6 +63,36 @@
 /* ---- the connector ---- */
 .oylp .oyl-flow{position:relative;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:12px}
+/* ---- DecisionMaker connector: the real ribbon button, not an arrow ----
+   on this page the thing that joins the two windows IS the click - the oYmer button in
+   Revit. The lightning still runs underneath it, so the pair keeps the suite's language,
+   but the button is what the eye lands on. */
+.oylp .oyl-dmflow{gap:9px}
+.oylp .oyl-dmbtn{
+  display:block;width:62px;height:auto;border-radius:9px;
+  box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.14),
+             0 0 26px rgba(255,122,0,.30);
+  animation:dmpress 2.6s ease-out infinite;
+}
+@keyframes dmpress{
+  0%{box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.14), 0 0 0 0 rgba(255,122,0,.55)}
+  70%{box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.14), 0 0 0 15px rgba(255,122,0,0)}
+  100%{box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.14), 0 0 0 0 rgba(255,122,0,0)}
+}
+.oylp .oyl-dmflow span{color:#ff7a00;text-shadow:none;font-weight:800}
+@media (prefers-reduced-motion:reduce){ .oylp .oyl-dmbtn{animation:none} }
+
+/* ---- the approval record, written like the system wrote it ---- */
+.oylp .dm-approval{
+  position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:block;
+  font-size:.66rem;line-height:1.65;letter-spacing:.04em;color:#cfe6ff;
+  background:rgba(6,10,24,.82);backdrop-filter:blur(6px);
+  border-left:3px solid #ff7a00;border-radius:6px;padding:9px 12px;
+  box-shadow:0 6px 20px rgba(0,0,0,.45);
+}
+.oylp .dm-approval b{color:#fff;font-weight:700}
+.oylp .dm-approval .dm-client{color:#ffb266;font-weight:700}
+
 /* this label sits BETWEEN the panels, on the page's light ground - the cyan glow it
    used to carry was near-invisible there. black and heavy, so it actually reads. */
 .oylp .oyl-flow span{font-size:.72rem;font-weight:800;color:#0b0a18;opacity:1;

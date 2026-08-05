@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="bimsuite-mockup.css?v=36" rel="stylesheet">
 <link href="suite-pipe.css?v=3" rel="stylesheet">
-<link href="oymer-pairs.css?v=2" rel="stylesheet">
+<link href="oymer-pairs.css?v=3" rel="stylesheet">
 </head>
 <body>
 <div class="min-h-screen" dir="rtl">
@@ -64,82 +64,84 @@
       <div class="phead rev">
         <span class="no ltr">// DECISION MAKER</span>
         <h2>מהמודל, אל הפגישה, ובחזרה אל המודל</h2>
-        <p class="lead">שלושה שלבים על ציר אחד. מה שהוחלט בפגישה לא נשאר במצגת - הוא נכתב בחזרה לתוך Revit.</p>
+        <p class="lead">שני צמדים על ציר אחד. מימין המודל, משמאל מה שהלקוח רואה - והכפתור שבאמצע הוא הרגע שבו ההחלטה נחתמת.</p>
       </div>
-      <div class="oyl-stack">
+      <div class="oyl-pairs">
 
-      <article class="oyl-panel">
+      <div class="oyl-pair">
+        <article class="oyl-panel">
           <div class="oyl-media">
-            <span class="oyl-id oyl-mono">STEP_01</span>
-            <video src="media/lab/kitchen-revit.mp4" poster="media/lab/kitchen-revit-poster.jpg" autoplay muted loop playsinline></video>
+            <span class="oyl-id oyl-mono">REVIT_01</span>
+            <img src="media/dm-revit-before.jpg" alt="">
           </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">IN REVIT</span>
             <div class="oyl-hud oyl-mono"><b>.RVT</b><b>WHITE MODEL</b><b class="on">EXPORT</b></div>
-            <h3>מייצאים את המודל</h3>
-            <p>כפתור אחד בסרגל של ריוויט: המודל יוצא כמודל לבן - גאומטריה ומזהים, בלי הכנה ידנית.</p>
+            <h3>הפרויקט בריוויט</h3>
+            <p>המודל כפי שהוא במשרד - אותו חלל בדיוק שהלקוח עומד לראות במשקפיים.</p>
           </div>
         </article>
 
-      <div class="oyl-down oyl-mono" aria-hidden="true">
-          <span>EXPORT</span>
-          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
-            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
-            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
-            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
-            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
-            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
-            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
-            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
-            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
-          </svg>
+        <div class="oyl-flow oyl-dmflow oyl-mono" aria-hidden="true">
+          <span>DECISION MAKER</span>
+          <img class="oyl-dmbtn" src="media/dm-button.png" alt="">
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false"><path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__bolt" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__core" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__wall" d="M4 4 L4 30"/><circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/></svg>
         </div>
 
-      <article class="oyl-panel">
+        <article class="oyl-panel">
           <div class="oyl-media">
-            <span class="oyl-id oyl-mono">STEP_02</span>
+            <span class="oyl-id oyl-mono">VR_01</span>
             <video src="media/reels/quest.mp4" poster="media/reels/quest.jpg" autoplay muted loop playsinline></video>
           </div>
           <div class="oyl-body">
-            <span class="oyl-kick oyl-mono">IN VR - 1:1</span>
-            <div class="oyl-hud oyl-mono"><b>צובעים</b><b>מחליפים ריהוט</b><b>מזיזים קירות</b><b class="on">ההחלטה</b></div>
-            <h3>נכנסים למודל בקנה מידה 1:1</h3>
-            <p>הלקוח עומד בתוך הדירה שלו: צובע משטחים, מחליף ריהוט ומזיז אלמנטים - וההחלטה נסגרת שם, בפגישה.</p>
+            <span class="oyl-kick oyl-mono">IN VR 1:1</span>
+            <div class="oyl-hud oyl-mono"><b>1:1</b><b>WALK</b><b class="on">SAME SPACE</b></div>
+            <h3>אותו חלל, בקנה מידה 1:1</h3>
+            <p>הלקוח נכנס לאותו חלל בגודל אמיתי. לא מצגת - הוא עומד בפנים.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="oyl-pair">
+        <article class="oyl-panel">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">VR_02</span>
+            <video src="media/viewer/reel-2.mp4" poster="media/viewer/reel-2.jpg" autoplay muted loop playsinline></video>
+          </div>
+          <div class="oyl-body">
+            <span class="oyl-kick oyl-mono">DECIDING IN VR</span>
+            <div class="oyl-hud oyl-mono"><b>גימורים</b><b>אובייקטים</b><b class="on">הזזת אלמנטים</b></div>
+            <h3>מחליטים בתוך המשקפיים</h3>
+            <p>מחליפים גימור, מחליפים ריהוט, מזיזים חלון - הכל בתוך החלל עצמו.</p>
           </div>
         </article>
 
-      <div class="oyl-down oyl-mono" aria-hidden="true">
-          <span>WRITE BACK</span>
-          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
-            <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
-            <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
-            <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
-            <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
-            <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
-            <path class="oyl-arw__wall" d="M4 4 L4 30"/>
-            <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
-            <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
-            <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
-          </svg>
+        <div class="oyl-flow oyl-dmflow oyl-mono" aria-hidden="true">
+          <span>APPROVE 1:1</span>
+          <img class="oyl-dmbtn" src="media/dm-button.png" alt="">
+          <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false"><path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__bolt" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__core" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/><path class="oyl-arw__wall" d="M4 4 L4 30"/><circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/></svg>
         </div>
 
-      <article class="oyl-panel">
+        <article class="oyl-panel">
           <div class="oyl-media">
-            <span class="oyl-id oyl-mono">STEP_03</span>
-            <img src="media/lab/barrier-revit.jpg" alt="">
+            <span class="oyl-id oyl-mono">REVIT_02</span>
+            <img src="media/dm-revit-after.jpg" alt="">
+            <span class="dm-approval oyl-mono" dir="ltr">
+              <b>Window id 7797946</b> moved by <b>0.20 m</b> on <b>X</b> axis
+              on wall id <b>7982201</b> &middot; 05/08/2026 &middot;
+              approved by client <span class="dm-client" dir="rtl">אלי כהן</span>
+            </span>
           </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">BACK IN REVIT</span>
             <div class="oyl-hud oyl-mono"><b>CHANGE-SET</b><b>SAVE AS</b><b class="on">WRITE-BACK</b></div>
-            <h3>כותבים בחזרה לריוויט</h3>
-            <p>ההחלטות חוזרות לתוך המודל - עותק חדש של הקובץ, עם המשטחים והאלמנטים שזזו. המקור לא נגע.</p>
+            <h3>המודל חוזר עם ההחלטות</h3>
+            <p>עותק חדש של הקובץ: הקיר נסגר, החלון זז, ורשומת האישור נשמרת. המקור לא נגע.</p>
           </div>
         </article>
+      </div>
+
+      </div>
 
     </div>
     </div>
