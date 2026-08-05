@@ -20,7 +20,7 @@
   ];
   var REST = [
     ["VR Tours", "vrtours-mockup.html"],
-    ["VR Labs",  "lab-mockup.html"]
+    ["VR Lab",   "lab-mockup.html"]
   ];
 
   var OY = "font-size:max(11.5px,.68em)";
