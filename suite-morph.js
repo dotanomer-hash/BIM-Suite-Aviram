@@ -19,6 +19,15 @@
   "use strict";
 
   var PRODUCTS = {
+    "decisionmaker-mockup.html": {
+      hue: "c1",
+      name: 'DecisionMaker',
+      sub: 'פגישת אישור בקנה מידה 1:1.',
+      ix: '01',
+      video: 'media/reels/quest.mp4',
+      poster: 'media/reels/quest.jpg',
+      oneline: 'פגישת אישור בקנה מידה 1:1'
+    },
     "familycreator-mockup.html": {
       hue: "c3",
       name: 'Family Creator',

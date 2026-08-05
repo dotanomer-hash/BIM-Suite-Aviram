@@ -82,16 +82,33 @@
 .oylp .oyl-dmflow span{color:#ff7a00;text-shadow:none;font-weight:800}
 @media (prefers-reduced-motion:reduce){ .oylp .oyl-dmbtn{animation:none} }
 
-/* ---- the approval record, written like the system wrote it ---- */
+/* ---- the approval record, as a callout that points AT the window it describes ----
+   sits over the ceiling on purpose: that is dead space in the shot, and putting the
+   record up there lets its tail aim down at the moved (orange) window. */
 .oylp .dm-approval{
-  position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:block;
-  font-size:.66rem;line-height:1.65;letter-spacing:.04em;color:#cfe6ff;
-  background:rgba(6,10,24,.82);backdrop-filter:blur(6px);
-  border-left:3px solid #ff7a00;border-radius:6px;padding:9px 12px;
-  box-shadow:0 6px 20px rgba(0,0,0,.45);
+  position:absolute;left:7%;right:7%;top:14px;z-index:4;display:block;
+  font-size:.82rem;line-height:1.75;letter-spacing:.02em;color:#f2f6ff;
+  background:linear-gradient(165deg, rgba(18,12,34,.96), rgba(10,7,22,.96));
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,122,0,.55);border-radius:13px;padding:13px 17px;
+  box-shadow:0 14px 38px rgba(0,0,0,.55), 0 0 34px rgba(255,122,0,.20),
+             inset 0 1px 0 rgba(255,255,255,.10);
+  text-align:center;
 }
-.oylp .dm-approval b{color:#fff;font-weight:700}
-.oylp .dm-approval .dm-client{color:#ffb266;font-weight:700}
+.oylp .dm-approval b{color:#fff;font-weight:800}
+.oylp .dm-approval .dm-client{color:#ffb266;font-weight:800}
+/* the tail - a rotated square borrowing the bubble's own edge, aimed down-left at the
+   orange window. two layers so the 1px orange border wraps the point cleanly. */
+.oylp .dm-approval::after{
+  content:"";position:absolute;bottom:-9px;left:31%;width:16px;height:16px;
+  background:rgba(10,7,22,.96);
+  border-right:1px solid rgba(255,122,0,.55);
+  border-bottom:1px solid rgba(255,122,0,.55);
+  transform:rotate(45deg);border-bottom-right-radius:3px;
+}
+@media (max-width:900px){
+  .oylp .dm-approval{left:4%;right:4%;font-size:.72rem;padding:10px 12px}
+}
 
 /* this label sits BETWEEN the panels, on the page's light ground - the cyan glow it
    used to carry was near-invisible there. black and heavy, so it actually reads. */

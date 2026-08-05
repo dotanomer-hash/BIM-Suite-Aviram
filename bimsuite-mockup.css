@@ -527,6 +527,15 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
    ================================================================================== */
 /* each product page's hero wears its own hue over the plum - this is the colour the
    transition washes INTO, so the last frame of the flip and the loaded page agree. */
+/* DecisionMaker wears its own orange over the plum - same idea as the azure below.
+   the flag product gets the warmest hero in the suite. */
+.bs-hero.hue-c1,.mh-wash.hue-c1{
+  background:
+    radial-gradient(920px 460px at 18% 6%, rgba(255,122,0,.44), transparent 62%),
+    radial-gradient(780px 420px at 86% 92%, rgba(255,176,70,.16), transparent 64%),
+    linear-gradient(150deg,#2a1206 0%,#5c2508 46%,#8d3c09 100%);
+}
+
 /* deliberately a LONG way from the plum. the first pass sat at #121233->#1e2b66, which
    is still a purple-navy - next to the hub's plum it read as "no colour change at all".
    this is unmistakably the Family Creator azure. */
