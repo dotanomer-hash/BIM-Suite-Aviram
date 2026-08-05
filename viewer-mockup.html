@@ -187,5 +187,27 @@
 
 <script src="menu-preview.js?v=4"></script>
 <script src="suite-morph.js?v=11"></script>
+<script>
+/* the rays are DRAWN from measured geometry, not guessed coordinates: outer rays start
+   at the suite tag's own left/right edges and land on the title's left/right edges. */
+(function(){
+  function draw(){
+    var tag=document.querySelector('.bs-suitetag'), h1=document.querySelector('.bs-hero h1'),
+        svg=document.querySelector('.bs-lineage');
+    if(!tag||!h1||!svg) return;
+    var t=tag.getBoundingClientRect(), b=h1.getBoundingClientRect(), s=svg.getBoundingClientRect();
+    if(!s.width) return;
+    var X=function(px){return (px-s.left)/s.width*400;};
+    var t0=X(t.left), t1=X(t.right), b0=X(b.left), b1=X(b.right), N=5, d='';
+    for(var i=0;i<N;i++){
+      var f=i/(N-1);
+      d+='<path d="M'+(t0+(t1-t0)*f).toFixed(1)+' 2 L'+(b0+(b1-b0)*f).toFixed(1)+' 44"/>';
+    }
+    svg.innerHTML=d;
+  }
+  draw(); addEventListener('resize',draw);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
+})();
+</script>
 </body>
 </html>
