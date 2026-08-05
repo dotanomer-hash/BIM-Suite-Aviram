@@ -49,8 +49,15 @@ def main():
     print("branch  : %s @ %s" % (BRANCH, run("git rev-parse --short HEAD", SITE)))
 
     # ---- 2. mirror the whole tree into the preview clone ---------------------
+    # git marks objects read-only; on Windows rmtree then silently leaves them behind
+    # and the next clone fails with "destination path already exists".
     if os.path.isdir(WORK):
-        shutil.rmtree(WORK, ignore_errors=True)
+        def _force(fn, path, exc):
+            os.chmod(path, 0o700)
+            fn(path)
+        shutil.rmtree(WORK, onerror=_force)
+    if os.path.isdir(WORK):
+        sys.exit("could not clear %s - remove it and re-run" % WORK)
     run(["git", "clone", "-q", "--depth", "1", PREVIEW_REPO, WORK], os.path.dirname(WORK))
     for name, email in [("user.name", run("git config user.name", SITE)),
                         ("user.email", run("git config user.email", SITE))]:
