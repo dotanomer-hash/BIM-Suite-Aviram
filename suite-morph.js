@@ -287,14 +287,10 @@
        so a restored scroll position can never throw the turn off centre. */
     root.style.transformOrigin = "50% " + Math.round(window.scrollY + H / 2) + "px";
     document.documentElement.classList.add("morphing");
-    /* PURE ROTATION, no scale. First pass entered at the card's 0.44 - copied from the
-       return trip, where the page SHRINKS as it folds so the card is small at the seam.
-       Outbound is the opposite: the card GROWS to cover the viewport before it folds,
-       so it hands over at full size. Entering at 0.44 dropped the page back to card
-       size and grew it a second time - which is exactly the "double animation". The
-       card leaves full-size and the page arrives full-size; only the turn continues. */
+    /* enters at the width the card folded away at, so the seam is the same object */
+    var start = Math.min(470, Math.round(W * 0.44)) / W;
     var turn = root.animate([
-      {transform: "rotateY(-90deg)"},
+      {transform: "rotateY(-90deg) scale(" + start.toFixed(4) + ")"},
       {transform: "none"}
     ], {duration: TURN_IN, easing: EASE_IN_HALF});
     function done() {
