@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="bimsuite-mockup.css?v=42" rel="stylesheet">
+<link href="bimsuite-mockup.css?v=43" rel="stylesheet">
 <link href="suite-pipe.css?v=4" rel="stylesheet">
 <link href="oymer-pairs.css?v=18" rel="stylesheet">
 <script>if(location.search.indexOf("from=suite")>-1)document.documentElement.className+=" fromsuite";</script>
@@ -22,9 +22,7 @@
   </div>
   <div class="inner">
     <a class="bs-suitetag rev" href="bimsuite-mockup.html">o<span class="y">Y</span>mer <b>BIM VR</b> Suite<sup class="oyc">&#169;</sup></a>
-    <svg class="bs-lineage" viewBox="0 0 400 46" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M155 2 L2 44"/><path d="M178 2 L101 44"/><path d="M200 2 L200 44"/><path d="M222 2 L299 44"/><path d="M245 2 L398 44"/>
-    </svg>
+    <svg class="bs-lineage" aria-hidden="true"></svg>
     <h1 class="rev"><span class="oy">o<span class="yflash">Y</span>mer</span> Viewer<sup class="oyc">&#169;</sup></h1>
     <p class="sub rev">מודל ה-BIM בתוך מציאות מדומה.</p>
   </div>
@@ -188,25 +186,36 @@
 <script src="menu-preview.js?v=4"></script>
 <script src="suite-morph.js?v=11"></script>
 <script>
-/* the rays are DRAWN from measured geometry, not guessed coordinates: outer rays start
-   at the suite tag's own left/right edges and land on the title's left/right edges. */
+/* Drawn from measured geometry AND out of the flow - an in-flow svg pushed the title
+   down, so this hero no longer matched the other product pages. Absolute + zero size
+   until measured means it cannot move anything. */
 (function(){
   function draw(){
-    var tag=document.querySelector('.bs-suitetag'), h1=document.querySelector('.bs-hero h1'),
+    var inner=document.querySelector('.bs-hero .inner'),
+        tag=document.querySelector('.bs-suitetag'),
+        h1=document.querySelector('.bs-hero h1'),
         svg=document.querySelector('.bs-lineage');
-    if(!tag||!h1||!svg) return;
-    var t=tag.getBoundingClientRect(), b=h1.getBoundingClientRect(), s=svg.getBoundingClientRect();
-    if(!s.width) return;
-    var X=function(px){return (px-s.left)/s.width*400;};
-    var t0=X(t.left), t1=X(t.right), b0=X(b.left), b1=X(b.right), N=5, d='';
+    if(!inner||!tag||!h1||!svg) return;
+    var I=inner.getBoundingClientRect(), t=tag.getBoundingClientRect(), b=h1.getBoundingClientRect();
+    var L=Math.min(t.left,b.left), R=Math.max(t.right,b.right), T=t.bottom, B=b.top;
+    var w=R-L, h=B-T;
+    if(w<=0||h<=4){ svg.style.display='none'; return; }
+    svg.style.display='block';
+    svg.style.left=(L-I.left)+'px'; svg.style.top=(T-I.top)+'px';
+    svg.style.width=w+'px'; svg.style.height=h+'px';
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.setAttribute('preserveAspectRatio','none');
+    var N=5, d='';
     for(var i=0;i<N;i++){
       var f=i/(N-1);
-      d+='<path d="M'+(t0+(t1-t0)*f).toFixed(1)+' 2 L'+(b0+(b1-b0)*f).toFixed(1)+' 44"/>';
+      d+='<path d="M'+((t.left-L)+(t.width)*f).toFixed(1)+' 0 L'
+                    +((b.left-L)+(b.width)*f).toFixed(1)+' '+h.toFixed(1)+'"/>';
     }
     svg.innerHTML=d;
   }
-  draw(); addEventListener('resize',draw);
+  addEventListener('resize',draw);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
+  draw();
 })();
 </script>
 </body>
