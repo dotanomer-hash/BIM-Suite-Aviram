@@ -603,7 +603,10 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
 
 /* lineage: the suite is the PARENT, the product hangs off it. two hairlines fanning
    from the suite tag down to the product name, so the relationship is drawn, not implied. */
-.bs-lineage{position:absolute;display:none;margin:0;overflow:visible;pointer-events:none;z-index:11}
-.bs-lineage path{fill:none;stroke:#fff;stroke-width:1;opacity:.55;
+.bs-lineage{position:absolute;display:none;margin:0;overflow:visible;pointer-events:none;z-index:0}
+.bs-lineage path{fill:none;stroke:#fff;stroke-width:1;opacity:.22;
   vector-effect:non-scaling-stroke;stroke-linecap:round}
-@media (max-width:640px){.bs-lineage{position:absolute;display:none;margin:0;overflow:visible;pointer-events:none;z-index:11}}
+@media (max-width:640px){.bs-lineage{position:absolute;display:none;margin:0;overflow:visible;pointer-events:none;z-index:0}}
+
+/* the title sits ABOVE the rays now that they run its full height */
+.bs-hero h1{position:relative;z-index:2}
