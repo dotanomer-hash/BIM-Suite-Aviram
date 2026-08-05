@@ -124,9 +124,9 @@
   background:rgba(var(--c,79,125,255),.42);
   -webkit-backdrop-filter:blur(3px) saturate(1.15);
           backdrop-filter:blur(3px) saturate(1.15);
+  border-top:1.5px solid rgba(0,0,0,.55);
   border-right:1.5px solid rgba(0,0,0,.55);
-  border-bottom:1.5px solid rgba(0,0,0,.55);
-  transform:rotate(45deg);border-bottom-right-radius:3px;
+  transform:rotate(45deg);border-top-right-radius:3px;
 }
 @media (max-width:900px){
   .oylp .dm-approval{left:3%;right:auto;width:70%;font-size:.72rem;padding:11px 13px;gap:4px 11px}
