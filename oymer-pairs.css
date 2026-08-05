@@ -55,7 +55,7 @@
 
 /* ---- rows: window · arrow · window ---- */
 .oylp .oyl-pairs{margin-top:34px;display:grid;gap:30px}
-.oylp .oyl-pair{display:grid;grid-template-columns:1fr 150px 1fr;align-items:stretch}
+.oylp .oyl-pair{position:relative;display:grid;grid-template-columns:1fr 150px 1fr;align-items:stretch}
 .oylp .oyl-pair .oyl-panel{display:flex;flex-direction:column}
 .oylp .oyl-pair .oyl-body{flex:1}
 /* reversed rows: the lab object on the right, Revit on the left */
@@ -92,7 +92,7 @@
    and translucent on purpose, so the drawing underneath still reads through it. the
    blur is what buys legibility over a busy screenshot without going opaque. */
 .oylp .dm-approval{
-  position:absolute;left:1.5%;right:auto;width:42%;top:10px;z-index:4;
+  position:absolute;left:-13%;right:auto;width:44%;top:10px;z-index:6;
   display:grid;grid-template-columns:auto 1fr;gap:1px 10px;align-items:baseline;
   font-size:.78rem;line-height:1.34;letter-spacing:0;
   background:linear-gradient(160deg, rgba(255,255,255,.80) 0%,
