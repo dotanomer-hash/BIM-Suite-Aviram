@@ -603,7 +603,7 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
 
 /* lineage: the suite is the PARENT, the product hangs off it. two hairlines fanning
    from the suite tag down to the product name, so the relationship is drawn, not implied. */
-.bs-lineage{display:block;width:min(620px,78%);height:38px;margin:-6px auto 2px;overflow:visible}
+.bs-lineage{display:block;width:min(740px,90%);height:38px;margin:-6px auto 2px;overflow:visible}
 .bs-lineage path{fill:none;stroke:#fff;stroke-width:1;opacity:.55;
   vector-effect:non-scaling-stroke;stroke-linecap:round}
 @media (max-width:640px){.bs-lineage{height:26px;width:88%}}
