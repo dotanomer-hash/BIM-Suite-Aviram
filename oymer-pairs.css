@@ -92,7 +92,7 @@
    and translucent on purpose, so the drawing underneath still reads through it. the
    blur is what buys legibility over a busy screenshot without going opaque. */
 .oylp .dm-approval{
-  position:absolute;left:-3.0%;right:auto;width:18.5%;top:6px;z-index:6;
+  position:absolute;left:-3.8%;right:auto;width:18.5%;top:56px;z-index:6;
   display:grid;grid-template-columns:1fr;gap:0;align-items:start;
   font-size:.66rem;line-height:1.3;letter-spacing:0;
   background:linear-gradient(160deg, rgba(255,255,255,.80) 0%,
@@ -120,7 +120,7 @@
 /* the tail matches the bubble's LOWER edge, where it actually joins - the bubble is a
    gradient, so a flat hue here would show as a bright notch */
 .oylp .dm-approval::after{
-  content:"";position:absolute;bottom:auto;left:auto;top:78%;right:-9px;width:14px;height:14px;
+  content:"";position:absolute;bottom:auto;left:auto;top:50%;right:-9px;width:14px;height:14px;
   background:rgba(var(--c,79,125,255),.42);
   -webkit-backdrop-filter:blur(3px) saturate(1.15);
           backdrop-filter:blur(3px) saturate(1.15);
