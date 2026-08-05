@@ -127,13 +127,4 @@
     if ((d && m) || ++tries > 40) clearInterval(t);
   }, 100);
 
-  /* mockup ribbon, so this is never mistaken for the live site */
-  window.addEventListener("load", function () {
-    var b = document.createElement("div");
-    b.textContent = "MOCKUP - לא האתר החי";
-    b.style.cssText = "position:fixed;bottom:16px;left:16px;z-index:9999;background:#0f172a;" +
-                      "color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;" +
-                      "padding:8px 14px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);";
-    document.body.appendChild(b);
-  });
 })();

@@ -22,7 +22,7 @@
     "viewer-mockup.html": {
       hue: "c2", name: 'Viewer', sub: 'מודל ה-BIM בתוך מציאות מדומה.',
       ix: '02', video: 'media/viewer/reel-1.mp4', poster: 'media/viewer/reel-1.jpg',
-      oneline: 'מודל ה-BIM בתוך מציאות מדומה'
+      oneline: 'מודל ה BIM בתוך ה VR'
     },
     "decisionmaker-mockup.html": {
       hue: "c1",
@@ -42,6 +42,17 @@
       video: 'media/lab/kitchen-lab.mp4',
       poster: 'media/lab/kitchen-lab-poster.jpg',
       oneline: 'יצירת משפחות דינמיות לרוויט'
+    },
+    /* Type Studio was the one product still missing here, so its window navigated flat
+       while the other three flipped. Same entry shape, its own teal hue. */
+    "typestudio-mockup.html": {
+      hue: "c4",
+      name: 'Type Studio',
+      sub: 'יצירת טיפוסים חדשים בתוך רוויט.',
+      ix: '04',
+      video: 'media/lab/kitchen-revit.mp4',
+      poster: 'media/lab/kitchen-revit-poster.jpg',
+      oneline: 'יצירת טיפוסים חדשים בתוך רוויט'
     }
   };
   var SUITE = "bimsuite-mockup.html";
