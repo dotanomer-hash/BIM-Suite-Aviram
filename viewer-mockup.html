@@ -219,6 +219,27 @@
     }catch(e){}
     return lastLineTop+half+asc+desc;
   }
+  /* SUITE RULE: the beams land on the LETTERS, not on the h1 box.
+     Left beam ends at the left edge of the first letter, right beam at the right edge
+     of the LAST LETTER - the trailing (c) superscript is excluded. Measured here: the
+     h1 box runs 447.11 -> 817.70, but the last letter "r" ends at 799.54, so the box
+     was carrying 18px of copyright mark that the right beam was reaching for.
+     Rects cancel the entrance transform because both are read in the same frame. */
+  function letterEdges(h1, hostLeft){
+    var sup=h1.querySelector('sup');
+    var walk=document.createTreeWalker(h1, NodeFilter.SHOW_TEXT), nodes=[], n;
+    while((n=walk.nextNode())){ if(sup&&sup.contains(n)) continue; if(n.textContent.trim()) nodes.push(n); }
+    if(!nodes.length) return null;
+    function edge(node, index){
+      var r=document.createRange(); r.setStart(node,index); r.setEnd(node,index+1);
+      return r.getBoundingClientRect();
+    }
+    var f=nodes[0], ftxt=f.textContent, fi=ftxt.search(/\S/);
+    var l=nodes[nodes.length-1], ltxt=l.textContent, li=ltxt.length-1;
+    while(li>0 && !/\S/.test(ltxt[li])) li--;
+    var a=edge(f,fi), z=edge(l,li), base=h1.getBoundingClientRect().left;
+    return {left: hostLeft+(a.left-base), right: hostLeft+(z.right-base)};
+  }
   function draw(){
     var tag=document.querySelector('.bs-suitetag'),
         h1=document.querySelector('.bs-hero h1'),
@@ -226,9 +247,11 @@
     if(!tag||!h1||!svg) return;
     var root=svg.offsetParent||document.querySelector('.bs-hero .inner');
     if(!root) return;
-    var t=boxIn(tag,root), b=boxIn(h1,root);
+    var t=boxIn(tag,root), bb=boxIn(h1,root);
+    var e=letterEdges(h1, bb.left) || {left:bb.left, right:bb.left+bb.width};
+    var b={left:e.left, top:bb.top, width:e.right-e.left};
     var L=Math.min(t.left,b.left), R=Math.max(t.left+t.width,b.left+b.width);
-    var T=t.top+t.height, B=b.top+inkBottom(h1);
+    var T=t.top+t.height, B=bb.top+inkBottom(h1);
     var w=R-L, h=B-T;
     if(w<=0||h<=4){ svg.style.display='none'; return; }
     svg.style.display='block';
