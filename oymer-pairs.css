@@ -103,9 +103,10 @@
   box-shadow:0 12px 30px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.55);
   text-align:left;
 }
-/* the label column - the deep hue, so the eye runs down it without shouting */
+/* the label column - black like the values; separation comes from weight, tracking and
+   case, not colour. a coloured label was reading as a second accent. */
 .oylp .dm-approval b{
-  color:rgb(var(--cd,44,82,196));font-weight:800;white-space:nowrap;
+  color:#0a0806;font-weight:800;white-space:nowrap;opacity:.72;
   letter-spacing:.10em;font-size:.8em;text-transform:uppercase;
 }
 /* the value column - black, this is the part that must carry */
