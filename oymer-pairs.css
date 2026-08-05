@@ -120,7 +120,7 @@
 /* the tail matches the bubble's LOWER edge, where it actually joins - the bubble is a
    gradient, so a flat hue here would show as a bright notch */
 .oylp .dm-approval::after{
-  content:"";position:absolute;bottom:auto;left:auto;top:44%;right:-9px;width:14px;height:14px;
+  content:"";position:absolute;bottom:auto;left:auto;top:78%;right:-9px;width:14px;height:14px;
   background:rgba(var(--c,79,125,255),.42);
   -webkit-backdrop-filter:blur(3px) saturate(1.15);
           backdrop-filter:blur(3px) saturate(1.15);
