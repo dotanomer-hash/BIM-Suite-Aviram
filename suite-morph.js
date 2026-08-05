@@ -60,8 +60,8 @@
   /* The beats OVERLAP on purpose. First pass ran them end to end - flip, then colour,
      then titles - and it read as a queue of separate events instead of one move.
      Each beat now starts while the one before it is still running. */
-  /* FLIP/NAV are gone with the fake back face - the turn is now TURN_OUT here plus
-     TURN_IN on the destination, and the handover is edge-on at TURN_OUT+40. */
+  var FLIP = 860;      // grow + flip; the faces swap at FLIP/2, edge-on, unseen
+  var NAV  = 1560;     // navigate under full cover
 
   if (!document.body || !document.body.animate) return;                 // no WAAPI -> plain link
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -139,8 +139,6 @@
     });
   })();
 
-  /* UNUSED since the back face was removed - kept only because the return trip's
-     card face borrows the same wordmark markup conventions. */
   function heroHTML(p) {
     return '' +
       '<section class="bs bs-hero mh-band" dir="rtl">' +
@@ -272,41 +270,6 @@
     }
   })();
 
-  /* ---------- arrival on a PRODUCT page: the second half of the same turn ----------
-     The real document does the turning, so every one of its elements is inside the
-     animation instead of arriving after it. `.fromsuite` has already pinned the .rev
-     entrances to their finished state, so the content is fully drawn while it turns. */
-  (function () {
-    var here = location.pathname.split("/").pop();
-    if (!PRODUCTS[here] || location.search.indexOf("from=suite") < 0) return;
-    var root = document.querySelector(".min-h-screen");
-    if (!root || !root.animate) return;
-    var W = document.documentElement.clientWidth,
-        H = document.documentElement.clientHeight;
-    /* the pivot is the middle of the SCREEN - we land at scroll 0, but read it anyway
-       so a restored scroll position can never throw the turn off centre. */
-    root.style.transformOrigin = "50% " + Math.round(window.scrollY + H / 2) + "px";
-    document.documentElement.classList.add("morphing");
-    /* PURE ROTATION, no scale. First pass entered at the card's 0.44 - copied from the
-       return trip, where the page SHRINKS as it folds so the card is small at the seam.
-       Outbound is the opposite: the card GROWS to cover the viewport before it folds,
-       so it hands over at full size. Entering at 0.44 dropped the page back to card
-       size and grew it a second time - which is exactly the "double animation". The
-       card leaves full-size and the page arrives full-size; only the turn continues. */
-    var turn = root.animate([
-      {transform: "rotateY(-90deg)"},
-      {transform: "none"}
-    ], {duration: TURN_IN, easing: EASE_IN_HALF});
-    function done() {
-      document.documentElement.classList.remove("morphing");
-      root.style.transformOrigin = "";            // a live transform on the ancestor
-    }                                             // would re-anchor the fixed header
-    if (turn.finished) turn.finished.then(done, done); else setTimeout(done, TURN_IN + 60);
-    if (window.history.replaceState) {
-      history.replaceState(null, "", location.pathname);    // don't replay on refresh
-    }
-  })();
-
   function fly(link, href, p) {
     var wrap = link.closest(".winwrap") || link.parentNode;
     var r = link.getBoundingClientRect();
@@ -335,40 +298,76 @@
     clone.setAttribute("aria-hidden", "true");
     card.appendChild(clone);
 
-    /* ---------- no back face any more ----------
-       MEASURED 2026-08-05, which is what killed the old design: the fake hero face held
-       17 elements - one <section class="bs-hero"> and 255px of blank #f7f5fb ground
-       below it - while the real page has 176. So 90% of the page did not exist during
-       the flip and arrived in one hit when the document swapped at NAV=1560. That is
-       the "content draws half a second after the animation" pulse, and no amount of
-       preloading or prerendering could fix it: the content was never in the face.
+    /* ---------- back face: the destination hero, laid out at full size ---------- */
+    var hero = document.createElement("div");
+    hero.className = "mface mhero";
+    hero.style.width = W + "px";
+    hero.style.height = H + "px";
+    hero.innerHTML = heroHTML(p);
 
-       So the outbound now works exactly like the return trip already did - HALF the
-       turn here on the card, half on the REAL destination document. The page itself
-       does the second half of the rotation, with all 176 elements on board. */
     stage.appendChild(card);
+    stage.appendChild(hero);
     document.body.appendChild(stage);
     stage.classList.add("on");
     link.style.visibility = "hidden";              // never peek out behind the growing clone
 
+    /* ---------- geometry (measured BEFORE any transform is applied) ---------- */
+    var tag = hero.querySelector(".mh-suite"),
+        bimvr = tag.querySelector("b"),
+        h1 = hero.querySelector(".mh-prod");
+    var tr = tag.getBoundingClientRect(), hr = h1.getBoundingClientRect();
+    /* how much bigger the hub's title is than the tag it must shrink into */
+    var k = parseFloat(getComputedStyle(h1).fontSize) /
+            parseFloat(getComputedStyle(bimvr).fontSize);
+    /* the vertical distance it has to rise */
+    var dy = (hr.top + hr.height / 2) - (tr.top + tr.height / 2);
+
     var s = Math.max(W / r.width, H / r.height);                 // card -> cover the viewport
     var tx = W / 2 - (r.left + r.width / 2);
     var ty = H / 2 - (r.top + r.height / 2);
+    var ease = "cubic-bezier(.55,.06,.24,1)";
 
-    /* ---------- half the turn: the card grows to fill the screen and folds to edge-on.
-       TURN_OUT / EASE_OUT_HALF are the constants the return trip already uses - they
-       were measured to hand over at 0.157 deg/ms, and the arrival below enters at that
-       same speed, so the two halves read as one rotation. ---------- */
+    /* ---------- the flip: two faces, mirrored, so exactly one ever faces the viewer ---------- */
     card.animate([
       {transform: "translate(0px,0px) scale(1) rotateY(0deg)"},
-      {transform: "translate(" + tx + "px," + ty + "px) scale(" + s + ") rotateY(90deg)"}
-    ], {duration: TURN_OUT, easing: EASE_OUT_HALF, fill: "forwards"});
+      {transform: "translate(" + tx + "px," + ty + "px) scale(" + s + ") rotateY(180deg)"}
+    ], {duration: FLIP, easing: ease, fill: "forwards"});
 
-    /* hand over edge-on, where there is nothing to see - so the seam is invisible and
-       the document that completes the turn is the real one. */
+    hero.animate([
+      {transform: "translate(" + (-tx) + "px," + (-ty) + "px) scale(" + (1 / s) + ") rotateY(-180deg)"},
+      {transform: "translate(0px,0px) scale(1) rotateY(0deg)"}
+    ], {duration: FLIP, easing: ease, fill: "forwards"});
+
+    /* ---------- the hero recolours gradually, plum -> the product's own hue ----------
+       starts the instant the faces swap, and runs through the back half of the flip,
+       so the colour is changing WHILE the panel is still turning. */
+    hero.querySelector(".mh-wash").animate(
+      [{opacity: 0}, {opacity: 1}],
+      {duration: 620, delay: FLIP / 2 - 30, easing: "ease-in-out", fill: "forwards"});
+
+    /* ---------- "BIM VR" rises to its target size ----------
+       lifts off 200ms BEFORE the flip lands - the overlap is what makes the two
+       read as one movement rather than one waiting for the other. */
+    tag.animate([
+      {transform: "translateY(" + dy + "px) scale(" + k + ")", opacity: 1},
+      {transform: "translateY(0px) scale(1)", opacity: .92}
+    ], {duration: 620, delay: FLIP - 200, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+
+    /* ---------- and the product title takes the place it left ---------- */
+    h1.animate([
+      {transform: "translateY(34px) scale(.95)", opacity: 0},
+      {transform: "translateY(0px) scale(1)", opacity: 1}
+    ], {duration: 560, delay: FLIP + 40, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+
+    hero.querySelector(".mh-sub").animate([
+      {transform: "translateY(16px)", opacity: 0},
+      {transform: "translateY(0px)", opacity: 1}
+    ], {duration: 460, delay: FLIP + 180, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+
+    /* the page we hand over to is told to skip its own entrance, so the landing is seamless */
     setTimeout(function () {
       window.location.href = href + "?from=suite";
-    }, TURN_OUT + 40);
+    }, NAV);
 
     /* if the browser restores this page from bfcache, put the window back */
     window.addEventListener("pageshow", function (e) {
