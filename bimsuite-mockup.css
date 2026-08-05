@@ -491,6 +491,14 @@
    the suite tag up in the hero is the elegant way back, but it only announces itself
    on hover, and touch has no hover. this one is always visible and needs no pointer,
    so a phone visitor is never stranded on a product page. */
+
+/* the hue on its own, not depending on being inside .suite - on DecisionMaker the back
+   section sat outside that subtree, so --c/--cd resolved EMPTY and the link fell back
+   to near-black instead of the product colour. */
+.backsuite.c1{--c:255,122,0;--cd:196,88,0;--con:#1a0f00}
+.backsuite.c2{--c:139,108,240;--cd:92,64,190;--con:#ffffff}
+.backsuite.c3{--c:79,125,255;--cd:44,82,196;--con:#ffffff}
+.backsuite.c4{--c:43,179,163;--cd:22,124,113;--con:#052b27}
 .backsuite{background:var(--ground);padding:0 0 78px;text-align:center}
 /* no frame, no pill - it reads as a title, in the same Rubik weight and hue as the
    name above each window. .suite a{color:inherit} outranks a single class, so this
