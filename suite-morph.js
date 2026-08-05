@@ -20,9 +20,9 @@
 
   var PRODUCTS = {
     "viewer-mockup.html": {
-      hue: "c2", name: 'Viewer', sub: 'המודל של רוויט בדפדפן ובמשקפיים.',
+      hue: "c2", name: 'Viewer', sub: 'מודל ה-BIM בתוך מציאות מדומה.',
       ix: '02', video: 'media/viewer/reel-1.mp4', poster: 'media/viewer/reel-1.jpg',
-      oneline: 'המודל של רוויט בדפדפן ובמשקפיים'
+      oneline: 'מודל ה-BIM בתוך מציאות מדומה'
     },
     "decisionmaker-mockup.html": {
       hue: "c1",
