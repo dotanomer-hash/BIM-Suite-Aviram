@@ -11,16 +11,16 @@
 (function () {
   "use strict";
 
-  var GROUP = ["BIM VR Suite", "bimsuite-mockup.html"];
+  var GROUP = ["BIM VR Suite", "bimsuite.html"];
   var SUITE = [
-    ["DecisionMaker",  "decisionmaker-mockup.html"],
-    ["Viewer",         "viewer-mockup.html"],
-    ["Family Creator", "familycreator-mockup.html"],
-    ["Type Studio",    "typestudio-mockup.html"]
+    ["DecisionMaker",  "suite-decisionmaker.html"],
+    ["Viewer",         "suite-viewer.html"],
+    ["Family Creator", "suite-familycreator.html"],
+    ["Type Studio",    "suite-typestudio.html"]
   ];
   var REST = [
-    ["VR Tours", "vrtours-mockup.html"],
-    ["VR Lab",   "lab-mockup.html"]
+    ["VR Tours", "suite-vrtours.html"],
+    ["VR Lab",   "suite-vrlab.html"]
   ];
 
   var OY = "font-size:max(11.5px,.68em)";

@@ -19,12 +19,12 @@
   "use strict";
 
   var PRODUCTS = {
-    "viewer-mockup.html": {
+    "suite-viewer.html": {
       hue: "c2", name: 'Viewer', sub: 'מודל ה-BIM בתוך מציאות מדומה.',
       ix: '02', video: 'media/viewer/reel-1.mp4', poster: 'media/viewer/reel-1.jpg',
       oneline: 'מודל ה BIM בתוך ה VR'
     },
-    "decisionmaker-mockup.html": {
+    "suite-decisionmaker.html": {
       hue: "c1",
       name: 'DecisionMaker',
       sub: 'פגישת אישור בקנה מידה 1:1.',
@@ -33,7 +33,7 @@
       poster: 'media/reels/quest.jpg',
       oneline: 'פגישת אישור בקנה מידה 1:1'
     },
-    "familycreator-mockup.html": {
+    "suite-familycreator.html": {
       hue: "c3",
       name: 'Family Creator',
       sub: 'יצירת משפחות דינמיות לרוויט.',
@@ -45,7 +45,7 @@
     },
     /* Type Studio was the one product still missing here, so its window navigated flat
        while the other three flipped. Same entry shape, its own teal hue. */
-    "typestudio-mockup.html": {
+    "suite-typestudio.html": {
       hue: "c4",
       name: 'Type Studio',
       sub: 'יצירת טיפוסים חדשים בתוך רוויט.',
@@ -55,7 +55,7 @@
       oneline: 'יצירת טיפוסים חדשים בתוך רוויט'
     }
   };
-  var SUITE = "bimsuite-mockup.html";
+  var SUITE = "bimsuite.html";
 
   /* ================= backdrop mode =================
      ?bg=cN means this document is being rendered INSIDE the folding page, as the thing
