@@ -89,9 +89,7 @@
    two assets' own aspect ratios (760x665 = 1.143, 9:16 = 0.5625) so the photo
    and the clip come out exactly the same height without cropping either.
    dir=ltr on the duo so DOM order reads left-to-right regardless of the RTL page. */
-/* column flow so the demo clip can sit above the pair at every width - it is
-   the hero of the page, on a phone and on a desktop alike */
-.oy-frame{display:flex;flex-direction:column;
+.oy-frame{
   background:linear-gradient(180deg,#fbfbfc 0%,#f3f4f6 100%);
   border:1px solid #e8eaed;border-radius:20px;
   padding:clamp(14px,1.8vw,24px);
@@ -105,23 +103,20 @@
 .oy-duo__img{padding-bottom:87.5%}   /* 665/760 */
 .oy-duo__clip{padding-bottom:177.78%} /* 16/9 */
 .oy-duo img,.oy-duo iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
-.oy-frame__main{order:-1;margin-top:0;border-radius:14px;overflow:hidden;
+.oy-frame__main{margin-top:clamp(12px,1.5vw,20px);border-radius:14px;overflow:hidden;
   box-shadow:0 6px 18px rgba(15,23,42,.16)}
-.oy-duo{margin-top:clamp(12px,1.5vw,20px)}
 @media(max-width:820px){
-  /* PHONE. Nothing stacks. Stacking put the demo clip - the hero of the page -
-     third and 297x167, under a 427px vertical short: the least important asset
-     2.5x taller than the most important one. So the clip goes FIRST and full
-     bleed, and the photo and the reel keep their row underneath, scaled to fit.
-     -1.5rem cancels the container's px-6 exactly; 100vw would overflow by the
-     scrollbar width. The raised frame is a desktop device - at 375px its
-     padding only eats the dimension that matters. */
+  /* PHONE. Nothing stacks. The demo clip is the hero of the page so it goes
+     FIRST and full bleed; the photo and the reel keep their row underneath,
+     scaled down to fit. -1.5rem cancels the container's px-6 exactly - 100vw
+     would overflow by the scrollbar width. The raised frame is a desktop
+     device: at 375px its padding only eats the dimension that matters. */
   .oy-frame{display:flex;flex-direction:column;
     margin-inline:-1.5rem;padding:0;
     background:none;border:0;border-radius:0;box-shadow:none}
   .oy-frame__main{order:-1;margin-top:0;border-radius:0}
   /* the 1.143 / 0.5625 columns are the two assets' own aspect ratios, so both
-     still come out exactly the same height - 204px each at 375px wide. */
+     still come out exactly the same height - 213px each at 375px wide. */
   .oy-duo{gap:9px;margin-top:9px;padding-inline:9px}
   .oy-duo figure{border-radius:10px;box-shadow:0 3px 10px rgba(15,23,42,.14)}
 }
