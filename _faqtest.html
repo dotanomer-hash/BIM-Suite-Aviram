@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>בדיקת Q&amp;A - איזו דרך סגירה עובדת באייפון</title>
+<style>
+  body{margin:0;padding:18px 14px 40px;background:#f6f7f9;color:#0f172a;
+    font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:15px}
+  h1{font-size:19px;margin:0 0 6px}
+  .lead{color:#64748b;font-size:13.5px;margin:0 0 16px;line-height:1.55}
+  .case{margin-bottom:20px}
+  .lbl{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;color:#475569}
+  .lbl b{display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:50%;background:#0f172a;color:#fff;font-size:13px}
+  .q{width:100%;text-align:right;padding:10px 20px;border-radius:16px;
+    border:1px solid #e2e8f0;background:#fff;font:inherit;color:inherit;display:block}
+  .q h3{margin:0;font-size:16px;font-weight:600}
+  .ans p{margin:16px 0 0;color:#475569;line-height:1.6}
+  /* the four ways of closing it */
+  .m-maxh{overflow:hidden;max-height:0}
+  .m-h0{overflow:hidden;height:0;opacity:0}
+  .m-none{display:none}
+  /* a bright bar straight after each question - if a case reserves an invisible
+     void, the bar is pushed down and you can see it immediately */
+  .bar{height:8px;border-radius:4px;background:#f97316;margin-top:0}
+  .num{font-size:12.5px;color:#0f172a;background:#fff;border:1px solid #e2e8f0;
+    border-radius:8px;padding:6px 10px;margin-top:6px;direction:ltr;text-align:left;
+    font-variant-numeric:tabular-nums}
+  .ok{color:#15803d;font-weight:700}
+  .bad{color:#b91c1c;font-weight:700}
+  #sum{background:#0f172a;color:#fff;border-radius:12px;padding:12px 14px;
+    margin:0 0 18px;font-size:13px;direction:ltr;text-align:left;line-height:1.7;
+    word-break:break-word}
+</style>
+</head>
+<body>
+<h1>בדיקת Q&amp;A - איזו דרך סגירה עובדת באייפון</h1>
+<p class="lead">
+  ארבע שאלות, כולן סגורות. אחרי כל שאלה יש פס כתום.
+  אם הפס צמוד לשאלה - הסגירה עובדת. אם יש רווח לבן בין השאלה לפס - זו התקלה.
+  המספרים מתחת נמדדים על המכשיר שלך. צלם את התיבה השחורה ושלח לי.
+</p>
+
+<div id="sum">measuring...</div>
+
+<div class="case" data-case="A" data-how="max-height:0 בתוך ה-button (הקוד שהיה)">
+  <p class="lbl"><b>A</b> max-height:0 בתוך ה-button - הקוד הישן</p>
+  <div class="wrap">
+    <button class="q"><h3>מה זה בכלל מציאות מדומה?</h3>
+      <div class="ans m-maxh"><p>מציאות מדומה היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת מימדית כאילו הוא נמצא שם. באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית לפני הבנייה.</p></div>
+    </button>
+  </div>
+  <div class="bar"></div><div class="num"></div>
+</div>
+
+<div class="case" data-case="B" data-how="height:0 + opacity:0 בתוך ה-button (התיקון שעלה)">
+  <p class="lbl"><b>B</b> height:0 + opacity:0 בתוך ה-button - התיקון שעלה עכשיו</p>
+  <div class="wrap">
+    <button class="q"><h3>מה זה בכלל מציאות מדומה?</h3>
+      <div class="ans m-h0"><p>מציאות מדומה היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת מימדית כאילו הוא נמצא שם. באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית לפני הבנייה.</p></div>
+    </button>
+  </div>
+  <div class="bar"></div><div class="num"></div>
+</div>
+
+<div class="case" data-case="C" data-how="display:none בתוך ה-button">
+  <p class="lbl"><b>C</b> display:none בתוך ה-button</p>
+  <div class="wrap">
+    <button class="q"><h3>מה זה בכלל מציאות מדומה?</h3>
+      <div class="ans m-none"><p>מציאות מדומה היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת מימדית כאילו הוא נמצא שם. באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית לפני הבנייה.</p></div>
+    </button>
+  </div>
+  <div class="bar"></div><div class="num"></div>
+</div>
+
+<div class="case" data-case="D" data-how="height:0 מחוץ ל-button (אח, לא ילד)">
+  <p class="lbl"><b>D</b> height:0 מחוץ ל-button - התשובה כאלמנט אח</p>
+  <div class="wrap">
+    <button class="q"><h3>מה זה בכלל מציאות מדומה?</h3></button>
+    <div class="ans m-h0"><p>מציאות מדומה היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת מימדית כאילו הוא נמצא שם. באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית לפני הבנייה.</p></div>
+  </div>
+  <div class="bar"></div><div class="num"></div>
+</div>
+
+<script>
+/* one line of numbers per case, measured on the device that is looking */
+window.addEventListener('load', function () {
+  var parts = [];
+  document.querySelectorAll('.case').forEach(function (c) {
+    var wrap = c.querySelector('.wrap');
+    var btn = c.querySelector('.q');
+    var bar = c.querySelector('.bar');
+    var wrapH = Math.round(wrap.getBoundingClientRect().height);
+    var btnH = Math.round(btn.getBoundingClientRect().height);
+    var gap = Math.round(bar.getBoundingClientRect().top - btn.getBoundingClientRect().bottom);
+    var bad = wrapH > btnH + 2 || btnH > 60;
+    c.querySelector('.num').innerHTML =
+      c.dataset.case + ': button ' + btnH + 'px, block ' + wrapH + 'px, gap ' + gap + 'px ' +
+      '<span class="' + (bad ? 'bad' : 'ok') + '">' + (bad ? 'VOID' : 'OK') + '</span>';
+    parts.push(c.dataset.case + '=' + btnH + '/' + wrapH + '/' + gap + (bad ? '!' : ''));
+  });
+  document.getElementById('sum').textContent =
+    parts.join('  ') + '   |   ' + Math.round(window.innerWidth) + 'px   |   ' +
+    navigator.userAgent;
+});
+</script>
+</body>
+</html>
