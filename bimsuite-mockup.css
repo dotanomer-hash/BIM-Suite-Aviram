@@ -528,7 +528,18 @@
    deliberately NOT touching overflow here - hiding the scrollbar mid-fold reflows the
    page by its width and shows up as a jump on the first frame. */
 html.morphing body{perspective:1600px}
-html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform}
+html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform;
+  position:relative;z-index:1}          /* stays above the suite backdrop while it folds */
+
+/* the suite, rendered behind the folding page so the return has somewhere to land.
+   left:0 + an inline top of scrollY - see the containing-block note in suite-morph.js.
+   It starts invisible and is switched on by its own load event, so a backdrop that
+   never arrives simply leaves the old behaviour rather than flashing a blank frame. */
+#bgstage{position:absolute;left:0;z-index:0;border:0;pointer-events:none;
+  opacity:0;background:var(--ground)}
+#bgstage.on{opacity:1}
+/* the backdrop copy of the suite is scenery, never a target */
+html.bgstage{pointer-events:none}
 
 /* ==================================================================================
    the window flips into its own page  (see suite-morph.js)

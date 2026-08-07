@@ -57,11 +57,48 @@
   };
   var SUITE = "bimsuite-mockup.html";
 
+  /* ================= backdrop mode =================
+     ?bg=cN means this document is being rendered INSIDE the folding page, as the thing
+     you see behind it. It shows the suite exactly as the real arrival will, minus the
+     one window that is about to turn in - so the fold reveals a suite with a hole in
+     it, and the window flies into that hole. Nothing here is interactive, so every
+     handler below is skipped. */
+  var BG = (location.search.match(/[?&]bg=(c[1-4])/) || [])[1];
+  if (BG) {
+    document.documentElement.className += " fromproduct bgstage";
+    var bgWrap = document.querySelector(".winwrap." + BG);
+    if (bgWrap) {
+      bgWrap.style.visibility = "hidden";
+      /* park the view where the real arrival parks it, or the reveal jumps on navigate */
+      var bgH = document.documentElement.clientHeight;
+      var bgR = bgWrap.getBoundingClientRect();
+      window.scrollTo(0, window.scrollY + bgR.top + bgR.height / 2 - bgH / 2);
+    }
+    /* a hidden backdrop must not pull four videos down the wire - posters are enough */
+    Array.prototype.forEach.call(document.querySelectorAll("video"), function (v) {
+      v.removeAttribute("autoplay");
+      Array.prototype.forEach.call(v.querySelectorAll("source"), function (s) {
+        s.parentNode.removeChild(s);
+      });
+      v.removeAttribute("src");
+      try { v.load(); } catch (e) {}
+    });
+    return;
+  }
+
   /* The beats OVERLAP on purpose. First pass ran them end to end - flip, then colour,
      then titles - and it read as a queue of separate events instead of one move.
      Each beat now starts while the one before it is still running. */
   var FLIP = 860;      // grow + flip; the faces swap at FLIP/2, edge-on, unseen
-  var NAV  = 1560;     // navigate under full cover
+  var NAV  = 1500;     // navigate under full cover
+
+  /* The arrival beats used cubic-bezier(.2,.75,.2,1). Measured on the tag rise, that
+     curve leaves at 3.75x its own average speed (.75/.2) and the trace agrees: the tag
+     covers 93% of its 63px in the first 300ms, then spends the last 320ms crawling the
+     remaining 4px. Same curve, same 3.7x, on the title. Dart, then nothing - which is
+     the pulse. This one leaves at 1.56x average (.5/.32) and still parks at zero, so
+     the beats decelerate into place instead of snapping and waiting. */
+  var EASE_SETTLE = "cubic-bezier(.32,.5,.28,1)";
 
   if (!document.body || !document.body.animate) return;                 // no WAAPI -> plain link
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -228,6 +265,26 @@
         H = document.documentElement.clientHeight;
     var root = document.querySelector(".min-h-screen") || document.body;
 
+    /* ---------- put the suite behind BEFORE anything turns ----------
+       The fold used to end on the body background, and the page it folds toward has
+       --ground #f7f5fb - within 3% of white. So tinting the backdrop would still read
+       as folding into nothing; only the real page fixes it. This also warms the cache
+       for the navigation that follows, so the handover lands on a painted page.
+       position:absolute at the current scrollY, NOT fixed: html.morphing puts a
+       perspective on <body>, which makes body the containing block for fixed children,
+       and inset:0 would then pin the backdrop to the top of a 1782px document instead
+       of to the screen. */
+    var bg = document.createElement("iframe");
+    bg.id = "bgstage";
+    bg.setAttribute("aria-hidden", "true");
+    bg.setAttribute("tabindex", "-1");
+    bg.style.top = window.scrollY + "px";
+    bg.style.width = W + "px";
+    bg.style.height = H + "px";
+    bg.addEventListener("load", function () { bg.classList.add("on"); });
+    bg.src = SUITE + "?bg=" + p.hue;
+    document.body.insertBefore(bg, document.body.firstChild);
+
     /* the page is taller than the viewport and scrolled, so the pivot has to be the
        centre of what is ON SCREEN, not the centre of the document */
     root.style.transformOrigin = "50% " + Math.round(window.scrollY + H / 2) + "px";
@@ -351,18 +408,18 @@
     tag.animate([
       {transform: "translateY(" + dy + "px) scale(" + k + ")", opacity: 1},
       {transform: "translateY(0px) scale(1)", opacity: .92}
-    ], {duration: 620, delay: FLIP - 200, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+    ], {duration: 540, delay: FLIP - 200, easing: EASE_SETTLE, fill: "both"});
 
     /* ---------- and the product title takes the place it left ---------- */
     h1.animate([
       {transform: "translateY(34px) scale(.95)", opacity: 0},
       {transform: "translateY(0px) scale(1)", opacity: 1}
-    ], {duration: 560, delay: FLIP + 40, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+    ], {duration: 500, delay: FLIP + 40, easing: EASE_SETTLE, fill: "both"});
 
     hero.querySelector(".mh-sub").animate([
       {transform: "translateY(16px)", opacity: 0},
       {transform: "translateY(0px)", opacity: 1}
-    ], {duration: 460, delay: FLIP + 180, easing: "cubic-bezier(.2,.75,.2,1)", fill: "both"});
+    ], {duration: 420, delay: FLIP + 180, easing: EASE_SETTLE, fill: "both"});
 
     /* the page we hand over to is told to skip its own entrance, so the landing is seamless */
     setTimeout(function () {
