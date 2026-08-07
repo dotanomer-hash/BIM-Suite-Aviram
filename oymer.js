@@ -205,9 +205,14 @@ var OYMER_SERVICES = [
     function closeAll() {
       btns.forEach(function (b) {
         var pnl = b.querySelector(".oymer-ans"); if (pnl) pnl.style.maxHeight = "0px";
+        /* The first question ships pre-styled OPEN in the Base44 markup, so the
+           closed look has to strip those classes as well: an inline background
+           still leaves bg-sky-50 on the element, and clearing the svg transform
+           lets the baked-in rotation reassert rather than removing it. */
+        b.classList.remove("bg-sky-50", "border-sky-200", "shadow-lg");
         b.style.background = "#fff"; b.style.borderColor = "#e2e8f0"; b.style.boxShadow = "none";
-        var h = b.querySelector("h3"); if (h) h.style.color = "#0f172a";
-        var s = b.querySelector("svg"); if (s) s.style.transform = "";
+        var h = b.querySelector("h3"); if (h) { h.classList.remove("text-sky-700"); h.style.color = "#0f172a"; }
+        var s = b.querySelector("svg"); if (s) s.style.transform = "rotate(0deg)";
       });
     }
 
