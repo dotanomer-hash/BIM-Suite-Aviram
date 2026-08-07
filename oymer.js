@@ -204,8 +204,15 @@ var OYMER_SERVICES = [
 
     function closeAll() {
       btns.forEach(function (b) {
+        /* REMOVE the answer, do not collapse it. Every collapsed-box trick -
+           max-height:0, height:0, overflow:hidden - asks the engine to lay out
+           a box at zero while its content is not zero, and inside a <button>
+           WebKit reserved the content height anyway and painted nothing: an
+           invisible answer-sized void under every question on iPhone, invisible
+           on desktop. An element that is not in the DOM cannot reserve space in
+           any engine. That is why this is not another attempt at the same bet. */
         var pnl = b.querySelector(".oymer-ans");
-        if (pnl) { pnl.style.height = "0px"; pnl.style.opacity = "0"; }
+        if (pnl) pnl.parentNode.removeChild(pnl);
         /* The first question ships pre-styled OPEN in the Base44 markup, so the
            closed look has to strip those classes as well: an inline background
            still leaves bg-sky-50 on the element, and clearing the svg transform
@@ -220,27 +227,24 @@ var OYMER_SERVICES = [
     btns.forEach(function (btn, i) {
       var ex = btn.querySelector(".overflow-hidden"); if (ex) ex.remove();
       var ans = window.OYMER_FAQ[i]; if (ans == null) return;
-      var panel = document.createElement("div");
-      panel.className = "oymer-ans";
-      /* height:0 + opacity:0, NOT max-height:0 - the Base44 original closed it
-         this way and it was right. The panel is a child of a <button>, and in
-         WebKit a button's content box lays a child out at its content height
-         while still clipping the paint, so max-height:0 leaves an invisible
-         answer-sized void on iPhone. height:0 is unambiguous everywhere. */
-      panel.style.cssText = "overflow:hidden;height:0;opacity:0;transition:height .3s ease,opacity .3s ease;";
-      var p = document.createElement("p");
-      p.className = "mt-4 text-slate-600 leading-relaxed";
-      p.style.cssText = "text-align:right;margin-top:16px;";
-      p.textContent = ans;
-      panel.appendChild(p);
-      btn.appendChild(panel);
       btn.style.cursor = "pointer";
       btn.addEventListener("click", function () {
-        var isOpen = panel.style.height && panel.style.height !== "0px";
+        var isOpen = !!btn.querySelector(".oymer-ans");
         closeAll();
         if (!isOpen) {
-          panel.style.height = (panel.scrollHeight + 8) + "px";
-          panel.style.opacity = "1";
+          /* built on open, removed on close - it exists only while it is read */
+          var panel = document.createElement("div");
+          panel.className = "oymer-ans";
+          /* opacity only. It never affects layout, so the fade cannot leave a
+             void behind if an engine disagrees about the transition. */
+          panel.style.cssText = "opacity:0;transition:opacity .25s ease;";
+          var p = document.createElement("p");
+          p.className = "mt-4 text-slate-600 leading-relaxed";
+          p.style.cssText = "text-align:right;margin-top:16px;";
+          p.textContent = ans;
+          panel.appendChild(p);
+          btn.appendChild(panel);
+          requestAnimationFrame(function () { panel.style.opacity = "1"; });
           btn.style.background = "#f0f9ff"; btn.style.borderColor = "#bae6fd";
           btn.style.boxShadow = "0 10px 15px -3px rgba(2,132,199,.15)";
           var h = btn.querySelector("h3"); if (h) h.style.color = "#0369a1";
