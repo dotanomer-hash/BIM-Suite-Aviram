@@ -1,16 +1,16 @@
-/* oYmer VR site — restores interactions lost when Base44's React was stripped:
+/* oYmer VR site - restores interactions lost when Base44's React was stripped:
    services dropdown, FAQ accordion (+open frame), mobile menu, scroll animations,
    and a self-hosted accessibility menu. Vanilla JS, no dependencies. */
 
 window.OYMER_FAQ = [
-  "מציאות מדומה (VR) היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת־מימדית \"כאילו הוא נמצא שם\". באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית – לפני הבנייה.",
-  "היתרון המרכזי הוא מעבר מ\"דמיון מתוך שרטוט\" לחוויה מרחבית אמיתית. כך קל יותר לזהות בזמן: מסדרון צר, חלון גבוה מדי, זרימה לא נכונה, קשרי מבט, פרופורציות ותחושת מרחב כללית. כשזה מתגלה מוקדם — התיקון מהיר וזול יותר.",
-  "כי VR מפחית אי־הבנות, \"מיישר קו\" בין צוותי תכנון ובין אדריכל–לקוח, ומקצר זמן החלטות. בנוסף — זו חוויה רגשית חזקה שמעלה אמון וביטחון בהחלטות התכנון.",
+  "מציאות מדומה (VR) היא טכנולוגיה שמכניסה את המשתמש לתוך סביבה תלת־מימדית \"כאילו הוא נמצא שם\". באדריכלות זה מאפשר לחוות חלל בקנה מידה 1:1, להבין פרופורציות, זרימה ותחושה מרחבית - לפני הבנייה.",
+  "היתרון המרכזי הוא מעבר מ\"דמיון מתוך שרטוט\" לחוויה מרחבית אמיתית. כך קל יותר לזהות בזמן: מסדרון צר, חלון גבוה מדי, זרימה לא נכונה, קשרי מבט, פרופורציות ותחושת מרחב כללית. כשזה מתגלה מוקדם - התיקון מהיר וזול יותר.",
+  "כי VR מפחית אי־הבנות, \"מיישר קו\" בין צוותי תכנון ובין אדריכל-לקוח, ומקצר זמן החלטות. בנוסף - זו חוויה רגשית חזקה שמעלה אמון וביטחון בהחלטות התכנון.",
   "כמעט בכל פרויקט שבו חשוב להבין חלל לפני ביצוע: דירות ובתים פרטיים, משרדים, מסחר, לובאים, מבני ציבור, וגם פרויקטים יזמיים שבהם נדרש שילוב של תכנון + מכירה/שיווק.",
   "כן. סיור VR (ובעיקר סיור מוכן מראש) הוא כלי מצוין להצגת הפתרון המוצע ללקוח, להמחשה ברורה של ערך הפרויקט וליצירת \"וואו\". מתאים למצגות מכירה, שיווק פרויקטים והדגמות.",
   "אין צורך בידע מוקדם. המערכת פשוטה לתפעול ומלווה בהדרכה ברורה, כך שגם משתמשים חדשים יכולים להתנסות ולחוות סיור וירטואלי בקלות. כמובן שככל שצוברים יותר שעות בתוך סביבת ה-VR כך משתפרת תחושת הנוחות.",
   "לא בהכרח. ניתן לבצע סיור דינמי גם מרחוק ולהצטרף ממחשב/טאבלט/טלפון. יחד עם זאת, החוויה המלאה מתקבלת בתוך החלל הוירטואלי בעת חבישת קסדת VR.",
-  "סוג הסיור נגזר מצרכי הפרויקט. מטרתו העיקרית של סיור דינמי — תכנון אדריכלי בחלל וירטואלי, שיתוף פעולה בין אנשי צוות, מציאת בעיות ועוד. מטרתו העיקרית של סיור מוכן מראש — הצגת הפתרון המוצע ללקוח, והוא מיועד להתרשמות ויזואלית מהחלל המתוכנן לפני בנייתו בפועל.",
+  "סוג הסיור נגזר מצרכי הפרויקט. מטרתו העיקרית של סיור דינמי - תכנון אדריכלי בחלל וירטואלי, שיתוף פעולה בין אנשי צוות, מציאת בעיות ועוד. מטרתו העיקרית של סיור מוכן מראש - הצגת הפתרון המוצע ללקוח, והוא מיועד להתרשמות ויזואלית מהחלל המתוכנן לפני בנייתו בפועל.",
   "תלוי בסוג הסיור. בסיור מודרך שעה עד שעתיים. בסיור מוכן מראש הלקוח קובע את קצב ההתקדמות."
 ];
 
@@ -114,6 +114,19 @@ var OYMER_SERVICES = [
     if (!("IntersectionObserver" in window)) {
       els.forEach(function (e) { e.style.opacity = 1; e.style.transform = "none"; });
       return;
+    }
+    /* Phone and tablet: the reveal slides in from the SIDE, and an element still
+       holding translateX(50px) below the fold sticks 50px past the right edge -
+       that is what makes the whole page scroll sideways on a phone. Vertical on
+       narrow screens: same reveal, no horizontal overflow. */
+    if (window.innerWidth < 1024) {
+      els.forEach(function (e) {
+        var t = e.style.transform || "";
+        if (/translateX\(/i.test(t)) {
+          var px = parseFloat(t.replace(/.*translateX\(\s*(-?[\d.]+)px.*/i, "$1")) || 0;
+          e.style.transform = "translateY(" + (Math.abs(px) > 30 ? 30 : Math.abs(px)) + "px)";
+        }
+      });
     }
     els.forEach(function (e) { e.style.transition = "opacity .7s ease, transform .7s ease"; });
     var io = new IntersectionObserver(function (entries) {
@@ -346,4 +359,50 @@ var OYMER_SERVICES = [
     document.body.appendChild(panel);
     apply();
   }
+})();
+
+/* Email links: mailto still fires for anyone with a mail client, but the address is
+   also copied to the clipboard and a toast offers a Gmail compose window - so a
+   visitor with no mail handler is never left with a dead click. */
+(function () {
+  function toast(addr) {
+    var old = document.getElementById("oymer-mail-toast");
+    if (old) old.remove();
+    var t = document.createElement("div");
+    t.id = "oymer-mail-toast";
+    t.setAttribute("dir", "rtl");
+    t.style.cssText = "position:fixed;z-index:9999;bottom:26px;left:50%;transform:translateX(-50%);" +
+      "background:#0f172a;color:#fff;padding:14px 20px;border-radius:14px;font-size:15px;" +
+      "box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;align-items:center;gap:14px;" +
+      "font-family:inherit;max-width:92vw;opacity:0;transition:opacity .25s";
+    t.innerHTML = '<span>הכתובת הועתקה: <b dir="ltr" style="unicode-bidi:isolate">' + addr + '</b></span>' +
+      '<a href="https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(addr) + '" ' +
+      'target="_blank" rel="noopener noreferrer" ' +
+      'style="background:#0284c7;color:#fff;padding:7px 14px;border-radius:9px;text-decoration:none;' +
+      'font-weight:600;white-space:nowrap">פתח ב-Gmail</a>';
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.style.opacity = "1"; });
+    setTimeout(function () {
+      t.style.opacity = "0";
+      setTimeout(function () { if (t.parentNode) t.remove(); }, 300);
+    }, 7000);
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+    if (!a) return;
+    var addr = a.getAttribute("href").slice(7).split("?")[0];
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(function () { toast(addr); }, function () { toast(addr); });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = addr;
+      ta.style.cssText = "position:fixed;top:-1000px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (err) {}
+      ta.remove();
+      toast(addr);
+    }
+  });
 })();

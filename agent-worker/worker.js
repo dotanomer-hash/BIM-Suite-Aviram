@@ -1,5 +1,5 @@
 /*
- * oYmer VR — website AI agent (Cloudflare Worker)
+ * oYmer VR - website AI agent (Cloudflare Worker)
  * -------------------------------------------------
  * Holds the Anthropic API key SECRETLY (never sent to the browser) and proxies
  * chat messages from omerdotan.com to Claude. Deploy on Cloudflare Workers (free).
@@ -10,11 +10,11 @@
  *   3. Deploy. Put the Worker URL into agent.js -> AGENT_CONFIG.endpoint.
  *
  * Safety built in: only omerdotan.com may call it, history is capped, each message
- * is length-limited, replies are capped, and the model is Haiku (cheap). Combined
+ * is length-limited, replies are capped, and the model is Sonnet. Combined
  * with the spending cap you set in the Anthropic console, cost can never surprise you.
  */
 
-const MODEL = "claude-haiku-4-5-20251001";     // cheap + fast; good for a website agent
+const MODEL = "claude-sonnet-5";               // Haiku's Hebrew was the source of the mistakes
 const MAX_TOKENS = 512;                          // cap reply length (cost control)
 const MAX_HISTORY = 12;                          // cap conversation turns sent upstream
 const MAX_CHARS = 2000;                           // cap per-message length
@@ -32,7 +32,7 @@ const remapEnToHe = (s) => s.replace(/[a-z;,.\/]/gi, (c) => EN2HE[c.toLowerCase(
 const remapHeToEn = (s) => s.replace(/[֐-׿]/g, (c) => HE2EN[c] || c);
 
 // The editable knowledge file lives on the site. Edit THAT file to update the bot's
-// facts next year — no code change, no redeploy. Cached ~1h so it costs almost nothing.
+// facts next year - no code change, no redeploy. Cached ~1h so it costs almost nothing.
 const KNOWLEDGE_URL = "https://omerdotan.com/agent-knowledge.md";
 const KNOWLEDGE_TTL = 3600; // seconds
 
@@ -44,26 +44,28 @@ const ALLOWED_ORIGINS = [
   "https://dotanomer-hash.github.io", // GitHub Pages origin (fallback during transitions)
 ];
 
-/* PERSONA + RULES — rarely change, so they stay in code.
+/* PERSONA + RULES - rarely change, so they stay in code.
    The FACTS come from KNOWLEDGE_URL and are appended at runtime. */
-const PERSONA = `את/ה "העוזר/ת החכם/ה של עומר דותן" — עוזר/ת וירטואלי/ת באתר של עומר דותן, שמביא טכנולוגיית מציאות מדומה (VR) לעולם האדריכלות. (oYmer הוא שם חבילת המוצרים של עומר: oYmer DecisionMaker, oYmer VR Tours וכו'.)
+const PERSONA = `את/ה "העוזר/ת החכם/ה של עומר דותן" - עוזר/ת וירטואלי/ת באתר של עומר דותן, שמביא טכנולוגיית מציאות מדומה (VR) לעולם האדריכלות. (oYmer הוא שם חבילת המוצרים של עומר: oYmer DecisionMaker, oYmer VR Tours וכו'.)
 
 ## התפקיד שלך
-לענות בעברית, בחום ובמקצועיות, על שאלות של אדריכלים, יזמים, קבלנים ולקוחות פוטנציאליים — ולעזור למתעניינים ליצור קשר עם עומר.
+לענות בעברית, בחום ובמקצועיות, על שאלות של אדריכלים, יזמים, קבלנים ולקוחות פוטנציאליים - ולעזור למתעניינים ליצור קשר עם עומר.
 
 ## איך לענות
 - ענה תמיד בעברית, אלא אם פנו אליך בשפה אחרת (אז ענה באותה שפה).
-- ענה ישירות, בביטחון ובחום — בדרך כלל 2 עד 5 משפטים. בלי הצפה.
-- **ענה על השאלה שנשאלה.** אם השאלה ברורה — פשוט ענה עליה על סמך הידע. לעולם אל תאמר שההודעה "מעורבלת", "לא ברורה" או "הגיעה מוזר", ואל תבקש מהמשתמש לנסח מחדש שאלה שכבר ברורה.
-- בסס את התשובות על "בסיס הידע" שלמטה ועל האתר. אל תמציא עובדות, מחירים, לוחות זמנים או הבטחות שאינם שם. אם פרט מסוים חסר — ענה את מה שכן ידוע, והצע ליצור קשר עם עומר להשלמה.
-- כשמורגש עניין אמיתי — הצע בעדינות להשאיר שם וטלפון דרך טופס "צור קשר", או להתקשר/לכתוב לעומר ישירות.
+- **עברית תקנית וטבעית.** כתוב כמו דובר עברית ילידי, לא כמו תרגום מאנגלית: התאמת מין ומספר נכונה, סמיכות נכונה, מילות יחס נכונות, בלי תחביר אנגלי. מונחים מקצועיים (VR, BIM, Revit, oYmer) נשארים באנגלית. אל תמציא מילים בעברית - אם אתה לא בטוח במונח, השתמש במונח האנגלי.
+- סיים כל תשובה במשפט שלם. אם אתה מתקרב לאורך המקסימלי - קצר את התשובה מראש, אל תיקטע באמצע.
+- ענה ישירות, בביטחון ובחום - בדרך כלל 2 עד 5 משפטים. בלי הצפה.
+- **ענה על השאלה שנשאלה.** אם השאלה ברורה - פשוט ענה עליה על סמך הידע. לעולם אל תאמר שההודעה "מעורבלת", "לא ברורה" או "הגיעה מוזר", ואל תבקש מהמשתמש לנסח מחדש שאלה שכבר ברורה.
+- בסס את התשובות על "בסיס הידע" שלמטה ועל האתר. אל תמציא עובדות, מחירים, לוחות זמנים או הבטחות שאינם שם. אם פרט מסוים חסר - ענה את מה שכן ידוע, והצע ליצור קשר עם עומר להשלמה.
+- כשמורגש עניין אמיתי - הצע בעדינות להשאיר שם וטלפון דרך טופס "צור קשר", או להתקשר/לכתוב לעומר ישירות.
 - הישאר בתחום: VR לאדריכלות והשירותים של עומר דותן. לשאלות שאינן קשורות, השב בנימוס שאתה כאן בשביל נושאי ה-VR והאדריכלות.
 
-## מחירים — חשוב
-לעולם אל תנקוב במחיר, טווח מחירים או הצעת מחיר. המחיר תלוי בהיקף ובאופי הפרויקט. כשנשאלת על מחיר — הסבר זאת בקצרה, והצע ליצור קשר עם עומר לקבלת הצעה אישית: זו בדיוק הדרך לקבל מענה מדויק.
+## מחירים - חשוב
+לעולם אל תנקוב במחיר, טווח מחירים או הצעת מחיר. המחיר תלוי בהיקף ובאופי הפרויקט. כשנשאלת על מחיר - הסבר זאת בקצרה, והצע ליצור קשר עם עומר לקבלת הצעה אישית: זו בדיוק הדרך לקבל מענה מדויק.
 
 ## פריסת מקלדת שגויה
-המערכת מתקנת אוטומטית (בקוד) הודעות שהוקלדו בטעות בפריסת מקלדת שגויה, כך שתקבל טקסט עברי נקי. אם תצורף "הערה" שמנחה אותך לפתוח ב-"(הבנתי שהתכוונת ל: ...)" — עשה זאת, וענה על ההודעה המתוקנת כרגיל וכפי שהיא, גם אם השאלה מפתיעה (למשל "בן כמה עומר?" = שאלה לגיטימית על הגיל/הניסיון של עומר).
+המערכת מתקנת אוטומטית (בקוד) הודעות שהוקלדו בטעות בפריסת מקלדת שגויה, כך שתקבל טקסט עברי נקי. אם תצורף "הערה" שמנחה אותך לפתוח ב-"(הבנתי שהתכוונת ל: ...)" - עשה זאת, וענה על ההודעה המתוקנת כרגיל וכפי שהיא, גם אם השאלה מפתיעה (למשל "בן כמה עומר?" = שאלה לגיטימית על הגיל/הניסיון של עומר).
 
 ## פרטי קשר
 - טלפון / וואטסאפ: 054-466-8800
@@ -123,6 +125,19 @@ async function callClaude(env, { system, messages, max_tokens }) {
   });
   if (!resp.ok) throw new Error("upstream_" + resp.status);
   const data = await resp.json();
+  // Shows up in the Cloudflare worker log. cache_read > 0 on a follow-up turn
+  // means the caching is actually working; if it stays 0, something upstream of
+  // the breakpoint is changing between requests.
+  const u = data.usage || {};
+  console.log(
+    "usage " +
+      JSON.stringify({
+        in: u.input_tokens,
+        out: u.output_tokens,
+        cache_write: u.cache_creation_input_tokens,
+        cache_read: u.cache_read_input_tokens,
+      })
+  );
   return (data.content || []).filter((c) => c.type === "text").map((c) => c.text).join("\n").trim();
 }
 
@@ -142,8 +157,8 @@ async function resolveLayout(text, env) {
       max_tokens: 6,
       system:
         "הכרעה בלבד. מוצגים 'מקורי' ו'פענוח' של הקלדה אפשרית בפריסת מקלדת שגויה. " +
-        "אם המקורי הוא טקסט אמיתי וקריא (למשל אנגלית) — השב NO. " +
-        "אם הפענוח הוא הטקסט האמיתי והקריא (עברית) — השב YES. השב מילה אחת בלבד: YES או NO.",
+        "אם המקורי הוא טקסט אמיתי וקריא (למשל אנגלית) - השב NO. " +
+        "אם הפענוח הוא הטקסט האמיתי והקריא (עברית) - השב YES. השב מילה אחת בלבד: YES או NO.",
       messages: [{ role: "user", content: "מקורי: " + text + "\nפענוח: " + decoded }],
     });
   } catch (_) {
@@ -197,10 +212,23 @@ export default {
       messages[messages.length - 1] = { role: "user", content: layout.text };
       kbNote =
         '\n\n---\n# הערה\nהודעת המשתמש תוקנה אוטומטית מטעות פריסת מקלדת. ' +
-        'פתח את תשובתך ב-"(הבנתי שהתכוונת ל: \\"' + layout.text + '\\") —" ואז ענה על ההודעה כרגיל.';
+        'פתח את תשובתך ב-"(הבנתי שהתכוונת ל: \\"' + layout.text + '\\") -" ואז ענה על ההודעה כרגיל.';
     }
 
-    const system = PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge + kbNote;
+    /* The system prompt goes up as BLOCKS, not one string, so the big stable part
+       (persona + the whole knowledge base) can be cached. On a repeat turn inside
+       a conversation it bills at ~10% of the input price instead of full.
+       Caching is a prefix match: everything before the breakpoint must be
+       byte-identical every time, so the keyboard-layout note - which contains the
+       user's own text and changes per message - goes AFTER it, never before. */
+    const system = [
+      {
+        type: "text",
+        text: PERSONA + "\n\n---\n# בסיס הידע\n" + knowledge,
+        cache_control: { type: "ephemeral" },
+      },
+    ];
+    if (kbNote) system.push({ type: "text", text: kbNote });
 
     let reply;
     try {
