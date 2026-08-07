@@ -265,7 +265,8 @@
      is tuned to enter at that measured number rather than at a theoretical one.
      entry slope .30/.33 = 0.91 -> 0.91 x (90/520) = 0.157 deg/ms, matching the fold. */
   var EASE_OUT_HALF = "cubic-bezier(.4,0,.75,.55)";     // accelerating away
-  var EASE_IN_HALF  = "cubic-bezier(.33,.40,.45,1)";    // enters at the fold's exit speed
+  /* the arrival's easing now lives per-keyframe on the animation itself, because it
+     ends in a damped settle rather than a single curve - see the turn-in below */
 
   function flyBack(p) {
     var W = document.documentElement.clientWidth,
@@ -327,10 +328,21 @@
     /* transform only - .fromproduct pins opacity with !important, and an !important
        author declaration beats an animation, so opacity keyframes here would be dead
        code. it turns in at full strength, which reads cleaner than a fade anyway. */
+    /* The turn used to be two keyframes on one long-tailed curve, and measured it
+       crawled: 94.4% of the travel in the first half, then 350ms to cover the last
+       5.6% - the window arrived and then inched into place, which is what read as
+       "not smooth towards the end".
+       Omer's suggestion, and it is the right one: give it somewhere to go instead of
+       somewhere to creep. It now turns a little PAST flat, comes back short, and
+       settles - a damped landing rather than an asymptote. The eye reads weight, and
+       the motion ends because it arrives, not because it ran out of curve. */
     wrap.animate([
-      {transform: "rotateY(-90deg) scale(.82)"},
-      {transform: "none"}
-    ], {duration: TURN_IN, easing: EASE_IN_HALF});
+      { transform: "rotateY(-90deg) scale(.82)",   easing: "cubic-bezier(.30,.45,.30,1)", offset: 0 },
+      { transform: "rotateY(9deg) scale(1.028)",   easing: "cubic-bezier(.40,0,.30,1)",   offset: .68 },
+      { transform: "rotateY(-3deg) scale(.991)",   easing: "cubic-bezier(.40,0,.30,1)",   offset: .85 },
+      { transform: "rotateY(1deg) scale(1.004)",   easing: "ease-out",                    offset: .945 },
+      { transform: "none",                                                                offset: 1 }
+    ], { duration: TURN_IN });
     if (window.history.replaceState) {
       history.replaceState(null, "", location.pathname);    // don't replay on refresh
     }
