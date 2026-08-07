@@ -500,6 +500,12 @@
 .backsuite.c3{--c:79,125,255;--cd:44,82,196;--con:#ffffff}
 .backsuite.c4{--c:43,179,163;--cd:22,124,113;--con:#052b27}
 .backsuite{background:var(--ground);padding:0 0 78px;text-align:center}
+/* M11. `.ltr` is declared as `.suite .ltr`, and .backsuite is a SIBLING of .suite, not a
+   child - so the class did nothing here and the run stayed RTL. Measured: the word "Suite"
+   sat at x 691-762 while its own copyright mark sat at x 529, i.e. at the visual START of
+   the line. Same scoping trap as --c/--cd/--con on this section. isolate, not embed, so the
+   mark cannot escape the LTR run. */
+.backsuite .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
 /* no frame, no pill - it reads as a title, in the same Rubik weight and hue as the
    name above each window. .suite a{color:inherit} outranks a single class, so this
    has to be at least as specific or the label falls back to the body grey. */
