@@ -236,6 +236,12 @@ var OYMER_SERVICES = [
         }
       });
     });
+
+    /* The first question ships from Base44 with the OPEN styling baked into its
+       markup (bg-sky-50, border, shadow, rotated chevron) while the panel we
+       build starts closed - so it renders as a highlighted header above an empty
+       void with no answer text. Normalise every button to match its real state. */
+    closeAll();
   }
 
   /* ---- mobile hamburger menu ---- */
