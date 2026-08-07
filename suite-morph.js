@@ -58,12 +58,19 @@
   var SUITE = "bimsuite.html";
 
   /* ================= backdrop mode =================
-     ?bg=cN means this document is being rendered INSIDE the folding page, as the thing
-     you see behind it. It shows the suite exactly as the real arrival will, minus the
-     one window that is about to turn in - so the fold reveals a suite with a hole in
-     it, and the window flies into that hole. Nothing here is interactive, so every
-     handler below is skipped. */
-  var BG = (location.search.match(/[?&]bg=(c[1-4])/) || [])[1];
+     This document is being rendered INSIDE the folding page, as the thing you see
+     behind it. It shows the suite exactly as the real arrival will, minus the one
+     window that is about to turn in - so the fold reveals a suite with a hole in it,
+     and the window flies into that hole. Nothing here is interactive, so every handler
+     below is skipped.
+
+     The flag is the HASH (#bg), not a query. Measured on the host: with `?bg=c3` the
+     backdrop and the navigation that follows are two DIFFERENT urls, so the browser
+     cached the backdrop and then refetched the suite for real - transferSize 4574,
+     htmlFromCache false, and 865ms of nothing between the fold ending and the window
+     turning in. A hash is not part of the cache key and is never sent to the server,
+     so the backdrop now warms the EXACT url the navigation asks for. */
+  var BG = (location.hash.match(/^#bg=(c[1-4])$/) || [])[1];
   if (BG) {
     document.documentElement.className += " fromproduct bgstage";
     var bgWrap = document.querySelector(".winwrap." + BG);
@@ -282,7 +289,9 @@
     bg.style.width = W + "px";
     bg.style.height = H + "px";
     bg.addEventListener("load", function () { bg.classList.add("on"); });
-    bg.src = SUITE + "?bg=" + p.hue;
+    /* the SAME url the navigation will ask for, with the backdrop flag in the hash -
+       so this load populates the cache entry the navigation then hits */
+    bg.src = SUITE + "?to=" + p.hue + "#bg=" + p.hue;
     document.body.insertBefore(bg, document.body.firstChild);
 
     /* the page is taller than the viewport and scrolled, so the pivot has to be the
