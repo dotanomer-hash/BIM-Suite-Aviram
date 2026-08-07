@@ -204,7 +204,8 @@ var OYMER_SERVICES = [
 
     function closeAll() {
       btns.forEach(function (b) {
-        var pnl = b.querySelector(".oymer-ans"); if (pnl) pnl.style.maxHeight = "0px";
+        var pnl = b.querySelector(".oymer-ans");
+        if (pnl) { pnl.style.height = "0px"; pnl.style.opacity = "0"; }
         /* The first question ships pre-styled OPEN in the Base44 markup, so the
            closed look has to strip those classes as well: an inline background
            still leaves bg-sky-50 on the element, and clearing the svg transform
@@ -221,7 +222,12 @@ var OYMER_SERVICES = [
       var ans = window.OYMER_FAQ[i]; if (ans == null) return;
       var panel = document.createElement("div");
       panel.className = "oymer-ans";
-      panel.style.cssText = "overflow:hidden;max-height:0;transition:max-height .35s ease;";
+      /* height:0 + opacity:0, NOT max-height:0 - the Base44 original closed it
+         this way and it was right. The panel is a child of a <button>, and in
+         WebKit a button's content box lays a child out at its content height
+         while still clipping the paint, so max-height:0 leaves an invisible
+         answer-sized void on iPhone. height:0 is unambiguous everywhere. */
+      panel.style.cssText = "overflow:hidden;height:0;opacity:0;transition:height .3s ease,opacity .3s ease;";
       var p = document.createElement("p");
       p.className = "mt-4 text-slate-600 leading-relaxed";
       p.style.cssText = "text-align:right;margin-top:16px;";
@@ -230,10 +236,11 @@ var OYMER_SERVICES = [
       btn.appendChild(panel);
       btn.style.cursor = "pointer";
       btn.addEventListener("click", function () {
-        var isOpen = panel.style.maxHeight && panel.style.maxHeight !== "0px";
+        var isOpen = panel.style.height && panel.style.height !== "0px";
         closeAll();
         if (!isOpen) {
-          panel.style.maxHeight = (panel.scrollHeight + 40) + "px";
+          panel.style.height = (panel.scrollHeight + 8) + "px";
+          panel.style.opacity = "1";
           btn.style.background = "#f0f9ff"; btn.style.borderColor = "#bae6fd";
           btn.style.boxShadow = "0 10px 15px -3px rgba(2,132,199,.15)";
           var h = btn.querySelector("h3"); if (h) h.style.color = "#0369a1";
