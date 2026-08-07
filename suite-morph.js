@@ -362,6 +362,26 @@
     hero.style.height = H + "px";
     hero.innerHTML = heroHTML(p);
 
+    /* ---------- render the destination BEFORE the fold, not after ----------
+       The flip used to end on a fake hero and only THEN navigate, so the browser tore
+       down this document, fetched the real page, parsed and painted it - a blank beat
+       between the animation finishing and the content appearing, which read as the page
+       snapping into existence.
+       So the real page is loaded and painted here, at click, behind the stage: it has
+       the whole flip (~1.5s) to arrive, decode its images and lay itself out. By the
+       time NAV fires it is in cache, warm and already rendered once, and the handover
+       lands on a painted page instead of a white one.
+       z-index 44 puts it directly under #morph (45) and under the header (50), so it is
+       covered for the whole animation. Same idea as the backdrop on the return. */
+    var pre = document.createElement("iframe");
+    pre.id = "prestage";
+    pre.setAttribute("aria-hidden", "true");
+    pre.setAttribute("tabindex", "-1");
+    pre.style.width = W + "px";
+    pre.style.height = H + "px";
+    pre.src = href + "?from=suite";
+    document.body.appendChild(pre);
+
     stage.appendChild(card);
     stage.appendChild(hero);
     document.body.appendChild(stage);
@@ -431,6 +451,7 @@
       if (!e.persisted) return;
       link.style.visibility = "";
       if (stage.parentNode) stage.parentNode.removeChild(stage);
+      if (pre.parentNode) pre.parentNode.removeChild(pre);   // or Back leaves it stacked
     });
   }
 })();

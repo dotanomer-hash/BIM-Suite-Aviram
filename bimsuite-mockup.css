@@ -538,6 +538,11 @@ html.morphing .min-h-screen{backface-visibility:hidden;will-change:transform;
 #bgstage{position:absolute;left:0;z-index:0;border:0;pointer-events:none;
   opacity:0;background:var(--ground)}
 #bgstage.on{opacity:1}
+
+/* The destination page, rendered during the flip so the navigation lands on
+   something already painted. Fixed at the viewport, z-index 44 - directly under
+   #morph (45) and the header (50), so it is covered for the whole animation. */
+#prestage{position:fixed;left:0;top:0;z-index:44;border:0;pointer-events:none}
 /* the backdrop copy of the suite is scenery, never a target */
 html.bgstage{pointer-events:none}
 
