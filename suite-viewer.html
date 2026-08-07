@@ -25,7 +25,6 @@
   </div>
   <div class="inner">
     <a class="bs-suitetag rev" href="bimsuite.html">o<span class="y">Y</span>mer <b>BIM VR</b> Suite<sup class="oyc">&#169;</sup></a>
-    <svg class="bs-lineage" aria-hidden="true"></svg>
     <h1 class="rev"><span class="oy">o<span class="yflash">Y</span>mer</span> Viewer<sup class="oyc">&#169;</sup></h1>
     <p class="sub rev">מודל ה-BIM בתוך מציאות מדומה.</p>
   </div>
@@ -186,94 +185,7 @@
 </script>
 <script src="oymer.js?v=19"></script>
 
-<script src="menu-preview.js?v=7"></script>
+<script src="menu-preview.js?v=8"></script>
 <script src="suite-morph.js?v=14"></script>
-<script>
-/* Drawn from measured geometry AND out of the flow - an in-flow svg pushed the title
-   down, so this hero no longer matched the other product pages. Absolute + zero size
-   until measured means it cannot move anything. */
-(function(){
-  /* MEASURED, not guessed - both entry paths were probed and they disagreed:
-     arriving straight from the menu the tag and the h1 still carried the entrance
-     transform matrix(1,0,0,1,0,24), while arriving from the suite `.fromsuite` had
-     already killed it. getBoundingClientRect INCLUDES that transform, the svg's
-     containing block does not, so the rays landed 24px low on one route and correct
-     on the other. offsetLeft/offsetTop are layout positions and ignore transforms
-     entirely, so both routes now compute the same numbers. */
-  function boxIn(el, root){
-    var x=0, y=0, n=el;
-    while(n && n!==root){ x+=n.offsetLeft; y+=n.offsetTop; n=n.offsetParent; }
-    return {left:x, top:y, width:el.offsetWidth, height:el.offsetHeight};
-  }
-  /* the plane of the BOTTOM OF THE TEXT, not the bottom of the h1 box - the line box
-     carries half-leading plus the font's descent below the glyphs (measured here:
-     box bottom 288.0 vs ink bottom 283.7, so the rays used to overshoot by 4.3px). */
-  function inkBottom(el){
-    var cs=getComputedStyle(el);
-    var fs=parseFloat(cs.fontSize)||16;
-    var lh=parseFloat(cs.lineHeight)||fs*1.2;
-    var lastLineTop=el.offsetHeight-parseFloat(cs.paddingBottom||0)-lh;
-    var half=(lh-fs)/2, asc=fs*0.8, desc=fs*0.02;
-    try{
-      var c=document.createElement('canvas').getContext('2d');
-      c.font=cs.fontStyle+' '+cs.fontWeight+' '+fs+'px '+cs.fontFamily;
-      var m=c.measureText(el.textContent.trim()||'M');
-      if(m.fontBoundingBoxAscent){ asc=m.fontBoundingBoxAscent; desc=m.actualBoundingBoxDescent||0; }
-    }catch(e){}
-    return lastLineTop+half+asc+desc;
-  }
-  /* SUITE RULE: the beams land on the LETTERS, not on the h1 box.
-     Left beam ends at the left edge of the first letter, right beam at the right edge
-     of the LAST LETTER - the trailing (c) superscript is excluded. Measured here: the
-     h1 box runs 447.11 -> 817.70, but the last letter "r" ends at 799.54, so the box
-     was carrying 18px of copyright mark that the right beam was reaching for.
-     Rects cancel the entrance transform because both are read in the same frame. */
-  function letterEdges(h1, hostLeft){
-    var sup=h1.querySelector('sup');
-    var walk=document.createTreeWalker(h1, NodeFilter.SHOW_TEXT), nodes=[], n;
-    while((n=walk.nextNode())){ if(sup&&sup.contains(n)) continue; if(n.textContent.trim()) nodes.push(n); }
-    if(!nodes.length) return null;
-    function edge(node, index){
-      var r=document.createRange(); r.setStart(node,index); r.setEnd(node,index+1);
-      return r.getBoundingClientRect();
-    }
-    var f=nodes[0], ftxt=f.textContent, fi=ftxt.search(/\S/);
-    var l=nodes[nodes.length-1], ltxt=l.textContent, li=ltxt.length-1;
-    while(li>0 && !/\S/.test(ltxt[li])) li--;
-    var a=edge(f,fi), z=edge(l,li), base=h1.getBoundingClientRect().left;
-    return {left: hostLeft+(a.left-base), right: hostLeft+(z.right-base)};
-  }
-  function draw(){
-    var tag=document.querySelector('.bs-suitetag'),
-        h1=document.querySelector('.bs-hero h1'),
-        svg=document.querySelector('.bs-lineage');
-    if(!tag||!h1||!svg) return;
-    var root=svg.offsetParent||document.querySelector('.bs-hero .inner');
-    if(!root) return;
-    var t=boxIn(tag,root), bb=boxIn(h1,root);
-    var e=letterEdges(h1, bb.left) || {left:bb.left, right:bb.left+bb.width};
-    var b={left:e.left, top:bb.top, width:e.right-e.left};
-    var L=Math.min(t.left,b.left), R=Math.max(t.left+t.width,b.left+b.width);
-    var T=t.top+t.height, B=bb.top+inkBottom(h1);
-    var w=R-L, h=B-T;
-    if(w<=0||h<=4){ svg.style.display='none'; return; }
-    svg.style.display='block';
-    svg.style.left=L+'px'; svg.style.top=T+'px';
-    svg.style.width=w+'px'; svg.style.height=h+'px';
-    svg.setAttribute('viewBox','0 0 '+w+' '+h);
-    svg.setAttribute('preserveAspectRatio','none');
-    var N=5, d='';
-    for(var i=0;i<N;i++){
-      var f=i/(N-1);
-      d+='<path d="M'+((t.left-L)+t.width*f).toFixed(1)+' 0 L'
-                    +((b.left-L)+b.width*f).toFixed(1)+' '+h.toFixed(1)+'"/>';
-    }
-    svg.innerHTML=d;
-  }
-  addEventListener('resize',draw);
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
-  draw();
-})();
-</script>
 </body>
 </html>

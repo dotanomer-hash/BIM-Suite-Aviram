@@ -1,6 +1,10 @@
-/* menu-preview.js - MOCKUP ONLY. Loaded by the *-mockup pages, never by the real site.
+/* menu-preview.js - the products menu, SITE-WIDE. The name is historical: it began as a
+   mockup-only overlay, and since 2026-08-08 it ships on every page of the bim-suite
+   branch. Rename it at go-live if you want; 37 files reference it.
    oymer.js builds the header dropdowns; this rewrites the "המוצרים שלנו" one (desktop
-   + mobile) to the approved product structure so it can be judged inside the real header.
+   + mobile) to the approved product structure. Without it a page falls back to the dead
+   OYMER_PRODUCTS list inside oymer.js - the old DecisionMaker/VR Tours/BIM Viewer/VR Lab
+   menu that was still showing on ~30 pages until this shipped.
 
    The design, as approved 2026-08-02 in menu-mockup.html:
      - the four suite products gathered into ONE muted-purple block
