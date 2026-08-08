@@ -74,26 +74,26 @@
    118px. Change the chamfer or the middle column and these numbers must be redone. */
 .oylp .oyl-pairs:has(.oyl-link){gap:16px}
 .oylp .oyl-link{position:relative;height:118px;pointer-events:none}
-/* the head must NOT march. The bolt classes all carry stroke-dasharray + the
-   travelling animation, which turns a head into two crawling dashes - solid, with
-   the same glow, so it reads as an arrival instead of more lightning. */
-.oylp .oyl-link__head{fill:none;stroke:#ff8c1a;stroke-width:2.6;stroke-linecap:round;
-  stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,140,26,.95))}
-/* SQUARE on purpose: the run is a true 45 degrees only while the rendered box is
-   square. The first version was 300x150, so a "diagonal" drawn corner to corner came
-   out at about 25 degrees and read as broken.
-   172 square, centred on a 118px row, so it reaches exactly 27px above and below into
-   the grid gaps - landing on the two chamfer midpoints. The middle column is centred
-   in the grid, so centring the box horizontally puts it on the same axis. */
-.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:172px;height:172px;
-  transform:translate(-50%,-50%);overflow:visible}
+/* It IS one of the other arrows - same markup, same classes, same animations - only
+   longer and turned. 244 x 34 keeps 1 viewBox unit == 1 px exactly as the in-pair
+   arrows do, so stroke weight, dash rhythm and glow are identical rather than scaled.
+   The bolt travels right-to-left in its own box (the flash and the strike line are at
+   x 4-7), so rotating -135deg aims that landing end down-right.
+   243.24px = 172 x sqrt(2), the diagonal between the two chamfer midpoints - so the
+   ends still touch them. */
+/* sized off the BOLT, not the box: the bolt occupies 240 of the 252 viewBox units, and
+   it must render 243.24px long (172 x sqrt(2), the diagonal between the two chamfer
+   midpoints), so the box is 252 x 243.24/240 = 255.4px. Stroke lands at 2.43px against
+   the others' 2.40 - a 1.3% difference, invisible, and the ends are exact instead of
+   12px short, which is what measuring the rotated box's bounding box had hidden. */
+.oylp .oyl-link .oyl-arw{position:absolute;left:50%;top:50%;
+  width:255.4px;height:34.46px;
+  transform:translate(-50%,-50%) rotate(-135deg);overflow:visible}
 @media (max-width:960px){
   /* the pair itself collapses to one column here, so the panels are stacked and there
-     is no diagonal to trace - the in-pair arrow already rotates to point down, so this
-     matches it rather than pointing at nothing. */
+     is no diagonal to trace - point straight down, as the in-pair arrow does. */
   .oylp .oyl-link{height:96px}
-  .oylp .oyl-link svg{width:96px;height:96px;
-    transform:translate(-50%,-50%) rotate(-45deg)}
+  .oylp .oyl-link .oyl-arw{width:96px;transform:translate(-50%,-50%) rotate(-90deg)}
 }
 @media (prefers-reduced-motion:reduce){
   .oylp .oyl-link svg *{animation:none!important}
