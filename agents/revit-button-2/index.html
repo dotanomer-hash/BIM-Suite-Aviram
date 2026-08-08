@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>"Works inside Revit" mark - attempt 2, four graphical options</title>
+<style>
+  :root{
+    --ground:#f7f5fb; --dark:#0b0913;
+    --ink:#181329; --body:#544d68; --mut:#8f889f;
+    --rule:#e6e2f0; --orange:#ff7a00; --vio:#8b6cf0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--body);
+    font-family:"Rubik","Heebo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:44px 28px 100px}
+  h1{font-size:30px;font-weight:800;letter-spacing:-.025em;color:var(--ink);margin:0 0 10px}
+  h1 .y{color:var(--orange)}
+  .lede{font-size:15px;line-height:1.75;max-width:80ch;margin:0 0 10px}
+  .lede b{color:var(--ink)}
+  code{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:.92em;
+    background:#efecf7;border-radius:4px;padding:1px 5px}
+  .mono{font-family:"Share Tech Mono",ui-monospace,Consolas,"Courier New",monospace;letter-spacing:.12em}
+  .kick{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;
+    color:var(--mut);margin:26px 0 0}
+
+  .opt{background:#fff;border:1px solid var(--rule);border-radius:22px;margin:30px 0;
+    box-shadow:0 1px 2px rgba(24,19,41,.05),0 14px 34px rgba(24,19,41,.07);overflow:hidden}
+  .opt__head{padding:22px 26px 20px;border-bottom:1px solid var(--rule)}
+  .opt__head h2{margin:0 0 10px;font-size:21px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .opt__head h2 em{font-style:normal;color:var(--mut);font-weight:700;font-size:13px;
+    letter-spacing:.16em;text-transform:uppercase;margin-inline-end:10px}
+  .opt__head p{margin:0 0 8px;font-size:14.5px;line-height:1.72;max-width:92ch}
+  .opt__head p b{color:var(--ink)}
+  .verdict{display:inline-flex;align-items:center;gap:9px;margin-top:6px;
+    font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    border-radius:999px;padding:6px 14px}
+  .verdict.pass{background:rgba(43,179,163,.14);color:#0e6a5f;border:1px solid rgba(43,179,163,.4)}
+  .verdict.part{background:rgba(255,122,0,.12);color:#8a4200;border:1px solid rgba(255,122,0,.4)}
+  .verdict.fail{background:rgba(139,108,240,.13);color:#4a34a8;border:1px solid rgba(139,108,240,.42)}
+
+  .grounds{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media (max-width:900px){.grounds{grid-template-columns:1fr}}
+  .gd{padding:26px 26px 30px}
+  .gd--light{background:var(--ground);border-inline-end:1px solid var(--rule)}
+  .gd--dark{background:var(--dark)}
+  .gd__lbl{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin:0 0 20px}
+  .gd--light .gd__lbl{color:var(--mut)}
+  .gd--dark .gd__lbl{color:rgba(2,242,255,.75)}
+  .row{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:11px}
+  .cell > span.mono{font-size:10.5px;font-weight:700;letter-spacing:.1em}
+  .gd--light .cell > span.mono{color:var(--mut)}
+  .gd--dark .cell > span.mono{color:#7f93ad}
+
+  /* the mark as it would actually be pasted: glyph + HTML caption */
+  .oy-revitmark{display:inline-flex;align-items:center;gap:9px;line-height:1}
+  .oy-revitmark svg{display:block;flex:0 0 auto}
+  .oy-revitmark b{font-weight:700;font-size:13px;letter-spacing:.01em;white-space:nowrap}
+  .gd--light .oy-revitmark{color:var(--ink)}
+  .gd--dark .oy-revitmark{color:#e6ecf6}
+
+  .strip{padding:24px 26px 28px;background:#fff}
+  .strip h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--ink)}
+  .strip p{margin:0 0 16px;font-size:13.5px;line-height:1.7;max-width:92ch}
+  .shipbox{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);
+    border-radius:16px;overflow:hidden}
+  @media (max-width:900px){.shipbox{grid-template-columns:1fr}}
+  .shipbox > div{padding:22px 24px}
+  .shipbox .l{background:var(--ground);border-inline-end:1px solid var(--rule);color:var(--ink)}
+  .shipbox .d{background:var(--dark);color:#e6ecf6}
+
+  .foot{margin-top:38px;border-top:1px solid var(--rule);padding-top:24px;
+    font-size:13.5px;line-height:1.78;max-width:92ch}
+  .foot h3{font-size:15px;color:var(--ink);margin:0 0 8px}
+  .foot ul{margin:0 0 18px;padding-inline-start:20px}
+  .foot li{margin-bottom:7px}
+  .win{background:rgba(43,179,163,.1);border:1px solid rgba(43,179,163,.35);
+    border-radius:14px;padding:15px 18px;margin:18px 0 0;color:#0e6a5f;font-weight:600}
+  table.sz{border-collapse:collapse;margin:6px 0 18px;font-size:13px}
+  table.sz th,table.sz td{border:1px solid var(--rule);padding:7px 12px;text-align:left}
+  table.sz th{background:#f4f1fa;color:var(--ink);font-weight:800;font-size:11.5px;
+    letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>The "works inside Revit" mark <span class="y">/</span> attempt 2, four graphical options</h1>
+  <p class="lede">Attempt one was three variations on a rounded square with a letter in it. This set throws that
+  away. Every option here is <b>a small picture with depth</b>: isometric geometry, lit faces, a cast shadow,
+  a wireframe half turning into a solid one, a bolt that lands somewhere. Still inline SVG, still no raster,
+  no external font, no <code>&lt;defs&gt;</code>, no gradients and <b>no ids at all</b>, so the same markup can
+  be pasted under all four suite windows on one page without colliding with itself.</p>
+  <p class="lede">Each is shown at <b>22 / 40 / 96 / 160 px</b> on the suite ground <code>#f7f5fb</code> and on the
+  panel black <code>#0b0913</code>. Same file on both grounds, no light and dark variant: the pale foam faces carry
+  the shape on black, the dark outline and the cast shadow carry it on white. No Autodesk or Revit logo,
+  logotype or colour appears anywhere.</p>
+
+  <p class="kick mono">THE REAL SIZES THIS HAS TO SURVIVE</p>
+  <table class="sz">
+    <tr><th>Where</th><th>Rendered at</th></tr>
+    <tr><td>Foot of a suite window, beside a caption</td><td>20 to 26 px</td></tr>
+    <tr><td>Revit ribbon, large pushbutton</td><td>32 x 32 px</td></tr>
+    <tr><td>Revit ribbon, small pushbutton</td><td>16 x 16 px (nothing here survives this - use a stripped variant)</td></tr>
+    <tr><td>Product page hero, deck slide, print</td><td>96 px and up</td></tr>
+  </table>
+
+  <!-- ============================ A ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option A</em>Foam Section</h2>
+      <p><b>What it is:</b> an isometric fragment of a building, exported as white foam, standing on a dashed
+      ground plane with its own cast shadow. The whole right side has been sliced away and the cut face is filled
+      solid orange with two floor levels ruled across it, which is the architect's own section poche convention;
+      the exterior face keeps one dark window void so the block reads as a building rather than a box.</p>
+      <p><b>Weakness:</b> a face that big in <code>#ff7a00</code> is a lot of orange for a mark that sits four times
+      on one page, and at a glance the cut can read as a warning colour rather than as a section.</p>
+      <span class="verdict pass">22px: survives - the clearest of the four at true size, nothing thin to lose</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="A-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="A-dark"></div></div>
+    </div>
+  </section>
+
+  <!-- ============================ B ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option B</em>Wall Strike</h2>
+      <p><b>What it is:</b> the suite's electric-bolt motif doing actual work. A wall panel with a window sits in
+      the model as violet wireframe, a bolt comes down out of the top-right corner and lands on it, and the third
+      of the wall it has already reached has turned into solid lit foam. The seam between wireframe and solid glows
+      where the current is still touching it, so the mark shows a conversion in progress rather than a finished object.</p>
+      <p><b>Weakness:</b> it is the busiest of the four and the wireframe grid is the first thing to die; it also
+      needs its diagonal, so it is the only option that will not sit comfortably in a square 32px ribbon slot.</p>
+      <span class="verdict part">22px: partial - the bolt survives, the wall becomes a pale smear</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="B-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="B-dark"></div></div>
+    </div>
+  </section>
+
+  <!-- ============================ C ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option C</em>Half Cube</h2>
+      <p><b>What it is:</b> one model cube caught mid-conversion. The far half is BIM wireframe, open, gridded and
+      violet; the near half is white foam with lit and shaded faces; the vertical front edge where the two meet is a
+      live orange bolt with a flash at the floor. It is the whole pipeline in one object, and its silhouette is a
+      single hard hexagon, which is why it is the one that never turns into a smudge.</p>
+      <p><b>Weakness:</b> the cube is generic geometry. On its own it says "a model became a foam model", not
+      "Revit" - the Revit half of the sentence still has to come from the caption beside it. It is also the palest
+      of the four, so on the light suite ground it leans entirely on its outline and its shadow.</p>
+      <span class="verdict pass">22px: survives - the hexagon and the orange seam hold, but the wireframe half
+      does not resolve as wireframe until about 30px</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="C-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="C-dark"></div></div>
+    </div>
+    <div class="strip">
+      <h3>C as it would actually ship: the picture plus real HTML text</h3>
+      <p>The caption is HTML, not baked into the SVG. It scales with the page type ramp, it flips correctly in the
+      RTL suite pages, it is selectable and translatable, it can be dropped entirely below 560px, and it keeps the
+      word out of the graphic file.</p>
+      <div class="shipbox">
+        <div class="l"><div data-mount="ship-light"></div></div>
+        <div class="d"><div data-mount="ship-dark"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ D ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option D</em>Seated Inside</h2>
+      <p><b>What it is:</b> the most literal reading of the brief - a big hollow wireframe cage with cyan corner
+      ticks is the host model, and our small solid foam block sits on its floor inside it, outlined in orange, with
+      two orange rings spreading on the floor where it landed. It is the only one of the four that draws the word
+      "inside" instead of implying it.</p>
+      <p><b>Weakness:</b> the meaning lives entirely in the relationship between two objects, and the outer one is
+      built from hairlines, so the moment the cage stops resolving the mark is just an orange nugget floating in
+      nothing.</p>
+      <span class="verdict fail">22px: fails - the cage dissolves and only the orange block is left</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="D-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="D-dark"></div></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <h3>Why one file works on both grounds</h3>
+    <ul>
+      <li>The solid parts are white to pale lavender foam. On <code>#0b0913</code> they glow on their own and the
+      dark outline is invisible, which does not matter. On <code>#f7f5fb</code> the pale faces would vanish, so the
+      <code>#241b3c</code> outline and the cast shadow are what hold the shape there.</li>
+      <li>The wireframe is <code>#8b7fc0</code>, a mid violet chosen because it clears both grounds. Behind it sits a
+      wider cyan <code>rgba(2,242,255,.45)</code> halo stroke, which is near-invisible on white and becomes a neon
+      rim on black. Each ground is served by a different layer of the same drawing.</li>
+      <li><code>#ff7a00</code> is the only paint that needs no help on either ground, so in every option it carries
+      the single most important line: the cut, the strike, the seam, the outline of our block.</li>
+    </ul>
+    <h3>The 22px verdicts were measured, not guessed</h3>
+    <ul>
+      <li>Each mark was rendered at a true 22, 32 and 40 px, then that raster was magnified six times with
+      nearest-neighbour so the actual pixels could be judged. The first pass of <b>C</b> failed that test on the
+      light ground - a pale cube on a pale page. Its ink outline went 1.8 to 2.4, its violet outline 1.6 to 2.0,
+      the wireframe fills roughly doubled, the bolt went 2.6 to 3.0 and the shadow from .14 to .18 opacity. Nothing
+      about the drawing changed, only the weights, and it now holds at 22.</li>
+      <li>Ranked purely on legibility at a true 22px the order is <b>A, C, B, D</b>. A wins that contest because a
+      large flat orange plane is the single most robust thing you can put in a small mark. That is also the reason
+      it is not the recommendation - see NOTES.md.</li>
+    </ul>
+    <h3>Trademark</h3>
+    <ul>
+      <li>No Autodesk or Revit logo, logotype, glyph or brand colour is used. Nothing here is a picture of their UI
+      either - attempt one's "Ribbon Seat" drew a generic toolbar; this set does not draw a toolbar at all.</li>
+      <li>The word "Revit" appears only as HTML body text in the ship example, which is ordinary nominative use and
+      is trivially swappable to Hebrew without touching the graphic.</li>
+    </ul>
+    <h3>Traps carried over from attempt one</h3>
+    <ul>
+      <li><code>var()</code> does not resolve inside an SVG presentation attribute. Every paint in this file is
+      written as a <code>style=""</code> declaration for that reason. There are no custom properties in these SVGs
+      at all, so nothing can silently render black.</li>
+      <li>No <code>&lt;defs&gt;</code>, no gradients, no filters, no ids. The 3D look is built from flat facets at
+      three values, and the glow from stacked strokes, so the same markup can be duplicated freely on one page.</li>
+    </ul>
+    <div class="win">Recommendation: <b>Option C, Half Cube</b>, with <b>Option A, Foam Section</b> as the richer
+    alternative anywhere it is guaranteed 96px or larger. See NOTES.md.</div>
+  </div>
+
+</div>
+
+<!-- ==================== A: Foam Section ==================== -->
+<template id="tpl-A">
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="a foam building fragment with an orange section cut" focusable="false">
+  <path d="M2 50L28 37L54 50L28 63Z" style="fill:none;stroke:#8b7fc0;stroke-width:1;stroke-dasharray:3 2.6;opacity:.7"/>
+  <path d="M15 56.5L41 43.5M15 43.5L41 56.5" style="fill:none;stroke:#8b7fc0;stroke-width:.9;opacity:.45"/>
+  <path d="M9 54L24 46.5L39 54L24 61.5Z" style="fill:#241b3c;opacity:.16"/>
+  <path d="M28 12L43 19.5V45.5L28 53L13 45.5V19.5Z" style="fill:none;stroke:rgba(2,242,255,.45);stroke-width:3.4;stroke-linejoin:round"/>
+  <path d="M28 12L43 19.5L28 27L13 19.5Z" style="fill:#ffffff"/>
+  <path d="M13 19.5L28 27V53L13 45.5Z" style="fill:#cdc5e4"/>
+  <path d="M28 27L43 19.5V45.5L28 53Z" style="fill:#ff7a00"/>
+  <path d="M28 35.7L43 28.2M28 44.3L43 36.8" style="fill:none;stroke:#3a1400;stroke-width:1.3;opacity:.5"/>
+  <path d="M16.8 28.7L23.5 32V40.9L16.8 37.5Z" style="fill:#241b3c;opacity:.88"/>
+  <path d="M16.8 28.7L23.5 32V40.9L16.8 37.5Z" style="fill:none;stroke:rgba(2,242,255,.55);stroke-width:.8"/>
+  <path d="M28 12L43 19.5V45.5L28 53L13 45.5V19.5Z" style="fill:none;stroke:#241b3c;stroke-width:1.7;stroke-linejoin:round"/>
+  <path d="M13 19.5L28 27L43 19.5M28 27V53" style="fill:none;stroke:#241b3c;stroke-width:1.5;stroke-linejoin:round"/>
+</svg>
+</template>
+
+<!-- ==================== B: Wall Strike ==================== -->
+<template id="tpl-B">
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="a bolt striking a wireframe wall, the struck part turning solid" focusable="false">
+  <path d="M8 41L40 57L46 54L14 38Z" style="fill:#241b3c;opacity:.11"/>
+  <path d="M14 17L46 33V53L40 56L8 40V20Z" style="fill:none;stroke:rgba(2,242,255,.45);stroke-width:3;stroke-linejoin:round"/>
+  <path d="M8 20L28.8 30.4V50.4L8 40Z" style="fill:#8b7fc0;opacity:.12"/>
+  <path d="M8 20L28.8 30.4L34.8 27.4L14 17Z" style="fill:#8b7fc0;opacity:.2"/>
+  <path d="M28.8 30.4L40 36V56L28.8 50.4Z" style="fill:#e2ddf0"/>
+  <path d="M28.8 30.4L40 36L46 33L34.8 27.4Z" style="fill:#ffffff"/>
+  <path d="M40 36L46 33V53L40 56Z" style="fill:#a99ec6"/>
+  <path d="M14.4 23.2V43.2M20.8 26.4V46.4M27.2 29.6V49.6" style="fill:none;stroke:#8b7fc0;stroke-width:1"/>
+  <path d="M8 26.6L28.8 37M8 33.2L28.8 43.6" style="fill:none;stroke:#8b7fc0;stroke-width:1"/>
+  <path d="M18 27L28 32V42L18 37Z" style="fill:#241b3c;opacity:.42"/>
+  <path d="M18 27L28 32V42L18 37Z" style="fill:none;stroke:#8b7fc0;stroke-width:1.4"/>
+  <path d="M14 17L8 20V40L28.8 50.4M14 17L34.8 27.4M8 20L28.8 30.4" style="fill:none;stroke:#8b7fc0;stroke-width:1.5;stroke-linejoin:round"/>
+  <path d="M34.8 27.4L46 33V53L40 56L28.8 50.4V30.4Z" style="fill:none;stroke:#241b3c;stroke-width:1.6;stroke-linejoin:round"/>
+  <path d="M28.8 30.4L40 36V56" style="fill:none;stroke:#241b3c;stroke-width:1.3;opacity:.8"/>
+  <path d="M28.8 30.4V50.4" style="fill:none;stroke:#ff8c1a;stroke-width:1.9"/>
+  <path d="M56 3L47 13L52 16L41 26L45 29L30 34" style="fill:none;stroke:#ff7a00;stroke-width:6;opacity:.3;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M56 3L47 13L52 16L41 26L45 29L30 34" style="fill:none;stroke:#ff8c1a;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M56 3L47 13L52 16L41 26L45 29L30 34" style="fill:none;stroke:#fff6e8;stroke-width:.9;stroke-linecap:round;stroke-linejoin:round"/>
+  <circle cx="29.5" cy="34" r="5.2" style="fill:none;stroke:#ff8c1a;stroke-width:1.3;opacity:.6"/>
+  <path d="M29.5 25.6V28.9M29.5 39.1V42.4M22.4 34H25.7M33.3 34H36.6" style="fill:none;stroke:#ffb057;stroke-width:1.2;stroke-linecap:round"/>
+  <circle cx="29.5" cy="34" r="2.6" style="fill:#fff6e8"/>
+</svg>
+</template>
+
+<!-- ==================== C: Half Cube ==================== -->
+<template id="tpl-C">
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="a model cube, half wireframe and half solid foam, splitting along a bolt" focusable="false">
+  <path d="M8 48L28 40L48 48L28 56Z" style="fill:#241b3c;opacity:.18"/>
+  <path d="M32 8L52 18V42L32 52L12 42V18Z" style="fill:none;stroke:rgba(2,242,255,.45);stroke-width:3.2;stroke-linejoin:round"/>
+  <path d="M32 8L12 18L32 28Z" style="fill:#8b7fc0;opacity:.24"/>
+  <path d="M12 18L32 28V52L12 42Z" style="fill:#8b7fc0;opacity:.18"/>
+  <path d="M32 8L52 18L32 28Z" style="fill:#ffffff"/>
+  <path d="M32 28L52 18V42L32 52Z" style="fill:#c0b7db"/>
+  <path d="M25.3 11.3V24.7M18.7 14.7V21.3" style="fill:none;stroke:#8175b4;stroke-width:1.15"/>
+  <path d="M18.7 21.3V45.3M25.3 24.7V48.7" style="fill:none;stroke:#8175b4;stroke-width:1.15"/>
+  <path d="M12 26L32 36M12 34L32 44" style="fill:none;stroke:#8175b4;stroke-width:1.15"/>
+  <path d="M32 8L12 18V42L32 52" style="fill:none;stroke:#7a6cae;stroke-width:2;stroke-linejoin:round"/>
+  <path d="M32 8L52 18V42L32 52" style="fill:none;stroke:#241b3c;stroke-width:2.4;stroke-linejoin:round"/>
+  <path d="M12 18L32 28L52 18" style="fill:none;stroke:#241b3c;stroke-width:1.5;opacity:.7"/>
+  <path d="M32 8V26" style="fill:none;stroke:#241b3c;stroke-width:1.1;opacity:.45"/>
+  <path d="M32 25L28.4 33L34.4 37.4L30.6 46L33.2 53" style="fill:none;stroke:#ff7a00;stroke-width:6.4;opacity:.3;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M32 25L28.4 33L34.4 37.4L30.6 46L33.2 53" style="fill:none;stroke:#ff8c1a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M32 25L28.4 33L34.4 37.4L30.6 46L33.2 53" style="fill:none;stroke:#fff6e8;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"/>
+  <circle cx="33.2" cy="53" r="4.8" style="fill:none;stroke:#ff8c1a;stroke-width:1.2;opacity:.55"/>
+  <circle cx="33.2" cy="53" r="2.4" style="fill:#fff6e8"/>
+</svg>
+</template>
+
+<!-- ==================== D: Seated Inside ==================== -->
+<template id="tpl-D">
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="our solid block seated on the floor inside a wireframe host model" focusable="false">
+  <path d="M32 32L56 44L32 56L8 44Z" style="fill:#8b7fc0;opacity:.1"/>
+  <path d="M32 6L56 18L32 30L8 18Z" style="fill:none;stroke:rgba(2,242,255,.35);stroke-width:2.6;stroke-linejoin:round"/>
+  <path d="M32 32L56 44L32 56L8 44Z" style="fill:none;stroke:rgba(2,242,255,.35);stroke-width:2.6;stroke-linejoin:round"/>
+  <path d="M32 6V32M56 18V44M32 30V56M8 18V44" style="fill:none;stroke:rgba(2,242,255,.35);stroke-width:2.6"/>
+  <path d="M32 6L56 18L32 30L8 18Z" style="fill:none;stroke:#8b7fc0;stroke-width:1.2;stroke-linejoin:round"/>
+  <path d="M32 32L56 44L32 56L8 44Z" style="fill:none;stroke:#8b7fc0;stroke-width:1.2;stroke-linejoin:round"/>
+  <path d="M32 6V32M56 18V44M32 30V56M8 18V44" style="fill:none;stroke:#8b7fc0;stroke-width:1.2"/>
+  <path d="M32 6V10.5M56 18V22.5M32 30V34.5M8 18V22.5" style="fill:none;stroke:#02f2ff;stroke-width:1.7;opacity:.85;stroke-linecap:round"/>
+  <path d="M32 27.5V32M56 39.5V44M32 51.5V56M8 39.5V44" style="fill:none;stroke:#02f2ff;stroke-width:1.7;opacity:.85;stroke-linecap:round"/>
+  <path d="M32 33L54 44L32 55L10 44Z" style="fill:none;stroke:#ff7a00;stroke-width:1.3;opacity:.22"/>
+  <path d="M32 36L48 44L32 52L16 44Z" style="fill:none;stroke:#ff7a00;stroke-width:1.5;opacity:.45"/>
+  <path d="M32 27L42 32L32 37L22 32Z" style="fill:#ffffff"/>
+  <path d="M32 37L42 32V44L32 49Z" style="fill:#cdc5e4"/>
+  <path d="M22 32L32 37V49L22 44Z" style="fill:#a99ec6"/>
+  <path d="M22 32L32 37L42 32M32 37V49" style="fill:none;stroke:#241b3c;stroke-width:1.1;opacity:.7"/>
+  <path d="M32 27L42 32V44L32 49L22 44V32Z" style="fill:none;stroke:#ff7a00;stroke-width:2.2;stroke-linejoin:round"/>
+</svg>
+</template>
+
+<script>
+(function(){
+  var SIZES = [22, 40, 96, 160];
+
+  function make(tplId, px){
+    var tpl = document.getElementById(tplId);
+    var svg = tpl.content.firstElementChild.cloneNode(true);
+    var vb  = svg.getAttribute('viewBox').split(/\s+/).map(Number);
+    svg.style.height = px + 'px';
+    svg.style.width  = (px * vb[2] / vb[3]).toFixed(2) + 'px';
+    svg.style.display = 'block';
+    svg.setAttribute('aria-hidden','true');
+    return svg;
+  }
+
+  function cell(node, label){
+    var d = document.createElement('div');
+    d.className = 'cell';
+    d.appendChild(node);
+    var s = document.createElement('span');
+    s.className = 'mono';
+    s.textContent = label;
+    d.appendChild(s);
+    return d;
+  }
+
+  ['A','B','C','D'].forEach(function(k){
+    ['light','dark'].forEach(function(g){
+      var mount = document.querySelector('[data-mount="' + k + '-' + g + '"]');
+      SIZES.forEach(function(px){
+        mount.appendChild(cell(make('tpl-' + k, px), px + 'px'));
+      });
+    });
+  });
+
+  // C as it would ship: picture + real HTML caption, at the two sizes it will really be used at
+  ['light','dark'].forEach(function(g){
+    var mount = document.querySelector('[data-mount="ship-' + g + '"]');
+    var row = document.createElement('div');
+    row.className = 'row';
+    [22, 32].forEach(function(px){
+      var lock = document.createElement('span');
+      lock.className = 'oy-revitmark';
+      lock.appendChild(make('tpl-C', px));
+      var b = document.createElement('b');
+      b.textContent = 'Works inside Revit';
+      b.style.fontSize = Math.max(12, Math.round(px * 0.56)) + 'px';
+      lock.appendChild(b);
+      row.appendChild(cell(lock, px + 'px mark'));
+    });
+    [22, 32].forEach(function(px){
+      var lock = document.createElement('span');
+      lock.className = 'oy-revitmark';
+      lock.appendChild(make('tpl-C', px));
+      var b = document.createElement('b');
+      b.textContent = 'פועל בתוך Revit';
+      b.style.fontSize = Math.max(12, Math.round(px * 0.56)) + 'px';
+      lock.appendChild(b);
+      lock.setAttribute('dir','rtl');
+      row.appendChild(cell(lock, px + 'px RTL'));
+    });
+    mount.appendChild(row);
+  });
+})();
+</script>
+</body>
+</html>
