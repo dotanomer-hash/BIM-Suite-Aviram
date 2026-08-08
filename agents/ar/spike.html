@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>oYmer Type Studio - AR spike</title>
+<style>
+  :root { --ink:#12121a; --orange:#ff7a00; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:#101014; color:#e9e9ef;
+               font: 15px/1.45 -apple-system, Segoe UI, Roboto, sans-serif; }
+  canvas#c { position:fixed; inset:0; width:100%; height:100%; display:block; z-index:0; }
+  #ui { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:18px 16px 60px; }
+  h1 { font-size:20px; margin:6px 0 2px; }
+  .sub { color:#9a9aa6; font-size:13px; margin:0 0 14px; }
+
+  /* The banner that exists because a stale Quest room scan looks exactly like a
+     code bug. On Amber that question went unasked through nine rounds. */
+  #scanwarn { position:relative; z-index:3; background:#5a2d00; border-bottom:3px solid var(--orange);
+              padding:12px 16px; font-weight:700; letter-spacing:.2px; }
+  #scanwarn small { display:block; font-weight:400; color:#ffd9b0; margin-top:4px; letter-spacing:0; }
+
+  button { font:700 16px/1 inherit; padding:14px 20px; border-radius:12px; border:0;
+           background:var(--orange); color:#1a1108; cursor:pointer; }
+  button[disabled] { background:#3a3a44; color:#83838f; cursor:not-allowed; }
+  /* semi-transparent on purpose: on a desktop browser the turning box behind it
+     is the proof that three and the GL context are alive. */
+  #report { white-space:pre-wrap; background:rgba(25,25,34,.86); border:1px solid #2c2c38; border-radius:10px;
+            padding:12px; margin-top:16px; font:13px/1.5 ui-monospace, Consolas, monospace; color:#d8d8e2; }
+  .bad  { color:#ff7b6b; }
+  .good { color:#7ee08a; }
+
+  /* dom-overlay root: shown only while an immersive-ar session is running, and only
+     if the headset actually granted dom-overlay. Never the primary readout. */
+  #overlay { position:fixed; left:12px; bottom:12px; z-index:5; display:none;
+             background:rgba(20,20,26,.86); border:2px solid var(--orange); border-radius:10px;
+             padding:8px 12px; font:12px/1.4 ui-monospace, monospace; max-width:60vw; }
+  body.in-xr #ui, body.in-xr #scanwarn { display:none; }
+</style>
+</head>
+<body>
+
+<div id="scanwarn">
+  WHEN DID YOU LAST SCAN THIS ROOM?
+  <small>The Quest room scan is STORED, not live. WebXR hands over whatever Space Setup last saved,
+  so a months-old scan reports walls that moved and looks exactly like a bug in this page.
+  If the planes below look wrong: Quest settings -&gt; Physical Space -&gt; Space Setup -&gt; re-scan,
+  then reload. Do that BEFORE debugging any code.</small>
+</div>
+
+<div id="ui">
+  <h1>oYmer Type Studio - AR spike (AR1, step 1)</h1>
+  <p class="sub">One question only: do wall planes reach the Quest browser with their semantic labels
+  intact, and can we place something on a floor hit and flat on a wall. No Type Studio code here.</p>
+  <button id="go">CHECKING...</button>
+  <div id="report">starting...</div>
+</div>
+
+<div id="overlay">dom-overlay active</div>
+<canvas id="c"></canvas>
+
+<script src="./three.min.js"></script>
+<script>
+'use strict';
+
+/* ------------------------------------------------------------------ state */
+/* One source of truth for the readout. The DOM <pre> before the session and the
+   canvas panel inside the session both render from reportLines(). */
+var S = {
+  three:      (typeof THREE !== 'undefined') ? (THREE.REVISION || '?') : 'MISSING',
+  secure:     (typeof isSecureContext !== 'undefined') ? isSecureContext : false,
+  hasXR:      !!(navigator.xr),
+  arSupport:  'checking',
+  session:    false,
+  asked:      ['plane-detection', 'hit-test', 'anchors', 'local-floor', 'dom-overlay'],
+  granted:    {},                 // feature -> 'yes' | 'no' | 'unknown'
+  refSpace:   '-',
+  planeCount: 0,
+  planes:     [],                 // {label, orient, w, h}
+  hit:        'no hit yet',
+  floorBox:   'not placed - point at the floor and pull the trigger',
+  wallBox:    'no wall plane yet',
+  anchor:     'not tried',
+  showPlanes: true,
+  errors:     []
+};
+
+function err(where, e) {
+  var m = where + ': ' + ((e && (e.message || e.name)) || e);
+  if (S.errors.indexOf(m) < 0) S.errors.push(m);
+  paint();
+}
+/* A throw that kills ONE thing while the page keeps running is the most
+   expensive bug shape in this family of projects. Trap everything, loudly. */
+addEventListener('error', function (e) { err('window.error', e.error || e.message); });
+addEventListener('unhandledrejection', function (e) { err('promise', e.reason); });
+
+function reportLines() {
+  var L = [];
+  L.push('WHEN DID YOU LAST SCAN? a stale scan is not a bug in this page');
+  L.push('');
+  L.push('three        ' + S.three + '   secure ctx ' + (S.secure ? 'yes' : 'NO'));
+  L.push('navigator.xr ' + (S.hasXR ? 'yes' : 'NO') + '   immersive-ar ' + S.arSupport);
+  L.push('session      ' + (S.session ? 'RUNNING' : 'not started') + '   refSpace ' + S.refSpace);
+  L.push('');
+  L.push('features asked / granted');
+  for (var i = 0; i < S.asked.length; i++) {
+    var f = S.asked[i];
+    L.push('  ' + pad(f, 16) + (S.granted[f] || 'unknown'));
+  }
+  L.push('');
+  L.push('planes       ' + S.planeCount);
+  if (S.planes.length === 0 && S.session) {
+    L.push('  none yet. If this stays 0, the room was never scanned.');
+  }
+  for (var j = 0; j < S.planes.length && j < 14; j++) {
+    var p = S.planes[j];
+    L.push('  ' + pad(String(p.label), 18) + pad(p.orient, 11) +
+           p.w.toFixed(2) + ' x ' + p.h.toFixed(2) + ' m');
+  }
+  if (S.planes.length > 14) L.push('  ... and ' + (S.planes.length - 14) + ' more');
+  L.push('');
+  L.push('hit-test     ' + S.hit);
+  L.push('floor box    ' + S.floorBox);
+  L.push('wall box     ' + S.wallBox);
+  L.push('anchor       ' + S.anchor);
+  L.push('plane wires  ' + (S.showPlanes ? 'ON  (left Y toggles)' : 'off (left Y toggles)'));
+  if (S.errors.length) {
+    L.push('');
+    L.push('ERRORS');
+    for (var k = 0; k < S.errors.length && k < 6; k++) L.push('  ' + S.errors[k]);
+  }
+  return L;
+}
+function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s; }
+
+var reportEl = document.getElementById('report');
+var overlayEl = document.getElementById('overlay');
+function paint() {
+  try { reportEl.textContent = reportLines().join('\n'); } catch (e) {}
+  if (overlayEl && overlayEl.style.display !== 'none') {
+    overlayEl.textContent = 'planes ' + S.planeCount + '  |  ' + S.hit;
+  }
+  if (readout) readout.redraw();
+}
+
+/* ------------------------------------------------------------------ three */
+var canvas = document.getElementById('c');
+var renderer, scene, camera, rig, reticle, readout = null;
+var controllers = [];
+
+/* ONE white plastic, flatShading TRUE. The July in-VR panel work proved a lit
+   material without flatShading renders BLACK on the Quest in this stack. */
+function foam(color) {
+  return new THREE.MeshStandardMaterial({
+    color: color || 0xf2f2ef, roughness: 0.42, metalness: 0.0,
+    flatShading: true, side: THREE.DoubleSide
+  });
+}
+
+function initThree() {
+  renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight, false);
+  renderer.setClearAlpha(0);                 // passthrough shows through
+  renderer.xr.enabled = true;
+  renderer.xr.setReferenceSpaceType('local-floor');
+  /* three r160 has setReferenceSpaceType but NO getReferenceSpaceType.
+     Calling the getter throws and kills whatever line it sits above. Do not add it. */
+
+  scene = new THREE.Scene();
+  scene.background = null;
+  camera = new THREE.PerspectiveCamera(60, innerWidth / Math.max(1, innerHeight), 0.02, 60);
+  camera.position.set(0, 1.6, 0);
+
+  /* Everything posed from a WebXR reference space lives under the rig, never
+     under the scene. three computes camera.matrixWorld = parent.matrixWorld *
+     poseInRefSpace, so refSpace coordinates only agree inside the rig. */
+  rig = new THREE.Group();
+  rig.add(camera);
+  scene.add(rig);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x6a6a72, 1.1));
+  var sun = new THREE.DirectionalLight(0xfff4e0, 1.1);
+  sun.position.set(1.5, 3.0, 1.2);
+  scene.add(sun);
+
+  reticle = new THREE.Mesh(
+    new THREE.RingGeometry(0.07, 0.09, 32).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({ color: 0xff7a00 }));
+  reticle.matrixAutoUpdate = false;
+  reticle.visible = false;
+  rig.add(reticle);
+
+  readout = makeReadout();
+  scene.add(readout.group);
+  readout.group.visible = false;
+
+  for (var i = 0; i < 2; i++) {
+    var c = renderer.xr.getController(i);
+    rig.add(c);
+    controllers.push(c);
+  }
+  renderer.xr.getController(0).addEventListener('select', onSelect);
+  renderer.xr.getController(1).addEventListener('select', onSelect);
+
+  addEventListener('resize', function () {
+    if (renderer.xr.isPresenting) return;
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / Math.max(1, innerHeight);
+    camera.updateProjectionMatrix();
+  });
+
+  renderer.setAnimationLoop(tick);
+}
+
+/* -------------------------------------------------------------- readout 3D */
+/* The DOM does not exist inside an immersive session on the Quest, and
+   dom-overlay is optional and may be refused. So the real readout is a canvas
+   texture on an unlit plane, carried on the left controller. */
+function makeReadout() {
+  var W = 1024, H = 900, wM = 0.46, hM = 0.40;
+  var cnv = document.createElement('canvas');
+  cnv.width = W; cnv.height = H;
+  var ctx = cnv.getContext('2d');
+  var tex = new THREE.CanvasTexture(cnv);
+  if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+  var mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(wM, hM),
+    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false }));
+  mesh.renderOrder = 9999;          // nothing may hide the panel that debugs it
+  var group = new THREE.Group();
+  group.add(mesh);
+  var api = {
+    group: group,
+    redraw: function () {
+      try {
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = 'rgba(18,18,22,.93)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#ff7a00';
+        ctx.fillRect(0, 0, W, 58);
+        ctx.fillStyle = '#1a1108';
+        ctx.font = 'bold 30px monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('WHEN DID YOU LAST SCAN THIS ROOM?', 18, 40);
+        var lines = reportLines().slice(2);   // the banner is already the header
+        ctx.font = '21px monospace';
+        for (var i = 0; i < lines.length && i < 36; i++) {
+          var ln = lines[i];
+          ctx.fillStyle = /^ERRORS|^  [a-z]+\.|NO$|NO /.test(ln) ? '#ff7b6b' : '#dcdce6';
+          ctx.fillText(ln.substring(0, 58), 18, 92 + i * 23);
+        }
+        tex.needsUpdate = true;
+      } catch (e) { /* the readout must never be the thing that throws */ }
+    }
+  };
+  api.redraw();
+  return api;
+}
+
+var _hp = new THREE.Vector3(), _q = new THREE.Quaternion(), _off = new THREE.Vector3();
+function placeReadout() {
+  var left = controllers[0];
+  var host = (left && left.visible) ? left : null;
+  if (host) {
+    host.getWorldPosition(_hp);
+    host.getWorldQuaternion(_q);
+    _off.set(0, 0.14, -0.10).applyQuaternion(_q);
+    readout.group.position.copy(_hp).add(_off);
+  } else {
+    camera.getWorldPosition(_hp);
+    camera.getWorldQuaternion(_q);
+    _off.set(-0.30, -0.20, -0.62).applyQuaternion(_q);
+    readout.group.position.copy(_hp).add(_off);
+  }
+  camera.getWorldPosition(_hp);
+  readout.group.lookAt(_hp);
+  readout.group.visible = true;
+}
+
+/* ------------------------------------------------------------------ planes */
+var planeViews = new Map();      // XRPlane -> {group, line, label, w, h}
+var wallPlaced = false;
+var wallBox = null;
+
+function polygonSize(poly) {
+  var minx = Infinity, maxx = -Infinity, minz = Infinity, maxz = -Infinity;
+  for (var i = 0; i < poly.length; i++) {
+    var p = poly[i];
+    if (p.x < minx) minx = p.x;
+    if (p.x > maxx) maxx = p.x;
+    if (p.z < minz) minz = p.z;
+    if (p.z > maxz) maxz = p.z;
+  }
+  if (!isFinite(minx)) return { w: 0, h: 0, cx: 0, cz: 0 };
+  return { w: maxx - minx, h: maxz - minz, cx: (minx + maxx) / 2, cz: (minz + maxz) / 2 };
+}
+
+function planeOutline(poly) {
+  var pts = [];
+  for (var i = 0; i < poly.length; i++) pts.push(new THREE.Vector3(poly[i].x, 0, poly[i].z));
+  if (pts.length) pts.push(pts[0].clone());
+  var g = new THREE.BufferGeometry().setFromPoints(pts);
+  return new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x35ff6a }));
+}
+
+/* Quest may hand back Meta's OpenXR spelling (WALL_FACE, WINDOW_FRAME,
+   DOOR_FRAME) or the WebXR spec's lowercase set (wall, window, door). The
+   readout prints the RAW string so we learn which one this build uses;
+   matching is case-insensitive and accepts both. */
+function isWall(label, orientation) {
+  var s = String(label || '').toLowerCase();
+  if (/wall[_ ]?art/.test(s)) return false;
+  if (/invisible/.test(s)) return false;
+  if (/wall/.test(s)) return true;
+  return false;
+}
+
+function updatePlanes(frame, refSpace) {
+  var set = frame.detectedPlanes;
+  if (!set) { S.granted['plane-detection'] = 'no (frame.detectedPlanes missing)'; return; }
+  S.granted['plane-detection'] = 'yes';
+  S.planeCount = set.size;
+
+  // drop views for planes the runtime removed
+  planeViews.forEach(function (v, plane) {
+    if (!set.has(plane)) { rig.remove(v.group); planeViews.delete(plane); }
+  });
+
+  var list = [];
+  var bestWall = null, bestWallArea = -1;
+
+  set.forEach(function (plane) {
+    var v = planeViews.get(plane);
+    var poly = plane.polygon || [];
+    var size = polygonSize(poly);
+    var label = (plane.semanticLabel !== undefined && plane.semanticLabel !== null)
+                ? plane.semanticLabel : '(no label)';
+    var orient = plane.orientation || '?';
+
+    if (!v || v.stamp !== plane.lastChangedTime) {
+      if (v) rig.remove(v.group);
+      var g = new THREE.Group();
+      g.matrixAutoUpdate = false;
+      g.add(planeOutline(poly));
+      rig.add(g);
+      v = { group: g, stamp: plane.lastChangedTime, w: size.w, h: size.h,
+            label: label, orient: orient, cx: size.cx, cz: size.cz };
+      planeViews.set(plane, v);
+    }
+    v.group.visible = S.showPlanes;
+
+    var pose = null;
+    try { pose = frame.getPose(plane.planeSpace, refSpace); } catch (e) { }
+    if (pose) {
+      v.group.matrix.fromArray(pose.transform.matrix);
+      v.group.matrixWorldNeedsUpdate = true;
+      v.pose = pose;
+    }
+
+    list.push({ label: label, orient: orient, w: size.w, h: size.h });
+
+    if (pose && isWall(label, orient)) {
+      var area = size.w * size.h;
+      if (area > bestWallArea) { bestWallArea = area; bestWall = { plane: plane, v: v, pose: pose, size: size, label: label }; }
+    }
+  });
+
+  S.planes = list;
+
+  if (!bestWall) {
+    S.wallBox = wallPlaced ? S.wallBox
+      : (S.planeCount ? 'no plane labelled wall among ' + S.planeCount : 'no wall plane yet');
+  }
+  if (bestWall && !wallPlaced) placeOnWall(bestWall);
+}
+
+/* A box laid FLAT against the wall, oriented by the plane's own pose. The
+   plane's local Y is its normal, so the box is built thin in Y and pushed out
+   by half its thickness. No guessing at an up vector. */
+function placeOnWall(w) {
+  try {
+    var TH = 0.12, WI = 0.60, HE = 0.60;
+    var geo = new THREE.BoxGeometry(WI, TH, HE);
+    wallBox = new THREE.Mesh(geo, foam(0xffe0c0));
+    var m = new THREE.Matrix4().fromArray(w.pose.transform.matrix);
+    var pos = new THREE.Vector3(), quat = new THREE.Quaternion(), scl = new THREE.Vector3();
+    m.decompose(pos, quat, scl);
+    // centre of the polygon, in plane space, then out along the plane normal
+    var local = new THREE.Vector3(w.size.cx, TH / 2, w.size.cz).applyQuaternion(quat);
+    wallBox.position.copy(pos).add(local);
+    wallBox.quaternion.copy(quat);
+    rig.add(wallBox);
+    wallPlaced = true;
+    S.wallBox = 'PLACED flat on "' + w.label + '" (' +
+                w.size.w.toFixed(2) + ' x ' + w.size.h.toFixed(2) + ' m)';
+    paint();
+  } catch (e) { err('placeOnWall', e); }
+}
+
+/* ----------------------------------------------------------------- session */
+var xrSession = null, viewerSpace = null, hitSource = null, hitPose = null;
+var wantPlace = false, floorBox = null, floorAnchor = null;
+
+function onSelect() { wantPlace = true; }
+
+async function enterAR() {
+  try {
+    var overlay = document.getElementById('overlay');
+    var opts = {
+      requiredFeatures: [],
+      optionalFeatures: ['plane-detection', 'hit-test', 'anchors', 'local-floor', 'dom-overlay'],
+      domOverlay: { root: overlay }
+    };
+    var session = await navigator.xr.requestSession('immersive-ar', opts);
+    xrSession = session;
+    S.session = true;
+    document.body.classList.add('in-xr');
+
+    // What the runtime says it granted. If enabledFeatures is missing we probe below.
+    var en = session.enabledFeatures;
+    for (var i = 0; i < S.asked.length; i++) {
+      var f = S.asked[i];
+      S.granted[f] = en ? (en.indexOf(f) >= 0 ? 'yes' : 'NO (refused)') : 'unknown (no enabledFeatures)';
+    }
+    if (en && en.indexOf('dom-overlay') >= 0) overlay.style.display = 'block';
+
+    session.addEventListener('end', function () {
+      S.session = false;
+      document.body.classList.remove('in-xr');
+      overlay.style.display = 'none';
+      readout.group.visible = false;
+      xrSession = null; hitSource = null; viewerSpace = null;
+      paint();
+    });
+    session.addEventListener('select', onSelect);
+
+    await renderer.xr.setSession(session);
+    S.refSpace = 'local-floor (requested)';
+
+    try {
+      viewerSpace = await session.requestReferenceSpace('viewer');
+      hitSource = await session.requestHitTestSource({ space: viewerSpace });
+      S.granted['hit-test'] = 'yes';
+      S.hit = 'source ready, look at the floor';
+    } catch (e) {
+      S.granted['hit-test'] = 'NO (' + (e.message || e.name) + ')';
+      S.hit = 'unavailable';
+    }
+    paint();
+  } catch (e) {
+    err('requestSession', e);
+  }
+}
+
+/* --------------------------------------------------------------- main loop */
+var yWasDown = false;
+
+function readButtons(session) {
+  if (!session || !session.inputSources) return;
+  for (var i = 0; i < session.inputSources.length; i++) {
+    var src = session.inputSources[i];
+    if (src.handedness !== 'left' || !src.gamepad) continue;
+    var b = src.gamepad.buttons;
+    var y = b && b[5] && b[5].pressed;        // Quest left controller: 4 = X, 5 = Y
+    if (y && !yWasDown) { S.showPlanes = !S.showPlanes; paint(); }
+    yWasDown = !!y;
+  }
+}
+
+function tick(time, frame) {
+  try {
+    if (frame && renderer.xr.isPresenting) {
+      var refSpace = renderer.xr.getReferenceSpace();
+      if (refSpace) {
+        try { updatePlanes(frame, refSpace); } catch (e) { err('planes', e); }
+
+        if (hitSource) {
+          var hits = frame.getHitTestResults(hitSource);
+          if (hits.length) {
+            hitPose = hits[0].getPose(refSpace);
+            if (hitPose) {
+              reticle.visible = true;
+              reticle.matrix.fromArray(hitPose.transform.matrix);
+              S.hit = 'hit at y=' + hitPose.transform.position.y.toFixed(2) + ' m';
+            }
+          } else {
+            reticle.visible = false;
+            hitPose = null;
+            S.hit = 'no surface under the reticle';
+          }
+        }
+
+        if (wantPlace) { wantPlace = false; placeOnFloor(frame, refSpace); }
+        if (floorAnchor && floorBox) {
+          var ap = frame.getPose(floorAnchor.anchorSpace, refSpace);
+          if (ap) {
+            floorBox.position.set(ap.transform.position.x, ap.transform.position.y, ap.transform.position.z);
+          }
+        }
+        readButtons(frame.session);
+        placeReadout();
+      }
+    }
+    renderer.render(scene, camera);
+  } catch (e) { err('frame', e); }
+}
+
+/* A plain 1 m box on the floor hit. Anchored if anchors were granted, so it
+   does not drift as the headset refines its own tracking. */
+function placeOnFloor(frame, refSpace) {
+  if (!hitPose) { S.floorBox = 'no hit under the reticle when the trigger fired'; paint(); return; }
+  try {
+    if (!floorBox) {
+      floorBox = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), foam(0xf2f2ef));
+      rig.add(floorBox);
+    }
+    var p = hitPose.transform.position;
+    floorBox.position.set(p.x, p.y + 0.5, p.z);     // sits ON the floor, not through it
+    S.floorBox = 'PLACED 1.00 m box at (' + p.x.toFixed(2) + ', ' + p.y.toFixed(2) + ', ' + p.z.toFixed(2) + ')';
+
+    if (typeof frame.createAnchor === 'function') {
+      var t = new XRRigidTransform(
+        { x: p.x, y: p.y + 0.5, z: p.z },
+        hitPose.transform.orientation);
+      frame.createAnchor(t, refSpace).then(function (a) {
+        floorAnchor = a;
+        S.granted['anchors'] = 'yes';
+        S.anchor = 'anchor created, box follows it';
+        paint();
+      }, function (e) {
+        S.granted['anchors'] = 'NO (' + (e.message || e.name) + ')';
+        S.anchor = 'createAnchor refused';
+        paint();
+      });
+      S.anchor = 'requested';
+    } else {
+      S.granted['anchors'] = 'NO (frame.createAnchor missing)';
+      S.anchor = 'unavailable';
+    }
+    paint();
+  } catch (e) { err('placeOnFloor', e); }
+}
+
+/* ---------------------------------------------------- boot and degradation */
+var goBtn = document.getElementById('go');
+
+function desktopScene() {
+  // Never a blank screen. On a desktop browser this is a slowly turning box, so
+  // it is obvious the page and three itself are alive and the only missing
+  // thing is the headset.
+  var box = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), foam(0xf2f2ef));
+  box.position.set(0, 1.35, -2.6);
+  rig.add(box);
+  scene.background = new THREE.Color(0x14141a);
+  renderer.setClearAlpha(1);
+  var spin = function () {
+    if (!renderer.xr.isPresenting) { box.rotation.y += 0.006; box.rotation.x += 0.002; }
+  };
+  var old = tick;
+  renderer.setAnimationLoop(function (t, f) { spin(); old(t, f); });
+}
+
+async function boot() {
+  if (typeof THREE === 'undefined') {
+    goBtn.textContent = 'three.min.js DID NOT LOAD';
+    goBtn.disabled = true;
+    S.errors.push('three.min.js is missing next to this file. Copy it from the panel folder.');
+    paint();
+    return;
+  }
+  try { initThree(); } catch (e) { err('initThree', e); }
+
+  if (!S.secure) {
+    S.arSupport = 'no (this page is not a secure context)';
+    goBtn.textContent = 'NEEDS HTTPS';
+    goBtn.disabled = true;
+    S.errors.push('WebXR needs https or localhost. file:/// and plain http on a LAN address ' +
+                  'will never offer AR. Serve this folder over https, the 8443 pattern.');
+    desktopScene(); paint(); return;
+  }
+  if (!navigator.xr) {
+    S.arSupport = 'no (navigator.xr missing - not a WebXR browser)';
+    goBtn.textContent = 'NO WEBXR IN THIS BROWSER';
+    goBtn.disabled = true;
+    desktopScene(); paint(); return;
+  }
+  var ok = false;
+  try { ok = await navigator.xr.isSessionSupported('immersive-ar'); } catch (e) { err('isSessionSupported', e); }
+  S.arSupport = ok ? 'yes' : 'no (this device cannot do passthrough AR)';
+  if (!ok) {
+    goBtn.textContent = 'NO IMMERSIVE-AR ON THIS DEVICE';
+    goBtn.disabled = true;
+    desktopScene(); paint(); return;
+  }
+  goBtn.textContent = 'ENTER AR';
+  goBtn.disabled = false;
+  goBtn.addEventListener('click', enterAR);
+  paint();
+}
+
+boot();
+</script>
+</body>
+</html>

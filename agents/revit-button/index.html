@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M5 - "works inside Revit" mark, 3 options</title>
+<style>
+  :root{
+    --ground:#f7f5fb; --dark:#0b0913;
+    --ink:#181329; --body:#544d68; --mut:#8f889f;
+    --rule:#e6e2f0; --rule2:#d3cde4;
+    --orange:#ff7a00; --vio:#8b6cf0;
+    /* product hues, straight out of bimsuite-mockup.css */
+    --c:255,122,0; --cd:196,88,0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--body);
+    font-family:"Rubik","Heebo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:44px 28px 90px}
+  h1{font-size:30px;font-weight:800;letter-spacing:-.025em;color:var(--ink);margin:0 0 8px}
+  h1 .y{color:var(--orange)}
+  .lede{font-size:15px;line-height:1.7;max-width:74ch;margin:0 0 6px}
+  .mono{font-family:"Share Tech Mono",ui-monospace,Consolas,"Courier New",monospace;letter-spacing:.12em}
+  .kick{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--mut);margin:0 0 22px}
+
+  .opt{
+    background:#fff;border:1px solid var(--rule);border-radius:22px;margin:30px 0;
+    box-shadow:0 1px 2px rgba(24,19,41,.05),0 14px 34px rgba(24,19,41,.07);overflow:hidden;
+  }
+  .opt__head{padding:22px 26px 18px;border-bottom:1px solid var(--rule)}
+  .opt__head h2{margin:0 0 8px;font-size:21px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .opt__head h2 em{font-style:normal;color:var(--mut);font-weight:700;font-size:13px;
+    letter-spacing:.16em;text-transform:uppercase;margin-inline-end:10px}
+  .opt__head p{margin:0 0 6px;font-size:14.5px;line-height:1.7;max-width:88ch}
+  .opt__head p b{color:var(--ink)}
+  .verdict{display:inline-flex;align-items:center;gap:9px;margin-top:10px;
+    font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    border-radius:999px;padding:6px 14px}
+  .verdict.pass{background:rgba(43,179,163,.14);color:#0e6a5f;border:1px solid rgba(43,179,163,.4)}
+  .verdict.part{background:rgba(255,122,0,.12);color:#8a4200;border:1px solid rgba(255,122,0,.4)}
+  .verdict.fail{background:rgba(139,108,240,.13);color:#4a34a8;border:1px solid rgba(139,108,240,.42)}
+
+  .grounds{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media (max-width:820px){.grounds{grid-template-columns:1fr}}
+  .gd{padding:26px 26px 30px}
+  .gd--light{background:var(--ground);border-inline-end:1px solid var(--rule)}
+  .gd--dark{background:var(--dark)}
+  .gd__lbl{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin:0 0 20px}
+  .gd--light .gd__lbl{color:var(--mut)}
+  .gd--dark .gd__lbl{color:rgba(2,242,255,.75)}
+  .row{display:flex;align-items:flex-end;gap:34px;flex-wrap:wrap}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:11px}
+  /* the size label only. NOT `.cell span` - the option-B lockup is itself a span inside
+     .cell, and the loose selector was shrinking its caption to 10.5px grey. */
+  .cell > span.mono{font-size:10.5px;font-weight:700;letter-spacing:.1em}
+  .gd--light .cell > span.mono{color:var(--mut)}
+  .gd--dark .cell > span.mono{color:#7f93ad}
+  /* option C's big line is painted with currentColor, so the ground has to set the ink
+     or it renders in the body grey and the dark panel looks worse than it really is */
+  .gd--light .cell{color:var(--ink)}
+  .gd--dark .cell{color:#e6ecf6}
+
+  /* the mark as it would actually be pasted: glyph + HTML caption */
+  .oy-revitmark{display:inline-flex;align-items:center;gap:8px;line-height:1}
+  .oy-revitmark svg{display:block;flex:0 0 auto}
+
+  .hues{padding:24px 26px 30px;border-top:1px solid var(--rule);background:#fff}
+  .hues h3{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--ink)}
+  .hues p{margin:0 0 18px;font-size:13.5px;line-height:1.7;max-width:88ch}
+  .hue-row{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-end}
+  .h1c{--c:255,122,0}.h2c{--c:139,108,240}.h3c{--c:79,125,255}.h4c{--c:43,179,163}
+
+  .foot{margin-top:36px;border-top:1px solid var(--rule);padding-top:22px;
+    font-size:13.5px;line-height:1.75;max-width:88ch}
+  .foot h3{font-size:15px;color:var(--ink);margin:0 0 8px}
+  .foot ul{margin:0 0 16px;padding-inline-start:20px}
+  .foot li{margin-bottom:7px}
+  .win{background:rgba(43,179,163,.1);border:1px solid rgba(43,179,163,.35);
+    border-radius:14px;padding:14px 18px;margin:18px 0 0;color:#0e6a5f;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>M5 - the "works inside Revit" mark <span class="y">/</span> 3 options</h1>
+  <p class="lede">Replaces <code>media/dm-button.png</code> (a screenshot of the real ribbon button, now unused).
+  Target use is M4: a small mark at the bottom of every suite window on <code>bimsuite.html</code>. All three are
+  inline SVG, no raster, no external font files, no <code>&lt;defs&gt;</code> and no ids, so the same markup can be
+  pasted many times on one page without id collisions.</p>
+  <p class="lede">Each is shown at 22 / 40 / 96 px <b>height</b> on the suite ground <code>#f7f5fb</code> and on the
+  panel black <code>#0b0913</code>. No Autodesk or Revit logo or wordmark is used anywhere.</p>
+  <p class="kick mono">22PX IS THE REAL TEST</p>
+
+  <!-- ============================ A ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option A</em>Ribbon Seat</h2>
+      <p>Draws the <b>context instead of the product</b>: our orange tile sitting in a toolbar row between two
+      grey ghost neighbours, with an active-tab underline beneath it, so the mark itself says "this is a button
+      that lives in somebody else's ribbon" without naming or drawing anyone else's brand.</p>
+      <p><b>Weakness:</b> the whole idea lives in the neighbours, and at small sizes the neighbours are the first
+      thing to die - below about 34px it collapses into an orange smudge flanked by two grey nubs, which reads as
+      dirt rather than as a toolbar.</p>
+      <span class="verdict part">22px: partial - shape survives, meaning does not</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="A-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="A-dark"></div></div>
+    </div>
+  </section>
+
+  <!-- ============================ B ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option B</em>Foam Tile</h2>
+      <p>The SimLab move: <b>one clean square app-tile</b> and nothing else - the suite's 22px chamfer cut into a
+      near-black tile, an orange oYmer Y, a cyan hairline, and an orange cut edge at the bottom-right corner. It is
+      the only option whose entire content is one glyph, which is why it is the only one that cannot degrade.</p>
+      <p><b>Weakness:</b> on its own it says "oYmer", not "Revit". The Revit half of the message has to come from the
+      words next to it, so the tile is only half of a mark - it needs a caption in HTML, shown here to its right.</p>
+      <span class="verdict pass">22px: passes</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="B-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="B-dark"></div></div>
+    </div>
+    <div class="grounds" style="border-top:1px solid var(--rule)">
+      <div class="gd gd--light">
+        <p class="gd__lbl">as it would ship: tile + HTML caption</p>
+        <div class="row" data-mount="Bcap-light"></div>
+      </div>
+      <div class="gd gd--dark">
+        <p class="gd__lbl">same markup, dark panel</p>
+        <div class="row" data-mount="Bcap-dark"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ C ============================ -->
+  <section class="opt">
+    <div class="opt__head">
+      <h2><em>Option C</em>Seat and Caption</h2>
+      <p>Bakes the sentence <b>into the SVG</b>: the tile plus a two-line mono lockup, orange micro-label over a
+      heavy line of ink, with <code>textLength</code> locking both runs so the box cannot be blown out by whatever
+      mono the visitor happens to have. Self-contained - one element carries the whole message.</p>
+      <p><b>Weakness:</b> it fails its own brief. At 22px tall the big line renders at about 7px and the micro-label
+      at 4.5px; both are unreadable. It is also frozen English inside a Hebrew RTL page - not selectable, not
+      translatable, and the word order cannot flip.</p>
+      <span class="verdict fail">22px: fails - tile reads, type does not</span>
+    </div>
+    <div class="grounds">
+      <div class="gd gd--light"><p class="gd__lbl">light ground #f7f5fb</p><div class="row" data-mount="C-light"></div></div>
+      <div class="gd gd--dark"><p class="gd__lbl">dark panel #0b0913</p><div class="row" data-mount="C-dark"></div></div>
+    </div>
+  </section>
+
+  <!-- ==================== hue check for the winner ==================== -->
+  <section class="opt">
+    <div class="hues">
+      <h3>Winner, tinted by the window it sits in (40px)</h3>
+      <p>The tile reads <code>--c</code> for a faint wash over its fill, so it picks up the product hue already
+      declared on <code>.suite .c1-.c4</code> for free. The Y stays brand orange in all four - it is the oYmer mark,
+      not a per-product accent. Custom properties only resolve from CSS, never from a presentation attribute, so
+      every paint in these SVGs is written as a <code>style=""</code> declaration.</p>
+      <div class="hue-row">
+        <div class="cell h1c"><div data-mount="hue1"></div><span class="mono">c1 DecisionMaker</span></div>
+        <div class="cell h2c"><div data-mount="hue2"></div><span class="mono">c2 Viewer</span></div>
+        <div class="cell h3c"><div data-mount="hue3"></div><span class="mono">c3 Family Creator</span></div>
+        <div class="cell h4c"><div data-mount="hue4"></div><span class="mono">c4 Type Studio</span></div>
+      </div>
+      <p style="margin:20px 0 0">Said plainly: at 13% over a near-black fill the tint is a <b>whisper</b> - the four
+      tiles above are almost the same tile, which is the point (one mark, four windows). If you want the hue to
+      actually read per product, change the hairline from <code>rgba(2,242,255,.55)</code> to
+      <code>rgb(var(--c))</code> and the tiles separate immediately - at the cost of losing the suite's cyan.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    <h3>Why every option is dark-filled with a cyan hairline</h3>
+    <ul>
+      <li>Cyan <code>rgba(2,242,255,.55)</code> over <code>#f7f5fb</code> is almost invisible. On the light suite
+      ground the hairline does nothing - the <b>near-black fill</b> is what carries the shape.</li>
+      <li>On <code>#0b0913</code> the fill nearly matches the ground, so there the <b>hairline</b> carries the shape.
+      The tile fill is lifted to <code>#141024</code> rather than the panel's own <code>#0b0913</code> so it does not
+      sit flush against a dark panel.</li>
+      <li>That is the trade: each ground is served by a different part of the drawing, which is why the mark works on
+      both without needing a light and a dark variant.</li>
+    </ul>
+    <h3>Trademark</h3>
+    <ul>
+      <li>No Autodesk or Revit logo, logotype or coloured mark appears in any option. Option A implies Revit purely by
+      drawing a generic toolbar row.</li>
+      <li>Option C sets the plain word "REVIT" in our own mono. That is nominative text use, the same as the body copy
+      already on the site, and is not their wordmark - but if you want zero exposure, the caption is HTML in the
+      recommendation, so the word can be swapped or localised without touching the graphic.</li>
+    </ul>
+    <div class="win">Recommendation: <b>Option B, Foam Tile</b>, shipped with the caption as real HTML text rather
+    than baked into the SVG. See NOTES.md for the paste-ready snippet.</div>
+  </div>
+
+</div>
+
+<!-- =========================== the three marks =========================== -->
+
+<template id="tpl-A">
+<svg viewBox="0 0 108 68" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="oYmer button in the Revit ribbon" focusable="false">
+  <!-- ghost neighbour buttons: a mid slate that reads on white and on near-black alike -->
+  <rect x="5" y="13" width="25" height="34" rx="4" style="fill:none;stroke:#7f8caa;stroke-width:2;opacity:.55"/>
+  <rect x="12" y="20" width="11" height="11" rx="2" style="fill:#7f8caa;opacity:.4"/>
+  <path d="M11 38H24" style="stroke:#7f8caa;stroke-width:2.4;stroke-linecap:round;opacity:.4"/>
+  <rect x="78" y="13" width="25" height="34" rx="4" style="fill:none;stroke:#7f8caa;stroke-width:2;opacity:.55"/>
+  <rect x="85" y="20" width="11" height="11" rx="2" style="fill:#7f8caa;opacity:.4"/>
+  <path d="M84 38H97" style="stroke:#7f8caa;stroke-width:2.4;stroke-linecap:round;opacity:.4"/>
+  <!-- our tile, seated between them and a size larger -->
+  <path d="M45 6H74V38L64 48H34V16Z" style="fill:#141024"/>
+  <path d="M45 6H74V38L64 48H34V16Z" style="fill:rgb(var(--c,255,122,0));opacity:.10"/>
+  <path d="M45 6H74V38L64 48H34V16Z" style="fill:none;stroke:rgba(2,242,255,.55);stroke-width:2.4"/>
+  <path d="M43 18L54 32M65 18L54 32M54 32V42" style="fill:none;stroke:#ff7a00;stroke-width:7;stroke-linecap:round;stroke-linejoin:round"/>
+  <!-- selected-in-the-toolbar underline + the rail it stands on -->
+  <path d="M2 62H106" style="stroke:#7f8caa;stroke-width:2;stroke-linecap:round;opacity:.32"/>
+  <path d="M36 62H72" style="stroke:#ff7a00;stroke-width:4.4;stroke-linecap:round"/>
+</svg>
+</template>
+
+<template id="tpl-B">
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="oYmer, works inside Revit" focusable="false">
+  <path d="M15.5 1.5H62.5V48.5L48.5 62.5H1.5V15.5Z" style="fill:#141024"/>
+  <path d="M15.5 1.5H62.5V48.5L48.5 62.5H1.5V15.5Z" style="fill:rgb(var(--c,255,122,0));opacity:.10"/>
+  <path d="M17 3.4H61" style="stroke:#ffffff;stroke-width:2;opacity:.10"/>
+  <path d="M15.5 1.5H62.5V48.5L48.5 62.5H1.5V15.5Z" style="fill:none;stroke:rgba(2,242,255,.55);stroke-width:2.6"/>
+  <path d="M16 15L32 35M48 15L32 35M32 35V50" style="fill:none;stroke:#ff7a00;stroke-width:9;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M60.6 48.9L48.9 60.6" style="stroke:#ff7a00;stroke-width:3;stroke-linecap:round"/>
+</svg>
+</template>
+
+<template id="tpl-C">
+<svg viewBox="0 0 190 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="oYmer works inside Revit" focusable="false">
+  <path d="M15 6H60V44L48 56H3V18Z" style="fill:#141024"/>
+  <path d="M15 6H60V44L48 56H3V18Z" style="fill:rgb(var(--c,255,122,0));opacity:.10"/>
+  <path d="M15 6H60V44L48 56H3V18Z" style="fill:none;stroke:rgba(2,242,255,.55);stroke-width:2.4"/>
+  <path d="M16 18L31.5 37M47 18L31.5 37M31.5 37V49" style="fill:none;stroke:#ff7a00;stroke-width:8;stroke-linecap:round;stroke-linejoin:round"/>
+  <path d="M58.2 44.4L48.4 54.2" style="stroke:#ff7a00;stroke-width:2.6;stroke-linecap:round"/>
+  <!-- textLength pins the run width whatever mono the machine has -->
+  <text x="72" y="29" textLength="110" lengthAdjust="spacingAndGlyphs"
+        style="font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:12px;
+               letter-spacing:.1em;fill:#ff7a00;font-weight:700">WORKS INSIDE</text>
+  <text x="72" y="52" textLength="86" lengthAdjust="spacingAndGlyphs"
+        style="font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:22px;
+               letter-spacing:.04em;fill:currentColor;font-weight:800">REVIT</text>
+</svg>
+</template>
+
+<script>
+(function(){
+  var SIZES = [22, 40, 96];
+
+  function make(tplId, px){
+    var tpl = document.getElementById(tplId);
+    var svg = tpl.content.firstElementChild.cloneNode(true);
+    var vb  = svg.getAttribute('viewBox').split(/\s+/).map(Number);
+    var ratio = vb[2] / vb[3];
+    svg.style.height = px + 'px';
+    svg.style.width  = (px * ratio).toFixed(2) + 'px';
+    svg.style.display = 'block';
+    svg.setAttribute('aria-hidden','true');
+    return svg;
+  }
+
+  function cell(node, label){
+    var d = document.createElement('div');
+    d.className = 'cell';
+    d.appendChild(node);
+    var s = document.createElement('span');
+    s.className = 'mono';
+    s.textContent = label;
+    d.appendChild(s);
+    return d;
+  }
+
+  // plain glyph rows
+  [['A','tpl-A'],['B','tpl-B'],['C','tpl-C']].forEach(function(o){
+    ['light','dark'].forEach(function(g){
+      var mount = document.querySelector('[data-mount="'+o[0]+'-'+g+'"]');
+      SIZES.forEach(function(px){
+        mount.appendChild(cell(make(o[1], px), px + 'px'));
+      });
+    });
+  });
+
+  // B shipped as it would really be used: glyph + HTML caption
+  ['light','dark'].forEach(function(g){
+    var mount = document.querySelector('[data-mount="Bcap-'+g+'"]');
+    SIZES.forEach(function(px){
+      var lock = document.createElement('span');
+      lock.className = 'oy-revitmark cap';
+      lock.appendChild(make('tpl-B', px));
+      var b = document.createElement('b');
+      b.textContent = 'Works inside Revit';
+      b.style.fontSize   = Math.max(11, Math.round(px * 0.44)) + 'px';
+      b.style.fontWeight = 700;
+      b.style.letterSpacing = '.01em';
+      lock.appendChild(b);
+      mount.appendChild(cell(lock, px + 'px tile'));
+    });
+  });
+
+  // hue check
+  [1,2,3,4].forEach(function(n){
+    document.querySelector('[data-mount="hue'+n+'"]').appendChild(make('tpl-B', 40));
+  });
+})();
+</script>
+</body>
+</html>

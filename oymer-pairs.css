@@ -106,6 +106,10 @@
      and deliberately HEAVIER than the in-pair arrows beside it (1.54px at their 96px).
      This one is the join between the two halves of the story, not a link inside a pair,
      so it should carry more weight, and at 0.91px it was reading as a scribble. */
+  /* phone: the label pushed each arrow off to one side, because the flow turns into a
+     row here and the text eats the width. No labels, so every arrow sits on the centre
+     line of the windows it joins. */
+  .oylp .oyl-flow span{display:none}
   .oylp .oyl-link{height:150px}
   .oylp .oyl-link .oyl-arw.oyl-link__diag{display:none}
   .oylp .oyl-link .oyl-arw.oyl-link__down{display:block;width:150px;height:34px;

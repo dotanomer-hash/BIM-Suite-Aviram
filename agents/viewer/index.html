@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצעה - oYmer Viewer (עמוד מוצר)</title>
+<style>
+/* ============================================================================
+   PROPOSAL ONLY - self contained. Every rule below is either copied verbatim
+   from the real suite stylesheets (bimsuite-mockup.css / suite-pipe.css /
+   oymer-pairs.css / the .oymer-free sign from all-mockup.html) or is marked
+   NEW. Nothing here invents a second visual language.
+   Fonts: the real page loads Rubik+Heebo from Google. No CDN allowed here, so
+   the stack falls back to the system Hebrew face. Type will look slightly
+   different from the live page - ignore the letterforms, judge the layout.
+   ========================================================================== */
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,video{max-width:100%}
+
+/* ---- tokens (copied: bimsuite-mockup.css) ---- */
+.bs,.suite{
+  --plum1:#191130; --plum2:#221743; --plum3:#2b1e52;
+  --vio:#8b6cf0; --vio-lt:#c3b3ff;
+  --orange:#ff7a00; --orange-ink:#1a0f00;
+  --ink:#181329; --body:#544d68; --mut:#8f889f;
+  --ground:#f7f5fb; --rule:#e6e2f0; --rule2:#d3cde4;
+}
+body{background:#f7f5fb;
+  font-family:"Heebo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+
+/* ---- proposal chrome: a strip that names each section. NOT part of the page. ---- */
+.pnote{position:relative;z-index:60;background:#12122a;color:#8bf9ff;
+  font:600 12.5px/1.5 ui-monospace,monospace;letter-spacing:.06em;
+  padding:7px 18px;direction:ltr;text-align:left;border-top:1px solid rgba(2,242,255,.28)}
+.pnote b{color:#ff9a3c;font-weight:800}
+.pnote i{color:#b9cbe2;font-style:normal;font-weight:400;letter-spacing:0}
+
+/* ---- header (approximated: the real page keeps its existing markup verbatim) ---- */
+.fakehead{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);
+  box-shadow:0 1px 3px rgba(24,19,41,.08);backdrop-filter:blur(10px)}
+.fakehead .in{max-width:1180px;margin:0 auto;padding:0 24px;height:80px;
+  display:flex;align-items:center;justify-content:space-between}
+.fakehead .lg{display:flex;align-items:center;gap:12px}
+.fakehead .lgbox{width:52px;height:52px;border-radius:10px;
+  background:linear-gradient(150deg,#8b6cf0,#2b1e52);display:grid;place-items:center;
+  color:#fff;font:800 11px/1 ui-monospace,monospace;letter-spacing:.05em}
+.fakehead .lgtxt{direction:ltr}
+.fakehead .lgtxt b{display:block;font-size:20px;font-weight:800;color:#0f172a;letter-spacing:.01em}
+.fakehead .lgtxt span{display:block;font-size:13px;color:#64748b;letter-spacing:.18em;margin-top:-2px}
+.fakehead nav{display:flex;gap:4px;font-size:14px;color:#334155}
+.fakehead nav a{padding:8px 14px;border-radius:9px;color:#334155;text-decoration:none}
+.fakehead .cta{background:#0284c7;color:#fff;padding:10px 20px;border-radius:12px;
+  font-size:14px;font-weight:600;text-decoration:none}
+@media (max-width:900px){.fakehead nav,.fakehead .cta{display:none}}
+
+/* ============================ hero (copied) ============================ */
+.bs-hero{
+  position:relative; min-height:465px; display:flex; flex-direction:column; justify-content:center;
+  padding:80px 0; overflow:hidden;
+  background:
+    radial-gradient(880px 420px at 18% 8%, rgba(139,108,240,.20), transparent 62%),
+    radial-gradient(760px 400px at 84% 88%, rgba(255,122,0,.07), transparent 64%),
+    linear-gradient(150deg,#191130 0%,#221743 46%,#2b1e52 100%);
+}
+@media (min-width:641px){.bs-hero{height:465px}}
+/* the Viewer's own violet wash over the plum (copied: .bs-hero.hue-c2) */
+.bs-hero.hue-c2{
+  background:
+    radial-gradient(920px 460px at 18% 6%, rgba(139,108,240,.52), transparent 62%),
+    radial-gradient(780px 420px at 86% 92%, rgba(190,160,255,.18), transparent 64%),
+    linear-gradient(150deg,#140d30 0%,#2a1a6e 46%,#3f29a4 100%);
+}
+.bs-herobg{position:absolute;inset:0;overflow:visible;pointer-events:none}
+/* the four ghost panels: real page uses media/hero-*.jpg. flat tints stand in here. */
+.bs-herobg .p{position:absolute;display:block;border-radius:10px;
+  box-shadow:0 22px 55px rgba(12,6,30,.55);
+  background:repeating-linear-gradient(-45deg,rgba(255,255,255,.10) 0 10px,transparent 10px 20px),
+             linear-gradient(160deg,#3a2a78,#1a1140)}
+.bs-herobg .p1{left:2.5%;top:24%;width:141px;height:290px;opacity:.30;
+  transform:perspective(1300px) rotateY(27deg) rotate(-5deg);
+  -webkit-mask-image:linear-gradient(to right,#000 38%,transparent 100%);
+          mask-image:linear-gradient(to right,#000 38%,transparent 100%)}
+.bs-herobg .p2{right:2.5%;top:22%;width:145px;height:300px;opacity:.30;
+  transform:perspective(1300px) rotateY(-27deg) rotate(5deg);
+  -webkit-mask-image:linear-gradient(to left,#000 38%,transparent 100%);
+          mask-image:linear-gradient(to left,#000 38%,transparent 100%)}
+.bs-herobg .p3{right:2%;top:6%;width:250px;height:150px;opacity:.24;
+  transform:perspective(1100px) rotateX(20deg) rotate(-3deg);
+  -webkit-mask-image:radial-gradient(120% 120% at 50% 40%,#000 42%,transparent 100%);
+          mask-image:radial-gradient(120% 120% at 50% 40%,#000 42%,transparent 100%)}
+.bs-herobg .p4{left:2%;bottom:6%;width:230px;height:138px;opacity:.20;
+  transform:perspective(1100px) rotateX(-18deg) rotate(3deg);
+  -webkit-mask-image:radial-gradient(120% 120% at 50% 60%,#000 42%,transparent 100%);
+          mask-image:radial-gradient(120% 120% at 50% 60%,#000 42%,transparent 100%)}
+@media (max-width:900px){.bs-herobg{display:none}}
+
+.bs-hero .inner{position:relative;z-index:10;max-width:1180px;margin:0 auto;padding:0 28px;text-align:center}
+.bs-hero h1{
+  direction:ltr;unicode-bidi:isolate;position:relative;z-index:2;
+  font-family:"Rubik","Heebo",sans-serif;color:#fff;font-weight:800;
+  font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.03em;margin:0;
+}
+.bs-suitetag{display:inline-block;direction:ltr;unicode-bidi:isolate;line-height:1.45;
+  font-family:"Rubik","Heebo",sans-serif;font-weight:800;font-size:15px;letter-spacing:.005em;
+  color:#fff;margin:0 0 16px;opacity:.92;text-decoration:none}
+.bs-suitetag .y{color:var(--orange)}
+.bs-suitetag b{font-weight:800;font-size:1.24em;letter-spacing:.01em}
+.oyc{font-size:clamp(9px,.32em,20px);font-weight:700;vertical-align:super;line-height:0;
+  letter-spacing:0;margin-inline-start:.1em;opacity:.8;direction:ltr;unicode-bidi:isolate}
+.oy{font-size:max(11.5px,.68em)}
+.bs-suitetag .oyc{font-size:.55em;opacity:.72}
+.yflash{color:var(--orange);animation:yfl 3.4s ease-in-out infinite}
+@keyframes yfl{0%,100%{color:#ff7a00}50%{color:#ffb266}}
+.bs-hero .sub{
+  color:#b4a9cf;font-family:"Rubik","Heebo",sans-serif;font-weight:500;
+  font-size:clamp(15px,1.5vw,19px);letter-spacing:.01em;margin:18px auto 0;
+}
+
+/* ---- the חינם sign. COPIED from all-mockup.html / BIMViewer.html, unchanged.
+        it already sits in the hero above the title on VR Tours and on the live
+        BIM Viewer page - this is a MOVE, not a new component. ---- */
+.oymer-free{display:inline-block;position:relative;z-index:20;padding:2px;margin:0 0 24px;
+  background:linear-gradient(150deg,rgba(255,122,0,.95),rgba(255,122,0,.5));
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48);
+  transform:rotate(-5deg);animation:oymer-freeglow 3.2s ease-in-out infinite}
+.oymer-free__in{display:block;padding:11px 36px 13px;
+  font-size:2.15rem;font-weight:800;line-height:1;color:#ff7a00;
+  text-shadow:0 0 26px rgba(255,122,0,.8);
+  background:linear-gradient(150deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(21px 0,100% 0,100% calc(100% - 21px),calc(100% - 21px) 100%,0 100%,0 21px)}
+@keyframes oymer-freeglow{
+  0%,100%{box-shadow:0 0 46px rgba(255,122,0,.42),0 18px 42px rgba(11,11,28,.48)}
+  50%    {box-shadow:0 0 64px rgba(255,122,0,.62),0 18px 42px rgba(11,11,28,.48)}}
+@media (max-width:640px){
+  .oymer-free{margin-bottom:18px;transform:rotate(-4deg)}
+  .oymer-free__in{padding:9px 26px 11px;font-size:1.7rem}
+}
+@media (prefers-reduced-motion:reduce){.oymer-free{animation:none}}
+
+/* ============================ page (copied) ============================ */
+.suite{background:var(--ground);color:var(--body);direction:rtl;
+  font-family:"Heebo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.suite .inner{max-width:1180px;margin:0 auto;padding:0 28px}
+.suite .ltr{direction:ltr;unicode-bidi:embed;display:inline-block}
+.suite a{text-decoration:none;color:inherit}
+
+/* hue per product (copied) */
+.suite .c1{--c:255,122,0;   --cd:196,88,0;   --con:#1a0f00}
+.suite .c2{--c:139,108,240; --cd:92,64,190;  --con:#ffffff}
+
+.pipesec{position:relative;padding:70px 0 90px;overflow:hidden}
+.pipesec .inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 28px}
+.phead{margin-bottom:34px}
+.phead .no{display:block;font-family:"Rubik",sans-serif;font-size:11.5px;font-weight:800;
+  letter-spacing:.2em;color:rgb(var(--cd));margin-bottom:12px;direction:ltr}
+.phead h2{font-family:"Rubik","Heebo",sans-serif;color:var(--ink);margin:0;
+  font-size:clamp(26px,3.1vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.12}
+.phead .lead{font-size:15.5px;line-height:1.75;color:var(--body);margin-top:12px;max-width:60ch}
+
+/* quiet BIM field (copied, trimmed to the layers the product pages actually show) */
+.bimbg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bimbg > span{position:absolute;inset:-120px;display:block}
+.bimbg .plan{opacity:.022;background-size:260px 260px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'><g fill='none' stroke='%23181329' stroke-width='1.3'><rect x='24' y='24' width='96' height='74'/><rect x='142' y='24' width='94' height='48'/><rect x='24' y='120' width='212' height='116'/><path d='M120 60h22M72 98v22M236 96v24'/><path d='M158 120a34 34 0 0 1 34 34'/><circle cx='192' cy='178' r='16'/></g></svg>")}
+.bimbg .d1{opacity:.045;background-size:13px 13px;
+  background-image:radial-gradient(circle, rgba(24,19,41,.55) 1.5px, transparent 1.6px);
+  -webkit-mask-image:radial-gradient(70% 55% at 50% 46%, #000 0%, rgba(0,0,0,.35) 55%, transparent 82%);
+          mask-image:radial-gradient(70% 55% at 50% 46%, #000 0%, rgba(0,0,0,.35) 55%, transparent 82%)}
+.bimbg .d2{opacity:.03;background-size:27px 27px;
+  background-image:radial-gradient(circle, rgba(139,108,240,.75) 2.4px, transparent 2.5px);
+  -webkit-mask-image:linear-gradient(135deg,#000 0%,transparent 62%);
+          mask-image:linear-gradient(135deg,#000 0%,transparent 62%)}
+
+/* ==================== oymer-pairs.css - copied verbatim (trimmed) ==================== */
+.oylp{--cy:#02f2ff;--cy-dim:rgba(2,242,255,.28);--cy-hair:rgba(2,242,255,.5);--or:#ff7a00;
+  position:relative;z-index:1}
+.oylp .oyl-mono{font-family:'Share Tech Mono','Rajdhani',ui-monospace,monospace;letter-spacing:.12em}
+.oylp .oyl-panel{position:relative;
+  background:
+    linear-gradient(160deg, rgba(var(--cd,44,82,196),.62) 0%,
+                            rgba(var(--c,79,125,255),.26) 55%,
+                            rgba(var(--cd,44,82,196),.44) 100%),
+    linear-gradient(160deg,#0b0913 0%,#120e1e 100%);
+  border:1px solid var(--cy-dim);
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.oylp .oyl-panel:hover{border-color:var(--cy-hair);box-shadow:0 0 40px rgba(2,242,255,.16);
+  transform:translateY(-3px)}
+.oylp .oyl-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#04060f;
+  border-bottom:1px solid var(--cy-dim)}
+.oylp .oyl-media video,.oylp .oyl-media img{width:100%;height:100%;object-fit:cover;display:block}
+.oylp .oyl-media::after{content:'';position:absolute;left:0;right:0;height:34%;
+  background:linear-gradient(to bottom,transparent,rgba(2,242,255,.11),transparent);
+  animation:oylp-sweep 5.5s linear infinite}
+@keyframes oylp-sweep{from{top:-40%}to{top:110%}}
+.oylp .oyl-body{padding:22px 24px 26px}
+.oylp .oyl-kick{display:block;margin-bottom:9px;font-size:.7rem;color:var(--cy);opacity:.85}
+.oylp .oyl-panel h3{margin:0 0 10px;font-size:1.4rem;font-weight:800;color:#fff}
+.oylp .oyl-panel p{margin:0;font-size:1rem;line-height:1.72;color:#9db1cb}
+.oylp .oyl-hud{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.oylp .oyl-hud b{padding:3px 9px;font-size:.66rem;font-weight:500;color:var(--cy);
+  border:1px solid var(--cy-dim);background:rgba(2,242,255,.05)}
+.oylp .oyl-hud b.on{color:var(--or);border-color:rgba(255,122,0,.45);background:rgba(255,122,0,.07)}
+.oylp .oyl-id{position:absolute;top:12px;right:14px;z-index:2;font-size:.68rem;color:var(--cy);
+  padding:2px 8px;background:rgba(5,7,15,.75);border:1px solid var(--cy-dim)}
+.oylp .oyl-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;color:#7f93ad;text-align:center;padding:24px;
+  background:repeating-linear-gradient(-45deg,rgba(2,242,255,.05) 0 12px,transparent 12px 24px),
+    radial-gradient(ellipse at 50% 60%,rgba(2,242,255,.10),transparent 65%)}
+.oylp .oyl-ph strong{font-size:1.05rem;color:#b9cbe2;font-weight:600;line-height:1.5}
+.oylp .oyl-ph span{font-size:.72rem;color:var(--cy);opacity:.85;direction:ltr;line-height:1.7}
+.oylp .oyl-ph em{position:absolute;inset:16px;border:1px dashed rgba(2,242,255,.3);font-style:normal}
+.oylp .oyl-pairs{margin-top:34px;display:grid;gap:30px}
+.oylp .oyl-pair{position:relative;display:grid;grid-template-columns:1fr 150px 1fr;align-items:stretch}
+.oylp .oyl-pair .oyl-panel{display:flex;flex-direction:column}
+.oylp .oyl-pair .oyl-body{flex:1}
+.oylp .oyl-pairs--rev .oyl-pair > *:nth-child(1){order:3}
+.oylp .oyl-pairs--rev .oyl-pair > *:nth-child(2){order:2}
+.oylp .oyl-pairs--rev .oyl-pair > *:nth-child(3){order:1}
+.oylp .oyl-flow{position:relative;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px}
+.oylp .oyl-flow span{font-size:.72rem;font-weight:800;color:#0b0a18;opacity:1;
+  white-space:nowrap;text-shadow:none}
+.oylp .oyl-arw{display:block;width:100%;height:34px;overflow:visible}
+.oylp .oyl-arw__boltGlow{fill:none;stroke:rgba(255,122,0,.5);stroke-width:8;stroke-linecap:round;
+  filter:blur(4px);stroke-dasharray:34 16;animation:oylp-bolt 1.4s linear infinite}
+.oylp .oyl-arw__bolt{fill:none;stroke:#ff8c1a;stroke-width:2.4;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:34 16;filter:drop-shadow(0 0 6px rgba(255,140,26,.95));
+  animation:oylp-bolt 1.4s linear infinite}
+.oylp .oyl-arw__bolt2{fill:none;stroke:rgba(255,154,60,.75);stroke-width:1.4;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:12 26;filter:drop-shadow(0 0 5px rgba(255,122,0,.8));
+  animation:oylp-bolt .95s linear infinite}
+.oylp .oyl-arw__core{fill:none;stroke:#fff4e0;stroke-width:1;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:14 36;animation:oylp-bolt 1.05s linear infinite}
+@keyframes oylp-bolt{from{stroke-dashoffset:0}to{stroke-dashoffset:-50}}
+.oylp .oyl-arw__fork{fill:none;stroke:rgba(255,154,60,.85);stroke-width:1.1;stroke-linecap:round;
+  filter:drop-shadow(0 0 4px rgba(255,122,0,.9));opacity:0;
+  animation:oylp-fork 1.4s steps(1,end) infinite}
+.oylp .oyl-arw__fork:nth-of-type(2){animation-delay:.45s}
+.oylp .oyl-arw__fork:nth-of-type(3){animation-delay:.9s}
+@keyframes oylp-fork{0%,10%{opacity:.9}14%,100%{opacity:0}}
+.oylp .oyl-arw__wall{fill:none;stroke:rgba(2,242,255,.55);stroke-width:1.6;stroke-linecap:round;
+  animation:oylp-wall 1.4s ease-out infinite}
+@keyframes oylp-wall{0%,100%{stroke:rgba(2,242,255,.45);filter:none}
+  8%,26%{stroke:#ffd7a8;filter:drop-shadow(0 0 9px rgba(255,140,26,.95))}}
+.oylp .oyl-arw__flash{fill:#fff6e8;transform-box:view-box;transform-origin:7px 17px;
+  filter:drop-shadow(0 0 12px rgba(255,140,26,1));animation:oylp-flash 1.4s ease-out infinite}
+@keyframes oylp-flash{0%{transform:scale(.2);opacity:0}7%{transform:scale(1);opacity:1}
+  34%{transform:scale(1.7);opacity:.3}60%,100%{transform:scale(1.9);opacity:0}}
+.oylp .oyl-arw__spark{fill:none;stroke:#ffb057;stroke-width:1.3;stroke-linecap:round;
+  filter:drop-shadow(0 0 5px rgba(255,140,26,.95));
+  transform-box:view-box;transform-origin:7px 17px;
+  animation:oylp-spark 1.4s cubic-bezier(.15,.7,.3,1) infinite}
+@keyframes oylp-spark{0%{transform:scale(.15);opacity:0}8%{opacity:1}
+  50%{transform:scale(1.25);opacity:.8}78%,100%{transform:scale(1.6);opacity:0}}
+.oylp .oyl-arw__flare{fill:#fff3df;filter:drop-shadow(0 0 10px rgba(255,140,26,1));
+  animation:oylp-flare 1.4s ease-in-out infinite}
+@keyframes oylp-flare{0%,100%{opacity:.5;r:2.4}50%{opacity:1;r:4.4}}
+@media (max-width:960px){
+  .oylp .oyl-pair{grid-template-columns:1fr;gap:0}
+  .oylp .oyl-flow{flex-direction:row;height:96px}
+  .oylp .oyl-flow .oyl-arw{width:96px;height:34px;transform:rotate(90deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .oylp .oyl-media::after,.oylp .oyl-arw *{animation:none}
+}
+
+/* ==================== NEW - written for this page only ==================== */
+
+/* NEW 1. the "same place" stamp. The whole point of M13 is that the Revit still
+   and the VR clip are THE SAME ROOM FROM THE SAME SPOT. A viewer cannot verify
+   that by looking, so the page states it: the identical stamp on both panels,
+   naming the project, the room and the viewpoint. If the two shots ever stop
+   matching, the stamp turns into a visible lie - which is the point. */
+.oylp .vw-same{position:absolute;left:14px;top:12px;z-index:2;display:inline-flex;
+  align-items:center;gap:7px;font-size:.62rem;letter-spacing:.1em;color:#0b0a18;
+  padding:3px 9px 4px;background:rgba(2,242,255,.92);border:1px solid rgba(255,255,255,.7);
+  font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.oylp .vw-same::before{content:"";width:7px;height:7px;border-radius:50%;background:#0b0a18}
+.vw-samefoot{margin:14px 0 0;font-size:12.5px;line-height:1.7;color:var(--mut);text-align:center}
+
+/* NEW 2. "three ways in" - the same panel chrome as a pair window, three across,
+   no connector between them (they are alternatives, not a sequence). */
+.vw-ways{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media (max-width:860px){.vw-ways{grid-template-columns:1fr}}
+.vw-way{position:relative;padding:26px 24px 28px;min-height:196px;
+  display:flex;flex-direction:column;gap:10px}
+.vw-way .vw-ic{width:44px;height:44px;color:var(--cy);opacity:.9}
+.vw-way h3{margin:2px 0 0;font-size:1.22rem;font-weight:800;color:#fff}
+.vw-way p{margin:0;font-size:.96rem;line-height:1.7;color:#9db1cb}
+.vw-way .vw-no{margin-top:auto;padding-top:14px;font-size:.66rem;letter-spacing:.12em;
+  color:var(--or);font-family:'Share Tech Mono',ui-monospace,monospace}
+
+/* NEW 3. what you get + try it - one section, two columns.
+   The tick list is the live BIM Viewer page's list, unchanged, restyled onto
+   the suite's dark panel instead of the old white card. */
+.vw-get{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+@media (max-width:900px){.vw-get{grid-template-columns:1fr}}
+.vw-list{padding:26px 26px 28px}
+.vw-list .oyl-kick{margin-bottom:16px}
+.vw-list ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.vw-list li{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;
+  font-size:1rem;line-height:1.65;color:#c6d4e6}
+.vw-tick{width:24px;height:24px;display:grid;place-items:center;color:#0b0a18;
+  background:var(--cy);font-weight:800;font-size:13px;
+  clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.vw-try{display:flex;flex-direction:column}
+.vw-try .oyl-media{aspect-ratio:16/10}
+.vw-try .vw-trybody{padding:22px 24px 26px;flex:1;display:flex;flex-direction:column;gap:12px}
+.vw-try h3{margin:0;font-size:1.3rem;font-weight:800;color:#fff}
+.vw-try p{margin:0;font-size:.96rem;line-height:1.7;color:#9db1cb}
+/* the chamfered CTA - copied from .oymer-cta in all-mockup.html */
+.oymer-cta{display:inline-block;padding:2px;text-decoration:none;align-self:flex-start;
+  background:linear-gradient(160deg,rgba(2,242,255,.85),rgba(2,242,255,.45));
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  box-shadow:0 0 30px rgba(2,242,255,.34),0 14px 34px rgba(11,11,28,.30);
+  transition:box-shadow .22s ease,transform .22s ease}
+.oymer-cta:hover{box-shadow:0 0 44px rgba(2,242,255,.55),0 16px 38px rgba(11,11,28,.34);
+  transform:translateY(-2px)}
+.oymer-cta__in{display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 40px;font-size:1.1rem;font-weight:700;letter-spacing:.045em;color:#02f2ff;
+  background:linear-gradient(160deg,#12122a 0%,#0c182b 100%);
+  clip-path:polygon(17px 0,100% 0,100% calc(100% - 17px),calc(100% - 17px) 100%,0 100%,0 17px);
+  text-shadow:0 0 16px rgba(2,242,255,.65)}
+.vw-ctanote{font-size:12px;color:var(--mut);margin:0}
+
+/* NEW 4. the free/paid line, drawn as a pair that leaves the page.
+   Same bolt, same panels. The right-hand panel wears DecisionMaker's ORANGE and
+   is a link, so the paid step is literally the next window along - one click,
+   no sales pitch. --c/--cd are set INLINE on that panel: they are declared on
+   `.suite .c1/.c2` and this panel lives inside a c2 section, so it would
+   otherwise inherit the violet. (This exact trap is in .claude/rules.) */
+.vw-gate{background:linear-gradient(180deg,#f7f5fb 0%,#efeaf7 100%)}
+.vw-paid{display:inline-flex;align-items:center;gap:7px;position:absolute;left:14px;top:12px;
+  z-index:2;font-size:.64rem;letter-spacing:.1em;font-weight:800;
+  padding:4px 10px;color:#1a0f00;background:linear-gradient(140deg,#ffb266,#ff7a00);
+  box-shadow:0 3px 12px rgba(255,122,0,.45)}
+.vw-paid svg{width:11px;height:11px}
+.vw-gate .oyl-panel--link{cursor:pointer}
+.vw-gate .oyl-panel--link .vw-go{display:inline-flex;align-items:center;gap:9px;margin-top:14px;
+  font-weight:800;color:#ffb266;font-size:.95rem}
+.vw-gate .oyl-panel--link:hover .vw-go{color:#fff}
+.vw-gate .vw-go i{font-style:normal;direction:ltr}
+.vw-line{margin:30px auto 0;max-width:760px;text-align:center;
+  font-family:"Rubik","Heebo",sans-serif;font-weight:800;color:var(--ink);
+  font-size:clamp(19px,2.2vw,26px);letter-spacing:-.02em;line-height:1.5}
+.vw-line b{color:rgb(var(--cd))}
+.vw-line em{font-style:normal;color:var(--orange)}
+
+/* ---- back to the suite (copied) ---- */
+.backsuite.c2{--c:139,108,240;--cd:92,64,190;--con:#ffffff}
+.backsuite{background:var(--ground);padding:46px 0 78px;text-align:center}
+.backsuite .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.backsuite__link{display:inline-flex;align-items:baseline;gap:14px;text-decoration:none;
+  font-family:"Rubik","Heebo",sans-serif;font-weight:800;
+  font-size:clamp(21px,2.3vw,27px);letter-spacing:-.025em;color:rgb(var(--cd));
+  transition:color .22s ease,transform .22s cubic-bezier(.2,.7,.2,1)}
+.backsuite__link:hover{color:rgb(var(--c));transform:translateY(-2px)}
+.backsuite__arw{font-size:.86em;line-height:1;opacity:.75}
+.backsuite__txt .oy{font-size:max(11.5px,.68em);opacity:.75}
+.backsuite__txt .oyc{opacity:.6}
+
+/* ---- footer (approximated) ---- */
+.fakefoot{background:#0f172a;color:#94a3b8;padding:44px 0;font-size:13.5px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="pnote"><b>PROPOSAL</b> &nbsp;oYmer Viewer product page &nbsp;<i>The dark strips are proposal notes only and are not part of the page. Coloured hatched blocks are media placeholders.</i></div>
+
+<!-- ============================ 0. HEADER ============================ -->
+<div class="pnote">0 &nbsp;HEADER &nbsp;<i>unchanged - the real page keeps its existing markup. Drawn here without base44.css / the remote logo.</i></div>
+<header class="fakehead">
+  <div class="in">
+    <a class="lg" href="#">
+      <span class="lgbox">LOGO</span>
+      <span class="lgtxt"><b>OMER DOTAN</b><span>VR Solutions</span></span>
+    </a>
+    <nav><a href="#">השירותים שלנו</a><a href="#">שאלות? תשובות!</a><a href="#">בלוג</a><a href="#">אודות</a><a href="#">צור קשר</a></nav>
+    <a class="cta" href="#">דברו איתי</a>
+  </div>
+</header>
+
+<!-- ============================ 1. HERO ============================ -->
+<div class="pnote">1 &nbsp;HERO &nbsp;<b>CHANGED</b> &nbsp;<i>the חינם sign moves in (it already exists on VR Tours and on the live BIM Viewer page) + a tighter sub-line. Beams stay removed. No new component.</i></div>
+<section class="bs bs-hero hue-c2" dir="rtl" aria-label="oYmer Viewer">
+  <div class="bs-herobg" aria-hidden="true">
+    <span class="p p1"></span><span class="p p3"></span><span class="p p2"></span><span class="p p4"></span>
+  </div>
+  <div class="inner">
+    <a class="bs-suitetag" href="bimsuite.html">o<span class="y">Y</span>mer <b>BIM VR</b> Suite<sup class="oyc">&#169;</sup></a>
+    <div class="oymer-free"><span class="oymer-free__in">חינם</span></div>
+    <h1><span class="oy">o<span class="yflash">Y</span>mer</span> Viewer<sup class="oyc">&#169;</sup></h1>
+    <p class="sub">מודל ה-BIM שלכם, בתוך VR. בלי התקנה, בלי רישיון.</p>
+  </div>
+</section>
+
+<main class="suite bs" dir="rtl">
+
+  <!-- ============================ 2. THE PAIR (M13) ============================ -->
+  <div class="pnote">2 &nbsp;THE PAIR - <b>M13</b> &nbsp;<i>kept from today's page. Both windows become placeholders until the footage exists, and BOTH now carry the same "same place" stamp. One arrow only, Revit into the Viewer - the return arrow belongs to DecisionMaker.</i></div>
+  <section class="pipesec c2" id="samplace">
+    <div class="bimbg" aria-hidden="true"><span class="plan"></span><span class="dots d1"></span><span class="dots d2"></span></div>
+    <div class="inner oylp">
+      <div class="phead">
+        <span class="no ltr">// VIEWER</span>
+        <h2>אותו חלל בדיוק - פעם במסך, פעם מבפנים</h2>
+        <p class="lead">משמאל המודל כפי שהוא ברוויט. מימין אותו חדר, מאותה נקודת עמידה, מתוך המשקפת. לא רנדר יפה של משהו אחר - אותו קובץ, אותו מקום.</p>
+      </div>
+
+      <div class="oyl-pairs oyl-pairs--rev">
+        <div class="oyl-pair">
+
+          <article class="oyl-panel">
+            <div class="oyl-media">
+              <span class="oyl-id oyl-mono">VIEW_01</span>
+              <span class="vw-same oyl-mono">DIR EL ASAD &middot; LIVING &middot; VP-01</span>
+              <div class="oyl-ph">
+                <em></em>
+                <strong>קליפ M13 - חסר</strong>
+                <span>IN-HEADSET CAPTURE &middot; 16:10 &middot; 14-20 s LOOP<br>BAKED LIGHT &middot; IN-VR CONTROLS VISIBLE<br>STARTS AT VP-01, THE SAME POINT AS SRC_01</span>
+              </div>
+            </div>
+            <div class="oyl-body">
+              <span class="oyl-kick oyl-mono">IN THE VIEWER</span>
+              <div class="oyl-hud oyl-mono"><b>WEBXR</b><b>1:1</b><b>NO INSTALL</b><b class="on">FREE</b></div>
+              <h3>עומדים בפנים</h3>
+              <p>מסתובבים בחלל בגודל אמיתי, בוחנים חומרים ופרטים, ולוחצים על כל אלמנט כדי לראות את נתוני ה-BIM שלו.</p>
+            </div>
+          </article>
+
+          <div class="oyl-flow oyl-mono" aria-hidden="true">
+            <span>OPEN</span>
+            <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+              <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__bolt2"    d="M146 17 L137 20 L127 13 L117 20.5 L107 14.5 L97 21 L87 14 L77 20.5 L67 13.5 L57 21 L47 14 L37 20 L27 14.5 L17 19 L6 17"/>
+              <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__fork" d="M116 13.5 L112 6 L115 9.5"/>
+              <path class="oyl-arw__fork" d="M76 13.5 L71 5.5 L74 9"/>
+              <path class="oyl-arw__fork" d="M46 20.5 L42 28 L45 24"/>
+              <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+              <path class="oyl-arw__spark" d="M7 17 L-2 9 M7 17 L-1 24 M7 17 L4 4 M7 17 L5 30 M7 17 L16 7 M7 17 L15 27 M7 17 L20 12 M7 17 L19 22"/>
+              <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+              <circle class="oyl-arw__flare" cx="7" cy="17" r="2.4"/>
+            </svg>
+          </div>
+
+          <article class="oyl-panel">
+            <div class="oyl-media">
+              <span class="oyl-id oyl-mono">SRC_01</span>
+              <span class="vw-same oyl-mono">DIR EL ASAD &middot; LIVING &middot; VP-01</span>
+              <div class="oyl-ph">
+                <em></em>
+                <strong>צילום רוויט - חסר</strong>
+                <span>REVIT 3D VIEW &middot; 16:10 &middot; STILL<br>CAMERA AT VP-01, SAME EYE HEIGHT AND HEADING<br>oYmer RIBBON TAB VISIBLE</span>
+              </div>
+            </div>
+            <div class="oyl-body">
+              <span class="oyl-kick oyl-mono">IN REVIT</span>
+              <div class="oyl-hud oyl-mono"><b>.RVT</b><b>WHITE MODEL</b><b class="on">EXPORT</b></div>
+              <h3>המודל ברוויט</h3>
+              <p>המודל כפי שהוא במשרד, עם כל נתוני ה-BIM. כפתור אחד בסרגל oYmer מוציא אותו החוצה.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+      <p class="vw-samefoot">שני הצילומים מאותה נקודה בדיוק - <span class="ltr">Dir El Asad, VP-01</span>. זה מה שהופך את ההשוואה לאמיתית.</p>
+    </div>
+  </section>
+
+  <!-- ============================ 3. OPENS ANYWHERE ============================ -->
+  <div class="pnote">3 &nbsp;OPENS ANYWHERE &nbsp;<b>NEW SECTION</b> &nbsp;<i>the "free" claim is worth nothing if it is hard to open. Three panels, same chrome as a pair window, no connector - they are alternatives, not a pipeline.</i></div>
+  <section class="pipesec c2">
+    <div class="bimbg" aria-hidden="true"><span class="dots d1"></span></div>
+    <div class="inner oylp">
+      <div class="phead">
+        <span class="no ltr">// NO INSTALL</span>
+        <h2>נפתח מקישור. בכל מקום.</h2>
+        <p class="lead">המודל הוא קבצים סטטיים על האינטרנט, בדיוק כמו הסיורים. אין מה להתקין, אין מה לרשות, ואין צורך במחשב בחדר הישיבות.</p>
+      </div>
+
+      <div class="vw-ways">
+
+        <article class="oyl-panel vw-way">
+          <svg class="vw-ic" viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M8 6h32a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6h-7l-5-6h-8l-5 6H8a6 6 0 0 1-6-6v-8a6 6 0 0 1 6-6Z"/>
+            <circle cx="14" cy="16" r="3.5"/><circle cx="34" cy="16" r="3.5"/>
+          </svg>
+          <h3>על משקפי Quest</h3>
+          <p>הלקוח חובש ונכנס. פגישה שלמה בלי מחשב על השולחן - מספיקים משקפת ו-Wi-Fi.</p>
+          <span class="vw-no">STANDALONE &middot; NO PC IN THE ROOM</span>
+        </article>
+
+        <article class="oyl-panel vw-way">
+          <svg class="vw-ic" viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="6" y="3" width="36" height="23" rx="2.5"/><path d="M2 29h44"/><path d="M6 9h36"/>
+          </svg>
+          <h3>בדפדפן, על כל מחשב</h3>
+          <p>לינק אחד. נפתח כמו אתר, גם למי שאין לו רוויט ואין לו שום כוונה להתקין משהו.</p>
+          <span class="vw-no">ANY BROWSER &middot; NO LICENCE</span>
+        </article>
+
+        <article class="oyl-panel vw-way">
+          <svg class="vw-ic" viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="17" y="1" width="14" height="30" rx="3"/><path d="M21 5h6"/><circle cx="24" cy="26" r="1.6"/>
+          </svg>
+          <h3>גם מהטלפון</h3>
+          <p>שולחים ללקוח בוואטסאפ. הוא מסתובב במודל באצבע, בזמן שלו, לפני הפגישה.</p>
+          <span class="vw-no">SHARE A LINK &middot; NOTHING TO SIGN UP FOR</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 4. WHAT YOU GET + TRY IT ============================ -->
+  <div class="pnote">4 &nbsp;WHAT YOU GET + TRY IT &nbsp;<b>RETURNS</b> &nbsp;<i>the four-tick list is the live BIM Viewer page's own Hebrew, word for word, moved onto the suite's dark panel. The demo block is the free tier's conversion action and is the one thing on the page that must eventually be a live link.</i></div>
+  <section class="pipesec c2">
+    <div class="bimbg" aria-hidden="true"><span class="plan"></span><span class="dots d2"></span></div>
+    <div class="inner oylp">
+      <div class="phead">
+        <span class="no ltr">// WHAT YOU GET</span>
+        <h2>מה יש בפנים</h2>
+      </div>
+
+      <div class="vw-get">
+
+        <article class="oyl-panel vw-list">
+          <span class="oyl-kick oyl-mono">INCLUDED &middot; FREE</span>
+          <ul>
+            <li><span class="vw-tick">&#10003;</span><span>הליכה וטיסה חופשית בתוך המודל - בדפדפן, על המחשב או על משקפי Meta Quest</span></li>
+            <li><span class="vw-tick">&#10003;</span><span>צביעת משטחים ובחירת גימורים - רואים את הבחירה על הקיר האמיתי, בגודל אמיתי</span></li>
+            <li><span class="vw-tick">&#10003;</span><span>החלפת ריהוט מתוך קטלוג, במקום שבו הוא עומד במודל</span></li>
+            <li><span class="vw-tick">&#10003;</span><span>תאורה מחושבת מראש - האור והצללים נאפים במפעל שלנו ומגיעים בתוך המודל</span></li>
+            <li><span class="vw-tick">&#10003;</span><span>לחיצה על כל אלמנט מציגה את נתוני ה-BIM שלו - סוג, קומה, מידות</span></li>
+          </ul>
+        </article>
+
+        <article class="oyl-panel vw-try">
+          <div class="oyl-media">
+            <span class="oyl-id oyl-mono">DEMO</span>
+            <div class="oyl-ph">
+              <em></em>
+              <strong>הדגמה חיה - ממתין לכתובת</strong>
+              <span>POSTER EXISTS: media/viewer/demo-poster.jpg<br>NEEDS: a hosted pack URL + a 6 s "link to inside" clip</span>
+            </div>
+          </div>
+          <div class="vw-trybody">
+            <h3>תנסו עכשיו, מכאן</h3>
+            <p>מודל אמיתי שבנינו - דיר אל אסד, עם התאורה האפויה. נפתח בלשונית חדשה, בלי הרשמה.</p>
+            <a class="oymer-cta" href="#"><span class="oymer-cta__in">כניסה למודל</span></a>
+            <p class="vw-ctanote">עד שהחבילה תעלה לאוויר, הכפתור נשאר &laquo;בקרוב&raquo; כמו בעמוד הקיים.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 5. THE LINE ============================ -->
+  <div class="pnote">5 &nbsp;THE FREE / PAID LINE &nbsp;<b>NEW SECTION - the strategic one</b> &nbsp;<i>"Look free. Write paid." drawn with the suite's own bolt. The right window wears DecisionMaker's orange and IS a link to its page. Deliberately does NOT copy DecisionMaker's ribbon-button connector or its approval callout.</i></div>
+  <section class="pipesec vw-gate c2">
+    <div class="inner oylp">
+      <div class="phead">
+        <span class="no ltr">// THE LINE</span>
+        <h2>רואים חינם. כותבים בתשלום.</h2>
+        <p class="lead">כל מה שרק קורא את המודל - חינם, בלי הגבלת זמן. ברגע שההחלטה נכתבת בחזרה לקובץ הרוויט, זה כבר <span class="ltr">DecisionMaker</span> - וזה החלק שמשלמים עליו.</p>
+      </div>
+
+      <div class="oyl-pairs">
+        <div class="oyl-pair">
+
+          <article class="oyl-panel">
+            <div class="oyl-media">
+              <span class="oyl-id oyl-mono">FREE</span>
+              <div class="oyl-ph">
+                <em></em>
+                <strong>אותו קליפ של המציג</strong>
+                <span>REUSE VIEW_01, TRIMMED TO 6 s</span>
+              </div>
+            </div>
+            <div class="oyl-body">
+              <span class="oyl-kick oyl-mono">VIEWER</span>
+              <div class="oyl-hud oyl-mono"><b>READ</b><b>WALK</b><b>PAINT PREVIEW</b><b class="on">FREE</b></div>
+              <h3>לראות, לבחון, להתלבט</h3>
+              <p>הכל פתוח, כמה שרוצים. שום דבר לא נוגע בקובץ המקורי.</p>
+            </div>
+          </article>
+
+          <div class="oyl-flow oyl-mono" aria-hidden="true">
+            <span>WRITE</span>
+            <svg class="oyl-arw" viewBox="0 0 150 34" preserveAspectRatio="xMidYMid meet" focusable="false">
+              <path class="oyl-arw__boltGlow" d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__bolt"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__core"     d="M146 17 L136 12.5 L126 21 L116 13.5 L106 20 L96 12.5 L86 21 L76 13.5 L66 20 L56 12.5 L46 20.5 L36 14 L26 19.5 L16 15.5 L6 17"/>
+              <path class="oyl-arw__wall" d="M4 4 L4 30"/>
+              <circle class="oyl-arw__flash" cx="7" cy="17" r="3.4"/>
+            </svg>
+          </div>
+
+          <a class="oyl-panel oyl-panel--link" href="suite-decisionmaker.html"
+             style="--c:255,122,0;--cd:196,88,0">
+            <div class="oyl-media">
+              <span class="oyl-id oyl-mono">PAID</span>
+              <span class="vw-paid oyl-mono">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                בתשלום
+              </span>
+              <div class="oyl-ph">
+                <em></em>
+                <strong>קיים - אין מה לצלם</strong>
+                <span>REUSE media/dm-revit-after.jpg</span>
+              </div>
+            </div>
+            <div class="oyl-body">
+              <span class="oyl-kick oyl-mono">DECISIONMAKER</span>
+              <div class="oyl-hud oyl-mono"><b>CHANGE-SET</b><b>SAVE AS</b><b class="on">WRITE-BACK</b></div>
+              <h3>ההחלטה נכנסת חזרה למודל</h3>
+              <p>עותק חדש של הקובץ, עם ההחלטות בפנים ורשומת אישור לצידן. הקובץ המקורי לא נגעו בו.</p>
+              <span class="vw-go">לעמוד <span class="ltr">oYmer DecisionMaker</span> <i>&#8592;</i></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <p class="vw-line">אותה משקפת. אותו מודל. <b>ההבדל היחיד</b> הוא אם ההחלטה <em>נשארת בפגישה</em> או נכנסת לקובץ.</p>
+    </div>
+  </section>
+
+  <!-- ============================ 6. BACK TO THE SUITE ============================ -->
+  <div class="pnote">6 &nbsp;BACK TO THE SUITE &nbsp;<i>unchanged.</i></div>
+  <section class="backsuite c2" aria-label="חזרה לחבילה">
+    <a class="backsuite__link" href="bimsuite.html">
+      <span class="backsuite__arw ltr" aria-hidden="true">&#8594;</span>
+      <span class="backsuite__txt">חזרה אל <span class="ltr"><span class="oy">oYmer</span> BIM VR Suite<sup class="oyc">&#169;</sup></span></span>
+    </a>
+  </section>
+</main>
+
+<div class="pnote">7 &nbsp;FOOTER &nbsp;<i>unchanged - the real page keeps the site footer.</i></div>
+<footer class="fakefoot">&copy; 2026 OMER DOTAN - VR Solutions</footer>
+
+</body>
+</html>

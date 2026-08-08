@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>שלוש הצעות - כפתור רוויט, עמוד Viewer, AR</title>
+<style>
+  :root{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--or:#ff7a00}
+  *{box-sizing:border-box}
+  body{margin:0;padding:30px 20px 60px;background:#f6f7f9;color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  h1{font-size:23px;margin:0 0 6px;text-align:center}
+  .sub{color:var(--mut);font-size:14px;margin:0 0 26px;text-align:center}
+  .grid{display:grid;gap:18px;max-width:900px;margin:0 auto;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+    box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 26px rgba(15,23,42,.06)}
+  .card h2{font-size:17px;margin:0 0 4px}
+  .card .what{color:var(--mut);font-size:13.5px;line-height:1.6;margin:0 0 14px}
+  .card a{display:block;padding:11px 14px;border-radius:10px;text-decoration:none;
+    font-weight:700;font-size:14px;text-align:center;margin-bottom:8px}
+  .go{background:var(--or);color:#1a0f00}
+  .notes{background:#f1f5f9;color:#334155}
+  .flag{font-size:12.5px;color:#b91c1c;margin:10px 0 0;line-height:1.55}
+  .foot{max-width:900px;margin:26px auto 0;font-size:13px;color:var(--mut);line-height:1.7;
+    text-align:center}
+</style>
+</head>
+<body>
+<h1>שלוש הצעות מהסוכנים</h1>
+<p class="sub">אף אחת לא נכנסה לאתר. הכל הצעות בלבד, ממתינות לעין שלך.</p>
+
+<div class="grid">
+  <div class="card">
+    <h2>כפתור רוויט</h2>
+    <p class="what">שלוש אפשרויות, כל אחת בשלושה גדלים ועל רקע בהיר וכהה. רק אחת שורדת ב-22 פיקסל.</p>
+    <a class="go" href="revit-button/index.html">לראות את השלוש</a>
+    <a class="notes" href="revit-button/NOTES.md">ההמלצה והנימוק</a>
+    <p class="flag">שים לב: לא להשתמש בלוגו של Autodesk או Revit - סימן מסחרי.</p>
+  </div>
+
+  <div class="card">
+    <h2>עמוד ה-Viewer</h2>
+    <p class="what">הצעה מלאה, שבעה חלקים, מלמעלה למטה. מלבנים צבעוניים במקום מדיה שעוד לא צולמה.</p>
+    <a class="go" href="viewer/index.html">לראות את ההצעה</a>
+    <a class="notes" href="viewer/NOTES.md">מה משתנה ומה צריך לצלם</a>
+    <p class="flag">הסוכן לא ראה את זה מרונדר. הכל נמדד מהקוד, לא מהעין.</p>
+  </div>
+
+  <div class="card">
+    <h2>AR ל-Type Studio</h2>
+    <p class="what">דף בדיקה אמיתי לקווסט - בודק אם הקירות מגיעים לדפדפן עם התוויות שלהם - ותוכנית ב-9 שלבים.</p>
+    <a class="go" href="ar/spike.html">דף הבדיקה (בקווסט)</a>
+    <a class="notes" href="ar/PLAN.md">התוכנית</a>
+    <p class="flag">דף הבדיקה דורש HTTPS ומשקפיים. בדפדפן רגיל הוא יגיד שאין AR - זה תקין.</p>
+  </div>
+</div>
+
+<p class="foot">
+  הכל יושב ב-<code>agents/</code> בענף bim-suite. שום דבר מזה לא מחובר לתפריט ולא מקושר משום עמוד.
+</p>
+</body>
+</html>
