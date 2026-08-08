@@ -196,7 +196,7 @@
      measured at 375px it covered 100% of the panel and 61% of the video. It joins the
      flow instead and sits above the pair, where it reads as the record of what follows. */
   .oylp .dm-approval{position:static;width:auto;left:auto;right:auto;top:auto;
-    margin:0 0 14px;font-size:.72rem;padding:11px 13px;gap:4px 11px}
+    margin:26px 0 14px;font-size:.72rem;padding:11px 13px;gap:4px 11px}
 }
 
 /* this label sits BETWEEN the panels, on the page's light ground - the cyan glow it

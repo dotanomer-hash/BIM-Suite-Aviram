@@ -52,3 +52,24 @@
   50%    {color:#ffbe73;text-shadow:0 0 30px rgba(255,122,0,.95),0 0 62px rgba(255,122,0,.45)}
 }
 @media (prefers-reduced-motion:reduce){.oymer-yflash{animation:none}}
+
+/* ---- round play button ----
+   Omer's call 2026-08-08: the headset-shaped .oy-play above reads as an oval at
+   player size; this is the one he approved. Fixed box PLUS aspect-ratio, so a flex
+   parent cannot stretch it back into an oval. Shared, so the VR Tours example and
+   the guided XR clip use the same button. */
+.oymer-play{position:relative;display:flex;align-items:center;justify-content:center;
+  width:84px;height:84px;aspect-ratio:1/1;border-radius:50%;flex:0 0 auto;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.22),transparent 58%),
+             linear-gradient(160deg,rgba(15,23,42,.92) 0%,rgba(2,6,23,.96) 100%);
+  border:2px solid rgba(255,255,255,.92);
+  box-shadow:0 12px 34px rgba(0,0,0,.5),0 0 0 6px rgba(255,255,255,.07);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.oymer-play__tri{width:0;height:0;margin-left:6px;
+  border-left:26px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));transition:border-left-color .22s ease}
+button:hover .oymer-play,button:focus-visible .oymer-play,
+[role="button"]:hover .oymer-play,[role="button"]:focus-visible .oymer-play{
+  transform:scale(1.07);border-color:#ff7a00;
+  box-shadow:0 14px 40px rgba(0,0,0,.55),0 0 0 8px rgba(255,122,0,.18)}
+button:hover .oymer-play__tri,[role="button"]:hover .oymer-play__tri{border-left-color:#ffb057}
