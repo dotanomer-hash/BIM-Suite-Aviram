@@ -64,8 +64,16 @@
    carried from the end of one row into the start of the next.
    The gap grows to 92px only on the rows that carry it; the other product pages
    keep their 30px. */
+/* DERIVED, not chosen. The panels are chamfered 22px at top-left and bottom-right, so
+   each cut edge's midpoint sits 11px in from the corner. The run therefore starts at
+   the left panel's bottom-right midpoint and ends at the right panel's top-left one:
+     horizontal = 150 (the middle column) + 11 + 11 = 172px, CONSTANT at any width,
+                  because both panels are 1fr and only the middle column is fixed.
+   A true 45 needs the drop to equal that, so the vertical distance between the pairs
+   must be 172 - 22 = 150px, which with a 16px grid gap either side fixes this row at
+   118px. Change the chamfer or the middle column and these numbers must be redone. */
 .oylp .oyl-pairs:has(.oyl-link){gap:16px}
-.oylp .oyl-link{position:relative;height:170px;pointer-events:none}
+.oylp .oyl-link{position:relative;height:118px;pointer-events:none}
 /* the head must NOT march. The bolt classes all carry stroke-dasharray + the
    travelling animation, which turns a head into two crawling dashes - solid, with
    the same glow, so it reads as an arrival instead of more lightning. */
@@ -73,12 +81,19 @@
   stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,140,26,.95))}
 /* SQUARE on purpose: the run is a true 45 degrees only while the rendered box is
    square. The first version was 300x150, so a "diagonal" drawn corner to corner came
-   out at about 25 degrees and read as broken. */
-.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:170px;height:170px;
+   out at about 25 degrees and read as broken.
+   172 square, centred on a 118px row, so it reaches exactly 27px above and below into
+   the grid gaps - landing on the two chamfer midpoints. The middle column is centred
+   in the grid, so centring the box horizontally puts it on the same axis. */
+.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:172px;height:172px;
   transform:translate(-50%,-50%);overflow:visible}
-@media (max-width:900px){
-  .oylp .oyl-link{height:112px}
-  .oylp .oyl-link svg{width:112px;height:112px}
+@media (max-width:960px){
+  /* the pair itself collapses to one column here, so the panels are stacked and there
+     is no diagonal to trace - the in-pair arrow already rotates to point down, so this
+     matches it rather than pointing at nothing. */
+  .oylp .oyl-link{height:96px}
+  .oylp .oyl-link svg{width:96px;height:96px;
+    transform:translate(-50%,-50%) rotate(-45deg)}
 }
 @media (prefers-reduced-motion:reduce){
   .oylp .oyl-link svg *{animation:none!important}
