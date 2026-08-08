@@ -65,12 +65,20 @@
    The gap grows to 92px only on the rows that carry it; the other product pages
    keep their 30px. */
 .oylp .oyl-pairs:has(.oyl-link){gap:16px}
-.oylp .oyl-link{position:relative;height:150px;pointer-events:none}
-.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:300px;height:150px;
+.oylp .oyl-link{position:relative;height:170px;pointer-events:none}
+/* the head must NOT march. The bolt classes all carry stroke-dasharray + the
+   travelling animation, which turns a head into two crawling dashes - solid, with
+   the same glow, so it reads as an arrival instead of more lightning. */
+.oylp .oyl-link__head{fill:none;stroke:#ff8c1a;stroke-width:2.6;stroke-linecap:round;
+  stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,140,26,.95))}
+/* SQUARE on purpose: the run is a true 45 degrees only while the rendered box is
+   square. The first version was 300x150, so a "diagonal" drawn corner to corner came
+   out at about 25 degrees and read as broken. */
+.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:170px;height:170px;
   transform:translate(-50%,-50%);overflow:visible}
 @media (max-width:900px){
-  .oylp .oyl-link{height:96px}
-  .oylp .oyl-link svg{width:190px;height:96px}
+  .oylp .oyl-link{height:112px}
+  .oylp .oyl-link svg{width:112px;height:112px}
 }
 @media (prefers-reduced-motion:reduce){
   .oylp .oyl-link svg *{animation:none!important}
