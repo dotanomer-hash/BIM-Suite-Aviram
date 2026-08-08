@@ -416,7 +416,20 @@
 /* ---------------- bottom strip: the one instruction, asking to be pressed ---------------- */
 /* deliberately slim. the text keeps its size - it is the FRAME that gives way, so the
    screen owns more of the panel than its chrome does. */
-.wbody{display:block;padding:9px 14px 11px}
+/* M4. The Revit mark at the foot of each window - the SAME drawing that now sits on
+   the ribbon, so a visitor who has seen Revit recognises it. Flex, so the mark and the
+   "open the page" ribbon share the row instead of the mark pushing it down. */
+.wbody{display:flex;align-items:center;gap:11px;padding:9px 14px 11px}
+.wbody .ribbon{flex:1 1 auto}
+/* 128px source shown at 30 so it stays crisp on a 2x screen; the srcset hands a 256
+   to anything denser. Sits slightly proud of the ribbon with its own soft shadow so
+   it reads as a badge on the glass rather than a picture inside the panel. */
+.wmark{flex:0 0 auto;width:30px;height:30px;display:block;
+  filter:drop-shadow(0 3px 8px rgba(3,6,20,.55));
+  transition:transform .25s ease}
+.winwrap:hover .wmark{transform:translateY(-2px) scale(1.06)}
+@media (max-width:560px){.wmark{width:26px;height:26px}}
+@media (prefers-reduced-motion:reduce){.wmark{transition:none}}
 .ribbon{
   position:relative;display:flex;align-items:center;justify-content:center;gap:14px;
   background:linear-gradient(150deg, rgba(var(--cd),.98) 0%, rgba(var(--cd),.82) 100%);
