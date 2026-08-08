@@ -55,6 +55,26 @@
 
 /* ---- rows: window · arrow · window ---- */
 .oylp .oyl-pairs{margin-top:34px;display:grid;gap:30px}
+
+/* ---- the step BETWEEN the pairs (DecisionMaker) ----
+   Pair 1 ends bottom-left (the client standing in VR); pair 2 begins top-right (the
+   client deciding). Nothing joined them, so the page read as two separate stories
+   instead of one round trip. This is the same lightning as the in-pair connector,
+   run diagonally across the gap - top-left down to bottom-right - so the eye is
+   carried from the end of one row into the start of the next.
+   The gap grows to 92px only on the rows that carry it; the other product pages
+   keep their 30px. */
+.oylp .oyl-pairs:has(.oyl-link){gap:16px}
+.oylp .oyl-link{position:relative;height:150px;pointer-events:none}
+.oylp .oyl-link svg{position:absolute;left:50%;top:50%;width:300px;height:150px;
+  transform:translate(-50%,-50%);overflow:visible}
+@media (max-width:900px){
+  .oylp .oyl-link{height:96px}
+  .oylp .oyl-link svg{width:190px;height:96px}
+}
+@media (prefers-reduced-motion:reduce){
+  .oylp .oyl-link svg *{animation:none!important}
+}
 .oylp .oyl-pair{position:relative;display:grid;grid-template-columns:1fr 150px 1fr;align-items:stretch}
 .oylp .oyl-pair .oyl-panel{display:flex;flex-direction:column}
 .oylp .oyl-pair .oyl-body{flex:1}

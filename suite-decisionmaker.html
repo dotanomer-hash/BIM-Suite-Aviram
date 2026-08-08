@@ -13,7 +13,7 @@
 <link rel="preload" as="image" href="media/hero-viewer.jpg">
 <link rel="preload" as="image" href="media/hero-ribbon.jpg">
 <link href="suite-pipe.css?v=5" rel="stylesheet">
-<link href="oymer-pairs.css?v=18" rel="stylesheet">
+<link href="oymer-pairs.css?v=19" rel="stylesheet">
 <script>if(location.search.indexOf("from=suite")>-1)document.documentElement.className+=" fromsuite";</script>
 </head>
 <body>
@@ -103,6 +103,19 @@
             <p>הלקוח נכנס לאותו חלל בגודל אמיתי. לא מצגת - הוא עומד בפנים.</p>
           </div>
         </article>
+      </div>
+
+      <!-- the round trip is ONE process: pair 1 ends bottom-left (standing in VR),
+           pair 2 begins top-right (deciding). Same lightning as the in-pair connector,
+           run diagonally so the eye is carried from one row into the next. -->
+      <div class="oyl-link" aria-hidden="true">
+        <svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet" focusable="false">
+          <path class="oyl-arw__boltGlow" d="M10 10 L48 34 L78 24 L116 56 L146 46 L184 78 L214 68 L252 100 L282 132"/>
+          <path class="oyl-arw__bolt" d="M10 10 L48 34 L78 24 L116 56 L146 46 L184 78 L214 68 L252 100 L282 132"/>
+          <path class="oyl-arw__core" d="M10 10 L48 34 L78 24 L116 56 L146 46 L184 78 L214 68 L252 100 L282 132"/>
+          <path class="oyl-arw__bolt2" d="M282 132 L258 130 M282 132 L280 108"/>
+          <circle class="oyl-arw__flash" cx="10" cy="10" r="3.4"/>
+        </svg>
       </div>
 
       <div class="oyl-pair">
