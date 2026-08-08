@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>oYmer ribbon icons - round 3, judged at 32 px</title>
+<style>
+  :root{
+    --ink:#1a1430; --mute:#6b6480; --line:#ddd8e8;
+    --ribbon:#e8e8e8; --ribbon-dark:#3c3c3c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:34px 30px 90px;background:#f7f5fb;color:var(--ink);
+       font:15px/1.55 "Segoe UI",Rubik,system-ui,sans-serif}
+  h1{font-size:23px;margin:0 0 6px;letter-spacing:-.01em}
+  h2{font-size:17px;margin:44px 0 4px;padding-top:16px;border-top:1px solid var(--line)}
+  h3{font-size:14px;margin:22px 0 8px;color:var(--mute);text-transform:uppercase;letter-spacing:.09em}
+  p{max-width:78ch;margin:8px 0}
+  .sub{color:var(--mute);margin-bottom:22px}
+  .verdict{display:inline-block;background:#132b1c;color:#a8f0c0;border:1px solid #2b6b45;
+           padding:9px 15px;border-radius:8px;font-weight:600;margin:6px 0 4px}
+  code{background:#eae6f3;padding:1px 5px;border-radius:4px;font-size:13px}
+
+  img{image-rendering:pixelated;image-rendering:crisp-edges;display:block}
+
+  /* ---- magnified comparison grid ---- */
+  .scroll{overflow-x:auto;max-width:100%;padding-bottom:4px}
+  table.mag{border-collapse:separate;border-spacing:10px;margin:6px 0 0 -10px}
+  table.mag th{font-size:12px;font-weight:600;color:var(--mute);text-transform:uppercase;
+               letter-spacing:.07em;text-align:center;padding-bottom:2px}
+  table.mag td.lab{font-size:12.5px;font-weight:700;text-align:right;white-space:nowrap;
+                   padding-right:6px;vertical-align:middle;width:1px}
+  table.mag td.lab small{display:block;font-weight:400;color:var(--mute);font-size:11px}
+  .cellbox{background:var(--ribbon);border:1px solid #c9c9c9;border-radius:3px;padding:0;
+           display:inline-block;line-height:0}
+  .dk .cellbox{background:var(--ribbon-dark);border-color:#565656}
+  tr.base td.lab{color:#8a3b00}
+  tr.base .cellbox{outline:2px solid #ffb37a}
+
+  /* ---- true size strips ---- */
+  .ribbon{background:var(--ribbon);border:1px solid #c6c6c6;border-radius:4px;
+          padding:10px 14px 8px;display:inline-block;margin:0 16px 14px 0;vertical-align:top}
+  .ribbon.dark{background:var(--ribbon-dark);border-color:#575757;color:#e8e8e8}
+  .ribbon .row{display:flex;gap:16px;align-items:flex-end}
+  .btn{width:66px;text-align:center;font:11px/1.15 "Segoe UI",sans-serif;color:#2b2b2b}
+  .dark .btn{color:#e6e6e6}
+  .btn img{margin:0 auto 4px}
+  .btn.sm{width:auto;display:flex;align-items:center;gap:6px;font-size:11.5px}
+  .btn.sm img{margin:0}
+  .cap{font-size:11.5px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;
+       margin:0 0 6px}
+  .dark .cap{color:#a9a4b8}
+
+  .grid2{display:flex;flex-wrap:wrap;gap:0}
+  .note{background:#fff;border:1px solid var(--line);border-radius:9px;padding:14px 18px;
+        max-width:78ch;margin:14px 0}
+  .note b{color:#7a2f00}
+  ul{max-width:78ch}
+  li{margin:4px 0}
+</style>
+</head>
+<body>
+
+<h1>oYmer Revit ribbon icons - round 3</h1>
+<p class="sub">Designed for 32 x 32 px, judged at 32 x 32 px. Every image on this page is a real
+PNG raster at its true pixel size; the big ones are the same file blown up with nearest-neighbour,
+so nothing here is a vector flattering itself.</p>
+
+<div class="verdict" id="v"></div>
+
+<h2>1. The row test - true size, on the ribbon</h2>
+<p>This is the only view that matches what he actually sees. Revit large button = 32 px, small
+button = 16 px, light theme ribbon <code>#e8e8e8</code>, dark theme <code>#3c3c3c</code>.</p>
+<div class="grid2" id="strips"></div>
+
+<h2>2. 32 px, magnified 8x - like for like</h2>
+<p>Row 1 in orange is the shipping set. Same magnification, same background, same order.</p>
+<div id="mag32"></div>
+
+<h3>the same, on Revit's dark theme</h3>
+<div id="mag32d" class="dk"></div>
+
+<h2>3. 16 px, magnified 12x</h2>
+<p>The shipping set has no 16 px artwork, so row 1 is its 32 px file downscaled - which is exactly
+what Revit does on a small button today. Every candidate below is a purpose-drawn 16 px variant,
+not a shrink.</p>
+<div id="mag16"></div>
+
+<h2>4. The three candidates</h2>
+<div id="notes"></div>
+
+<h2>5. Files</h2>
+<p>Each folder holds <code>&lt;Product&gt;_32.png</code> and <code>&lt;Product&gt;_16.png</code>,
+transparent background, ready to drop into a <code>.pushbutton</code> folder. The extension's own
+convention is the filename <code>icon.png.png</code> - match it, do not "fix" it.</p>
+<ul id="files"></ul>
+
+<script>
+const PROD = [
+  ['DecisionMaker','DecisionMaker'],
+  ['BIMViewer','BIM Viewer'],
+  ['FamilyCreator','Family Creator'],
+  ['TypeStudio','Type Studio'],
+];
+const FAM = [
+  ['A-bleed','A - Bleed','no container. The glyph is the whole icon.'],
+  ['B-plate','B - Plate','near-black plum chamfered plate, cyan hairline, hue glyph.'],
+  ['C-chip','C - Chip','product-hue chamfered chip, white glyph knocked out.'],
+];
+const p32 = (f,k)=> f==='existing' ? `existing/${k}.png` : `${f}/${k}_32.png`;
+const p16 = (f,k)=> f==='existing' ? `existing/${k}_16.png` : `${f}/${k}_16.png`;
+
+/* ---------- strips ---------- */
+function strip(fam, label, dark){
+  const rows = PROD.map(([k,name])=>`
+    <div class="btn">
+      <img src="${p32(fam,k)}" width="32" height="32" alt="">
+      ${name.replace(' ','<br>')}
+    </div>`).join('');
+  const small = PROD.map(([k,name])=>`
+    <div class="btn sm"><img src="${p16(fam,k)}" width="16" height="16" alt="">${name}</div>`).join('');
+  return `<div class="ribbon ${dark?'dark':''}">
+    <p class="cap">${label}${dark?' - dark theme':''}</p>
+    <div class="row">${rows}</div>
+    <div class="row" style="margin-top:12px;gap:14px;flex-wrap:wrap;max-width:300px">${small}</div>
+  </div>`;
+}
+document.getElementById('strips').innerHTML =
+  [['existing','shipping today'],...FAM.map(f=>[f[0],f[1]])]
+    .map(([f,l])=>strip(f,l,false)).join('') +
+  [['existing','shipping today'],...FAM.map(f=>[f[0],f[1]])]
+    .map(([f,l])=>strip(f,l,true)).join('');
+
+/* ---------- magnified tables ---------- */
+function magTable(getter, px, k, note){
+  const head = '<tr><th></th>' + PROD.map(p=>`<th>${p[1]}</th>`).join('') + '</tr>';
+  const rows = [['existing','SHIPPING','the set to beat'],...FAM].map(f=>{
+    const cls = f[0]==='existing' ? 'base' : '';
+    const cells = PROD.map(p=>
+      `<td><span class="cellbox"><img src="${getter(f[0],p[0])}"
+        width="${px*k}" height="${px*k}" alt=""></span></td>`).join('');
+    return `<tr class="${cls}"><td class="lab">${f[1]}<small>${f[2]}</small></td>${cells}</tr>`;
+  }).join('');
+  return `<div class="scroll"><table class="mag">${head}${rows}</table></div>`;
+}
+document.getElementById('mag32').innerHTML  = magTable(p32,32,8);
+document.getElementById('mag32d').innerHTML = magTable(p32,32,8);
+document.getElementById('mag16').innerHTML  = magTable(p16,16,12);
+
+/* ---------- per candidate notes ---------- */
+const NOTES = {
+ 'A-bleed':{
+   idea:'No container at all. The product hue IS the shape, shaded with two flat values plus a '
+       +'1 px cast edge, bleeding to the full 32 px box. This is the language Autodesk itself '
+       +'uses on the Revit ribbon.',
+   good:['Biggest glyph of the three - roughly 2.5x the ink area of the shipping set.',
+         'Four genuinely different silhouettes: diagonal, lens, hexagon, square. In peripheral '
+         +'vision you can tell them apart without reading the colour.',
+         'Sharpest of the three at 16 px.',
+         'Looks native inside Revit rather than like a pasted-in badge.'],
+   bad:['Loses the "these four are one product family" read. Nothing binds them but hue.',
+        'Least presence on a busy ribbon - no coloured block for the eye to land on.',
+        'It is the odd language out inside his own extension: the 14 buttons on the oYmer tab '
+        +'are flat orange circles with a white knockout glyph, which is a container language.']},
+ 'B-plate':{
+   idea:'The suite’s own dark look brought to the ribbon: near-black plum chamfered plate, '
+       +'cyan hairline along the top edge, product-hue glyph inside.',
+   good:['The most on-brand with the website and the VR panel.',
+         'The cyan hairline is a nice suite signature and survives as exactly 1 px.'],
+   bad:['Four dark plates in a row read as four identical dark blobs - the hue is demoted to a '
+        +'small glyph inside, so colour recognition, the whole point of the current set, drops.',
+        'The plate eats the glyph: it can only run at about 80% of the box, so the drawing ends '
+        +'up no bigger than the shipping set. All of the cost, none of the gain.',
+        'On Revit’s dark theme the plum plate sits close to #3c3c3c and the shape softens.',
+        'Type Studio at 16 px is the worst cell on this page: dark window panes on a teal frame '
+        +'on a plum plate is three dark values fighting in 16 pixels. That is measured, not '
+        +'guessed - look at row B in section 3.'],
+   verdict:'Tested and rejected. Kept on the page as evidence, not as an option.'},
+ 'C-chip':{
+   idea:'The shipping set’s own mechanism - saturated hue block, white glyph knocked out of '
+       +'it - rebuilt flat: the suite 22 px chamfer instead of the rounded corner, one lit top '
+       +'edge and one dark bottom band instead of the gloss gradient, and a glyph at 75% of the '
+       +'box instead of roughly 50%.',
+   good:['Keeps instant colour recognition, which is what actually finds a button on a crowded '
+         +'ribbon.',
+         'About 40% more glyph area than the shipping set at the same 32 px.',
+         'Flat fill plus white knockout is already the language of the 14 buttons on his oYmer '
+         +'tab, so it unifies the extension instead of adding a third style.',
+         'Strongest of the three on the dark theme.',
+         'Replaces the meaningless 2x2 grid with a window - the one family Type Studio actually '
+         +'ships.'],
+   bad:['It does not fix the shipping set’s real structural weakness: all four still share '
+        +'one identical square silhouette, so hue is still doing all the work.',
+        'The cube has to be shaded in three whites rather than separated by knockout gaps - 1 px '
+        +'gaps turn into petals at 16 px. That is why it looks softer than the other three glyphs.',
+        'It is an upgrade, not a reinvention. Nobody will notice it on day one.']},
+};
+document.getElementById('notes').innerHTML = FAM.map(([f,name,tag])=>{
+  const n = NOTES[f];
+  return `<h3>${name} - ${tag}</h3>
+    <p>${n.idea}</p>
+    <div class="note"><b>Holds up</b><ul>${n.good.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <b>Costs</b><ul>${n.bad.map(x=>`<li>${x}</li>`).join('')}</ul>
+    ${n.verdict?`<p><b>${n.verdict}</b></p>`:''}</div>`;
+}).join('');
+
+document.getElementById('files').innerHTML = FAM.map(([f,name])=>
+  `<li><code>${f}/</code> - ${name}: ` + PROD.map(p=>`<code>${p[0]}</code>`).join(', ') + '</li>'
+).join('') + '<li><code>existing/</code> - copies of the four shipping icons, untouched.</li>';
+
+document.getElementById('v').textContent =
+  'VERDICT: yes - C-chip beats the shipping four at 32 px, and all three candidates beat them at 16 px. '
+  + 'Ship C-chip. The margin at 32 px is real but modest; the margin at 16 px is large.';
+</script>
+</body>
+</html>
