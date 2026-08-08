@@ -72,6 +72,17 @@
   font-family:"Rubik","Heebo",sans-serif;color:#fff;font-weight:800;
   font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.03em;margin:0;
 }
+/* M17. VR Tours and VR Lab predate .bs-hero and were still on the Tailwind default
+   stack: measured against the product pages' Rubik 64px/800/-1.92px they came out
+   ui-sans-serif 60px/700/normal and 70.4px/800/normal - three different titles across
+   four sibling products. One rule, applied by page rather than by re-tagging their
+   markup, so neither hero has to be rebuilt. */
+.oymer-hero h1,
+.oyl-hero h1{
+  direction:ltr;unicode-bidi:isolate;
+  font-family:"Rubik","Heebo",sans-serif;color:#fff;font-weight:800;
+  font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.03em}
+
 /* parent-brand tag above each product name, so a product page still reads as part
    of the suite. links back to the suite. */
 /* inline-block, NOT inline-flex - flex would make the <span class="y"> its own flex
