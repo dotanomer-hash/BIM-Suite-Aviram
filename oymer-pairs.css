@@ -35,6 +35,47 @@
   animation:oylp-sweep 5.5s linear infinite}
 @keyframes oylp-sweep{from{top:-40%}to{top:110%}}
 .oylp .oyl-fit video,.oylp .oyl-fit img{object-fit:contain;background:#04060f}
+
+/* ⭐ THE REVIT COMMENT, ENLARGED. Omer 2026-08-11: the write-back writes its decision record
+   into the element's own Comments parameter, and inside a screen recording that text is ~8 px
+   tall - true, and unreadable. This strip reprints the SAME string at a size a person can read
+   across a room.
+   ⛔ It is NOT the old .dm-approval card: that one was a hand-typed SUMMARY sitting on top of
+   the evidence. This is the verbatim parameter value, character for character, so the clip
+   underneath is the proof of the line above it. If the caption in Revit changes, change it here
+   too or delete this - a caption that disagrees with the model is worse than none.
+   z-index clears .oyl-media::after (the cyan sweep), which would otherwise wash across it. */
+/* two captions stack in the same slot and cross-fade as the selection changes in the clip;
+   only .is-on is visible, and the hidden one must not eat pointer events or screen-reader focus */
+.oylp .dm-cap{
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .28s ease, visibility 0s linear .28s;
+  position:absolute;left:0;right:0;bottom:0;z-index:6;
+  padding:10px 14px 11px;
+  font-size:.86rem;line-height:1.35;font-weight:700;letter-spacing:.005em;
+  color:#0a0806;text-align:left;
+  background:linear-gradient(to top, rgba(255,255,255,.96) 0%, rgba(255,255,255,.90) 70%,
+                                     rgba(255,255,255,.72) 100%);
+  -webkit-backdrop-filter:blur(4px) saturate(1.1);
+          backdrop-filter:blur(4px) saturate(1.1);
+  border-top:1.5px solid rgba(0,0,0,.5);
+  box-shadow:0 -8px 22px rgba(0,0,0,.30);
+}
+.oylp .dm-cap.is-on{opacity:1;visibility:visible;transition-delay:0s}
+/* the customer's name is Hebrew inside an otherwise LTR line - it carries its own dir on the
+   element, this just stops the <i> from italicising and keeps it the same weight as the rest */
+.oylp .dm-cap i{font-style:normal;font-weight:800;color:#0a0806}
+/* the little label that says WHERE this text comes from - without it the strip reads as our
+   copywriting rather than as Revit's own field */
+.oylp .dm-cap b{
+  display:block;margin-bottom:3px;
+  font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  opacity:.62;
+}
+@media (max-width:960px){
+  .oylp .dm-cap{font-size:.74rem;padding:8px 11px 9px}
+  .oylp .dm-cap b{font-size:.58rem}
+}
 .oylp .oyl-body{padding:22px 24px 26px}
 .oylp .oyl-kick{display:block;margin-bottom:9px;font-size:.7rem;color:var(--cy);opacity:.85}
 .oylp .oyl-panel h3{margin:0 0 10px;font-size:1.4rem;font-weight:800;color:#fff}

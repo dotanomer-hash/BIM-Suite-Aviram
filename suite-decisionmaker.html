@@ -13,7 +13,7 @@
 <link rel="preload" as="image" href="media/hero-viewer.jpg">
 <link rel="preload" as="image" href="media/hero-ribbon.jpg">
 <link href="suite-pipe.css?v=5" rel="stylesheet">
-<link href="oymer-pairs.css?v=29" rel="stylesheet">
+<link href="oymer-pairs.css?v=32" rel="stylesheet">
 <script>if(location.search.indexOf("from=suite")>-1)document.documentElement.className+=" fromsuite";</script>
 </head>
 <body>
@@ -76,7 +76,7 @@
         <article class="oyl-panel">
           <div class="oyl-media">
             <span class="oyl-id oyl-mono">REVIT_01</span>
-            <img src="media/dm-revit-before.jpg?v=5" alt="">
+            <video src="media/dm-revit-before.mp4?v=8" poster="media/dm-revit-before.jpg?v=8" autoplay muted loop playsinline></video>
           </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">IN REVIT</span>
@@ -94,7 +94,10 @@
         <article class="oyl-panel">
           <div class="oyl-media">
             <span class="oyl-id oyl-mono">VR_01</span>
-            <video src="media/viewer/reel-1.mp4" poster="media/viewer/reel-1.jpg" autoplay muted loop playsinline></video>
+            <!-- a real headset walkthrough at 1:1 - no menu, just the space. ⛔ Not reel-1.mp4:
+                 that file is shared with bimsuite.html, all-mockup.html and BIMViewer.html, so it
+                 stays where it is instead of being overwritten under those pages. -->
+            <video src="media/viewer/dm-vr-walk.mp4?v=2" poster="media/viewer/dm-vr-walk.jpg?v=2" autoplay muted loop playsinline></video>
           </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">IN VR 1:1</span>
@@ -118,7 +121,11 @@
         <article class="oyl-panel">
           <div class="oyl-media">
             <span class="oyl-id oyl-mono">VR_02</span>
-            <video src="media/viewer/reel-2.mp4" poster="media/viewer/reel-2.jpg" autoplay muted loop playsinline></video>
+            <!-- a real headset recording of the DecisionMaker: the ribbon, the element info, the
+                 window being moved. ⛔ Not reel-2.mp4 any more - that file is shared with
+                 BIMViewer.html and suite-viewer.body.html, so it is left alone rather than
+                 overwritten. First 2s trimmed (they were a wall info-panel, not the decision). -->
+            <video src="media/viewer/dm-vr-decide.mp4?v=3" poster="media/viewer/dm-vr-decide.jpg?v=3" autoplay muted loop playsinline></video>
           </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">DECIDING IN VR</span>
@@ -136,23 +143,29 @@
         <article class="oyl-panel">
           <div class="oyl-media">
             <span class="oyl-id oyl-mono">REVIT_02</span>
-            <img src="media/dm-revit-after.jpg?v=5" alt="">
-            
+            <video class="dm-capvid" src="media/dm-revit-after.mp4?v=8" poster="media/dm-revit-after.jpg?v=8" autoplay muted loop playsinline></video>
+            <!-- the caption follows the SELECTION inside the clip: the RED demolished element is
+                 selected first, the GREEN moved one from 8.85s on.
+                 ⛔ Do not re-derive this from the window's colour - BOTH windows carry permanent
+                 graphic overrides, so the pixels are red or green regardless of what is selected.
+                 It was read off the Properties panel instead: at t=4 it shows Mark 3144 and
+                 "Phase Demolished: Phase 2", which is the red copy (the real window is Mark 2673
+                 and is not demolished). Re-read the panel, not the colour, if the clip is re-cut. -->
+            <span class="dm-cap oyl-mono is-on" dir="ltr" data-from="0"><b>Revit comments</b>Window 80/200 - id 7808969 - WAS HERE</span>
+            <span class="dm-cap oyl-mono" dir="ltr" data-from="8.85"><b>Revit comments</b>Window 80/200 - id 7808969 - moved 15cm along the wall, 10cm up - host EXT 25-CN 2-XP 5-TRM 2-IP id 11157067 - approved 11/08/2026 by <i class="dm-client" dir="rtl">אלי כהן</i></span>
             </div>
           <div class="oyl-body">
             <span class="oyl-kick oyl-mono">BACK IN REVIT</span>
             <div class="oyl-hud oyl-mono"><b>CHANGE-SET</b><b>SAVE AS</b><b class="on">WRITE-BACK</b></div>
             <h3>המודל חוזר עם ההחלטות</h3>
-            <p>עותק חדש של הקובץ: הקיר נסגר, החלון זז, ורשומת האישור נשמרת.</p>
+            <p>עותק חדש של הקובץ: הקיר נסגר, החלון זז, ורשומת האישור נשמרת. ההחלטות חוזרות אל קובץ הרוויט שלך - לא לענן של אף אחד.</p>
           </div>
         </article>
-        <span class="dm-approval oyl-mono" dir="ltr">
-              <b>Object</b><i>Window 80/200 &middot; id 7797946</i>
-              <b>Moved</b><i>20 cm on X axis</i>
-              <b>Host</b><i>Wall EXT 25-CN 2-XP 5-TRM 2-IP &middot; id 7982201</i>
-              <b>Approved on</b><i>05/08/2026</i>
-              <b>Customer</b><i class="dm-client" dir="rtl">אלי כהן</i>
-            </span>
+        <!-- the floating approval card lived here until 2026-08-11. Removed by Omer's call:
+             the REVIT_02 clip now shows the real Revit Comments on the moved window, so the
+             card was a second, hand-typed copy of the same record sitting on top of the
+             genuine one. ⛔ Do not re-add it - the proof is that Revit itself says it.
+             Its styling is still in oymer-pairs.css (.dm-approval) if it ever comes back. -->
       </div>
 
       </div>
@@ -223,5 +236,31 @@
 
 <script src="menu-preview.js?v=8"></script>
 <script src="suite-morph.js?v=17"></script>
+<script>
+  /* The Revit-comment caption tracks which window is SELECTED inside the clip, so the text on
+     screen always belongs to the element highlighted underneath it. Cue times live on the
+     spans (data-from), measured off the video's own chroma - see the markup comment.
+     ⛔ Driven by currentTime, not a timer: the video loops and can stall on a slow connection,
+     and a setInterval would drift out of sync with the picture within one loop. */
+  (function () {
+    document.querySelectorAll(".dm-capvid").forEach(function (vid) {
+      var caps = [].slice.call(vid.parentNode.querySelectorAll(".dm-cap"))
+        .map(function (el) { return { el: el, from: parseFloat(el.dataset.from) || 0 }; })
+        .sort(function (a, b) { return a.from - b.from; });
+      if (caps.length < 2) return;
+      var shown = null;
+      function sync() {
+        var t = vid.currentTime, pick = caps[0];
+        for (var i = 0; i < caps.length; i++) if (t >= caps[i].from) pick = caps[i];
+        if (pick === shown) return;
+        shown = pick;
+        caps.forEach(function (c) { c.el.classList.toggle("is-on", c === pick); });
+      }
+      vid.addEventListener("timeupdate", sync);
+      vid.addEventListener("seeked", sync);
+      sync();
+    });
+  })();
+</script>
 </body>
 </html>
