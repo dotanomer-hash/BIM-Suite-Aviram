@@ -423,7 +423,15 @@
           box.classList.add('is-playing');
           btn.disabled = true;
           btn.querySelector('.oymer-demo__label').textContent = 'טוען…';
-          btn.querySelector('.oymer-demo__sub').textContent = 'רגע אחד';
+          // ⛔ GUARDED, and it must stay guarded. The suite rewrite of this page dropped the
+          // .oymer-demo__sub span from the markup but kept this write, so the handler threw
+          // "Cannot set properties of null" HERE - two lines before f.src is set. The button
+          // had already been disabled and relabelled "טוען…", so the demo sat in an eternal
+          // loading state having never requested the tour at all. Measured on the live Aviram
+          // preview: 0 iframes created, 0 bytes fetched. VRTours.html still has the span,
+          // which is why the same demo works there and only the suite page was dead.
+          var sub = btn.querySelector('.oymer-demo__sub');
+          if (sub) sub.textContent = 'רגע אחד';
           var f = document.createElement('iframe');
           f.title = 'סיור VR - מועדון החייל';
           // deliberately NO xr-spatial-tracking: without it the framed tour can't reach
