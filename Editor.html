@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- Migrated 2026-08-17 from VR Tour App/vr-tour-editor.html - THE master editor.
+     Everything else that looks like an editor is output or history: Versions/ holds the old
+     copies, Tours-Build.js prints the published (no-AI) edition. Edit THIS file only. -->
 <!--
   oYmer VR Tour Editor
   Copyright (c) 2026 Omer Dotan / oYmer VR (Architectural VR Solutions). All rights reserved.
@@ -81,7 +84,7 @@ body {
   background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-orange), var(--neon-magenta), transparent);
 }
 #project-title {
-  flex: 1;                 /* fills the space BETWEEN the left buttons and Exit - never overlaps them */
+  flex: 1;                 /* fills the space BETWEEN the left buttons and Exit — never overlaps them */
   min-width: 0;            /* allow it to shrink + ellipsis instead of pushing buttons */
   text-align: center;      /* centered within that middle gap */
   font-family: 'Rajdhani', sans-serif;
@@ -685,7 +688,7 @@ body {
 }
 .scene-floor-select:focus { border-color: var(--neon-cyan); color: var(--text-primary); outline: none; box-shadow: 0 0 5px rgba(0,240,255,0.2); }
 
-/* Distance slider (hotspot depth) - visible on the dark theme */
+/* Distance slider (hotspot depth) — visible on the dark theme */
 #hs-depth { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #ff7a00, #1a1a2e); outline: none; cursor: pointer; margin: 2px 0; }
 #hs-depth::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #ff7a00; border: 2px solid #fff; cursor: pointer; box-shadow: 0 0 8px rgba(255,122,0,0.7); }
 #hs-depth::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #ff7a00; border: 2px solid #fff; cursor: pointer; box-shadow: 0 0 8px rgba(255,122,0,0.7); }
@@ -697,7 +700,7 @@ body {
 
 <!-- Toolbar -->
 <div id="toolbar">
-  <div class="brand">oYmer VR <span id="brand-copy">©<span id="brand-copy-text">Copyright © 2026 Omer Dotan / oYmer VR - All rights reserved. Proprietary software.</span></span></div>
+  <div class="brand">oYmer VR <span id="brand-copy">©<span id="brand-copy-text">Copyright © 2026 Omer Dotan / oYmer VR — All rights reserved. Proprietary software.</span></span></div>
   <button id="btn-load">Load Project</button>
   <button id="btn-save">Save Project</button>
   <button id="btn-export">Export Tour</button>
@@ -711,7 +714,7 @@ body {
         <input type="checkbox" id="chk-autobacklink" checked style="accent-color:#ff7a00;cursor:pointer"> Auto return hotspot
       </label>
       <!-- AI scope is chosen ON THE SPOT in VR per edit (frame + Current view / Whole room / Cancel after
-           typing, before the Gemini request) - NOT a per-project dropdown (Omer dismissed that 2026-06-28).
+           typing, before the Gemini request) — NOT a per-project dropdown (Omer dismissed that 2026-06-28).
            See ai-design-viewer.runVR onChooseScope + buildAiScope/_aiChooseScope/updateAiScope in this file. -->
     </div>
   </div>
@@ -868,7 +871,7 @@ body {
       </div>
 
       <div class="cond-field" id="field-variant">
-        <label>Design Options - clicking the hotspot cycles through these</label>
+        <label>Design Options — clicking the hotspot cycles through these</label>
         <div id="hs-variant-pool" style="font-size:13px;margin:4px 0"></div>
         <button id="hs-variant-upload" type="button">Upload Design Option pano…</button>
         <input type="file" id="hs-variant-file" accept="image/*" style="display:none">
@@ -1060,11 +1063,11 @@ body {
     nextFloorId: 2,
     autoBacklink: true,  // C1: auto-create reverse hotspots (overridden from localStorage on init)
     walkthroughHeading: true,  // C6: arrival faces hotspot direction (per-project; default on for new projects)
-    aiScope: 'view',  // AI Design coverage: 'view' (current view) | 'room' (whole-room sweep, transparent) | 'ask' (viewer picks each edit - testing)
+    aiScope: 'view',  // AI Design coverage: 'view' (current view) | 'room' (whole-room sweep, transparent) | 'ask' (viewer picks each edit — testing)
     film: { enabled: false, autoStart: false, loop: false, defaultHold: 8, preroll: 2, entries: [] }  // C4 film/auto-play: entries = [{sceneId, hold|null}]; preroll = sec before each scene's first show (#2)
   };
 
-  // C4: sanitize a film config from a loaded project (or null) - drops entries whose
+  // C4: sanitize a film config from a loaded project (or null) — drops entries whose
   // scene no longer exists. Call only after state.scenes is populated.
   function normalizeFilm(raw) {
     const f = raw || {};
@@ -1262,7 +1265,7 @@ body {
       lastPointerY = e.clientY;
 
       // Check if mousedown is near any hotspot (by screen-space distance).
-      // C6: skip during capture - overlays are hidden and we must not drag/select an
+      // C6: skip during capture — overlays are hidden and we must not drag/select an
       // editing-scene hotspot while the user rotates to aim the arrival view.
       if (!captureMode) {
         const hit = findHotspotAtScreen(e.clientX, e.clientY);
@@ -1304,14 +1307,14 @@ body {
       if (!pointerDown) return;
       pointerDown = false;
       el.classList.remove('dragging-hotspot');
-      if (captureMode) return; // C6: capturing arrival view - don't save angle / place / deselect
+      if (captureMode) return; // C6: capturing arrival view — don't save angle / place / deselect
 
       if (draggingHs) {
         draggingHs = null;
         return;
       }
 
-      if (pointerMoved) { saveCurrentAngle(); return; } // was camera-panning - save angle
+      if (pointerMoved) { saveCurrentAngle(); return; } // was camera-panning — save angle
 
       // Click on empty panorama
       if (placingHotspot && state.currentSceneId) {
@@ -1365,7 +1368,7 @@ body {
 
     const scn = getCurrentScene();
     if (!scn || !isThreeReady) return;
-    if (captureMode) return; // C6: showing the TARGET pano during capture - hide editing-scene overlays
+    if (captureMode) return; // C6: showing the TARGET pano during capture — hide editing-scene overlays
 
     const w = renderer.domElement.clientWidth;
     const h = renderer.domElement.clientHeight;
@@ -1394,7 +1397,7 @@ body {
       el.textContent = _ovIcon[hs.type] || getHotspotIcon(hs, state.currentSceneId); // nav keeps its floor-direction eye
       el.style.left = x + 'px';
       el.style.top = y + 'px';
-      // Size preview: large (depth<1) bigger, small (depth>1) smaller - matches VR perspective.
+      // Size preview: large (depth<1) bigger, small (depth>1) smaller — matches VR perspective.
       // Nav hotspots render at 0.7x default, same as the viewer.
       const _df = (hs.type === 'nav' ? 0.7 : 1) / (hs.depth || 1);
       el.style.width = (30 * _df) + 'px';
@@ -1403,7 +1406,7 @@ body {
       // Warn: a nav door that leads somewhere but has no saved arrival view will face a
       // default direction on arrival (often the wrong way). Flag it so it's obvious here.
       if (hs.type === 'nav' && hs.target && hs.arrivalLon == null) {
-        el.title = 'No arrival view set - the tour may face the wrong way here. Select it and use "Set arrival view".';
+        el.title = 'No arrival view set — the tour may face the wrong way here. Select it and use "Set arrival view".';
         const warn = document.createElement('span');
         warn.className = 'hs-arrival-warn';
         warn.textContent = '⚠';
@@ -1497,7 +1500,7 @@ body {
       return { canvas:cn, w:Wn, h:Hn };
     }
 
-    // card family (scifi / neon / glass / brand) - landscape, auto-fit height
+    // card family (scifi / neon / glass / brand) — landscape, auto-fit height
     var W=1024, m=56, pad=54, glow=0.6; var r=(style==='scifi')?14:34; var innerW=W-2*m-2*pad;
     var mc=document.createElement('canvas').getContext('2d'); mc.font=bodyPx+'px '+printFont;
     var clines=infoSplitLines(mc, body, innerW);
@@ -1678,7 +1681,7 @@ body {
         _arrVal.style.color = '#6a6a8a';
       } else if (hs.target) {
         // Leads somewhere but no view set -> the tour may face the wrong way on arrival.
-        _arrVal.textContent = '⚠ not set - may face the wrong way';
+        _arrVal.textContent = '⚠ not set — may face the wrong way';
         _arrVal.style.color = '#ffb020';
       } else {
         _arrVal.textContent = '(Auto)';
@@ -1739,7 +1742,7 @@ body {
   }
 
   function setupPropsEvents() {
-    // C6: walkthrough heading toggle - per-project (saved in project JSON, not localStorage)
+    // C6: walkthrough heading toggle — per-project (saved in project JSON, not localStorage)
     const _wtChk = document.getElementById('chk-walkthrough');
     if (_wtChk) {
       syncWalkthroughToggle();
@@ -1749,7 +1752,7 @@ body {
         if (sel) populateProps(sel); // refresh arrival-row enabled state
       });
     }
-    // AI Design scope - per-project (saved in project JSON, exported into the tour)
+    // AI Design scope — per-project (saved in project JSON, exported into the tour)
     const _aiSel = document.getElementById('sel-aiscope');
     if (_aiSel) {
       _aiSel.value = state.aiScope || 'view';
@@ -1771,7 +1774,7 @@ body {
       });
     }
 
-    // C1: auto-backlink global toggle - editor-wide preference (not saved into the project)
+    // C1: auto-backlink global toggle — editor-wide preference (not saved into the project)
     const _abChk = document.getElementById('chk-autobacklink');
     if (_abChk) {
       const _abSaved = localStorage.getItem('oymer_autoBacklink');
@@ -2151,7 +2154,7 @@ body {
 
   // === C6: "Set arrival view" capture mode ===
   function enterArrivalCapture(hs) {
-    if (captureMode) return; // C6: already capturing - don't overwrite the saved restore point
+    if (captureMode) return; // C6: already capturing — don't overwrite the saved restore point
     if (!hs || hs.type !== 'nav' || !hs.target) { alert('Pick a target scene first.'); return; }
     const target = state.scenes.find(s => s.id === parseInt(hs.target));
     if (!target) { alert('Target scene not found.'); return; }
@@ -2381,7 +2384,7 @@ body {
           ctx.drawImage(img, 0, 0);
           const ratio = img.width / img.height;
           // Detect stereo layout from aspect ratio:
-          // ~1:1 (0.9-1.1) = over/under stereo, ~4:1 (3.8-4.2) = side-by-side stereo
+          // ~1:1 (0.9–1.1) = over/under stereo, ~4:1 (3.8–4.2) = side-by-side stereo
           // Everything else (including 2:1 mono equirect) = mono
           let stereoType = 'none';
           if (ratio >= 0.9 && ratio <= 1.1) stereoType = 'ou';
@@ -2424,7 +2427,7 @@ body {
         orphansCleaned++;
       }
       if (c.imageData) { c.imageRef = ref(c.imageData); delete c.imageData; }
-      // dedupe each variant through the SAME pool (the Original reuses the base key - no duplication)
+      // dedupe each variant through the SAME pool (the Original reuses the base key — no duplication)
       if (_vars) {
         c.variants = _vars.map(v => {
           const cv = Object.assign({}, v);
@@ -2556,7 +2559,7 @@ body {
     const curScn = getCurrentScene();
     if (curScn) { curScn.startLon = lon; curScn.startLat = lat; }
 
-    // ALWAYS prompt the file picker on every export - never silently reuse a cached handle.
+    // ALWAYS prompt the file picker on every export — never silently reuse a cached handle.
     // Reusing exportFileHandle meant that after switching to a different tour, Export would
     // silently overwrite the PREVIOUS tour's file (the stale handle still pointed at it).
     // Suggest the current project name so re-exporting the same tour is still one confirm.
@@ -2648,13 +2651,13 @@ body {
         new Function(appJs);
       }
     } catch (syntaxErr) {
-      alert('Export blocked - JavaScript error in viewer template:\\n\\n' + syntaxErr.message + '\\n\\nFix the template before exporting.');
+      alert('Export blocked — JavaScript error in viewer template:\\n\\n' + syntaxErr.message + '\\n\\nFix the template before exporting.');
       return;
     }
 
     const blob = new Blob([html], { type: 'text/html' });
     if (exportFileHandle) {
-      // Try up to 3 times - between picker and write, OneDrive/server activity can change the
+      // Try up to 3 times — between picker and write, OneDrive/server activity can change the
       // file's cached state and trigger InvalidStateError. Refreshing via getFile() then retrying
       // usually clears it.
       let lastErr = null;
@@ -2755,7 +2758,7 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
 .nav-item:hover { border-color: rgba(0,240,255,0.4); }
 .nav-item.active { border-color: #ff7a00; box-shadow: 0 0 10px rgba(255,122,0,0.3); }
 
-/* Hotspots - inner circle + outer ring (Kuula style) */
+/* Hotspots — inner circle + outer ring (Kuula style) */
 .viewer-hotspot { position: absolute; width: 32px; height: 32px; border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; pointer-events: auto; animation: pulse 2s infinite; transition: transform 0.2s; outline-offset: 5px; outline-style: solid; outline-width: 2px; }
 .viewer-hotspot:hover { transform: translate(-50%, -50%) scale(1.3); }
 .viewer-hotspot.hs-nav { background: rgba(255,122,0,0.55); border: 2px solid rgba(255,255,255,0.8); outline-color: rgba(255,122,0,0.7); box-shadow: 0 0 12px rgba(255,122,0,0.5); }
@@ -2913,7 +2916,7 @@ ${threeJsSrc}
 <\/script>
 <script>
 (function(){
-  var names = ['projection','disparity','bake','capture','ai-edit-lib','ai-design-viewer','thinking-mesh'];
+  var names = ['debug','projection','disparity','bake','capture','ai-edit-lib','ai-design-viewer','thinking-mesh']; // 'debug' FIRST so AiDebug exists for every later script
   var t = (Date && Date.now) ? Date.now() : Math.floor(Math.random()*1e9);
   (function load(i){
     if (i >= names.length) return;
@@ -3218,7 +3221,7 @@ ${threeJsSrc}
         vrHotspotGroup.add(coneMesh);
       }
 
-      // Invisible hit area for gaze/laser targeting - radius 12.8 (reduced from 16 for more precise gaze aim)
+      // Invisible hit area for gaze/laser targeting — radius 12.8 (reduced from 16 for more precise gaze aim)
       const hitMesh = new THREE.Mesh(
         new THREE.CircleGeometry(12.8, 16),
         new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, side: THREE.DoubleSide, depthTest: false })
@@ -3300,7 +3303,7 @@ ${threeJsSrc}
     });
   }
 
-  // Minimap HUD - multi-floor support
+  // Minimap HUD — multi-floor support
   let minimapFloorImg = null;
   let currentFloorId = null;
   let flatMapViewFloorId = null; // floor shown on flat minimap (null = current floor)
@@ -3461,7 +3464,7 @@ ${threeJsSrc}
       });
     });
 
-    // Scene nodes - scale for small minimap, fixed for enlarged
+    // Scene nodes — scale for small minimap, fixed for enlarged
     const ms = flatMinimapEnlarged ? 1 : Math.max(0.5, W / 500);
     scenes.forEach(s => {
       const p = positions[s.id];
@@ -3490,7 +3493,7 @@ ${threeJsSrc}
         ctx.fill();
       });
 
-      // Label - only for current or hovered, only when enlarged
+      // Label — only for current or hovered, only when enlarged
       if (flatMinimapEnlarged && (isCurrent || isHovered)) {
         ctx.save();
         const label = s.name;
@@ -3702,14 +3705,14 @@ ${threeJsSrc}
     mat.needsUpdate = true;
 
     // If floor changed, reload the floor plan image
-    // CRITICAL: never resize vrMinimapCanvas or rebuild vrMinimapMesh.geometry here - that
+    // CRITICAL: never resize vrMinimapCanvas or rebuild vrMinimapMesh.geometry here — that
     // corrupts the CanvasTexture's GPU buffer (new content uploads into the corner of the
     // old allocation, leaving stale pixels elsewhere) and leaves the floor-arrow buttons
     // positioned for the OLD geometry size. drawVRMinimap letterboxes any-aspect floor
     // image inside the constant-size canvas, so we just swap the image and redraw.
     if (currentFloorId !== oldFloorId) {
       if (vrMinimapActive) {
-        // VR map is active and manages its own floor display - only update mapViewFloorId.
+        // VR map is active and manages its own floor display — only update mapViewFloorId.
         mapViewFloorId = currentFloorId;
         const newFloor = TOUR.floors.find(f => f.id === currentFloorId);
         const fpData = newFloor ? newFloor.floorPlanData : null;
@@ -3731,7 +3734,7 @@ ${threeJsSrc}
           vrMinimapTex.needsUpdate = true;
         }
       } else {
-        // Map not active - small floating icon shows current floor. Update aspect so the
+        // Map not active — small floating icon shows current floor. Update aspect so the
         // icon's plane geometry matches the new floor; canvas dims stay constant.
         loadFloorPlanImage();
         if (minimapFloorImg && !minimapFloorImg.complete) {
@@ -3761,7 +3764,7 @@ ${threeJsSrc}
     drawMinimap();
     drawVRMinimap();
 
-    // Auto-play audio hotspots for this scene - defer until panorama is ready and VR grace period has passed
+    // Auto-play audio hotspots for this scene — defer until panorama is ready and VR grace period has passed
     stopAudio();
     const autoAudio = s.hotspots.find(h => h.type === 'audio' && h.audioAutoplay && h.audioData);
     if (autoAudio) { pendingAutoAudio = autoAudio.audioData; pendingAutoAudioHs = autoAudio; }
@@ -4507,7 +4510,7 @@ ${threeJsSrc}
   var filmTutLastPress = 0;        // timestamp of the first press of a possible double
   var filmTutAwaitingSecond = false; // true between the first and second press (label says "Press again")
   // EYES-ONLY dismiss (Omer #9): once the gate is open, gazing at the tutorial card fills a border
-  // around the prompt and starts the tour - same outcome as a trigger press. Controllers still use the trigger.
+  // around the prompt and starts the tour — same outcome as a trigger press. Controllers still use the trigger.
   var FILM_TUT_GAZE_DWELL = 1.6;   // seconds of gaze on the card to dismiss (shared by film + self tutorials)
   var filmTutGazeStart = 0, filmTutGazeProg = 0, filmTutShowGazeBox = false, filmTutGazeArmed = false;
   var FILM_TUT_DOUBLE_MS = 600;    // two presses within this window = pass the gate
@@ -4695,7 +4698,7 @@ ${threeJsSrc}
     if (mat) mat.color.setRGB(d, d, d); // keep the welcome-dark background while the tutorial runs
     var t = (performance.now() - filmTutT0) / 1000;
     // EYES-ONLY dismiss (Omer #9): after the demo plays once (gate open) and no controller is in hand,
-    // gazing at the card fills the prompt border and starts the tour - same as a trigger press.
+    // gazing at the card fills the prompt border and starts the tour — same as a trigger press.
     var _ftNow = performance.now();
     filmTutShowGazeBox = ((_ftNow - filmTutT0) >= FILM_TUT_LOOP * 1000) && !(controllersVisible && !handTrackingActive);
     if (filmTutShowGazeBox) {
@@ -4962,7 +4965,7 @@ ${threeJsSrc}
     var d = Math.round(MENU_DIM) / 255;
     if (mat) mat.color.setRGB(d, d, d);
     var t = (performance.now() - selfTutT0) / 1000;
-    // EYES-ONLY dismiss (Omer #9): same as the film tutorial - gaze the card once the gate is open.
+    // EYES-ONLY dismiss (Omer #9): same as the film tutorial — gaze the card once the gate is open.
     var _stNow = performance.now();
     selfTutShowGazeBox = ((_stNow - selfTutT0) >= FILM_TUT_LOOP * 1000) && !(controllersVisible && !handTrackingActive);
     if (selfTutShowGazeBox) {
@@ -5108,7 +5111,7 @@ ${threeJsSrc}
     if (filmNextHs.placement === 'floor') { orientFloorMesh(filmRingMesh, pos); } else { filmRingMesh.lookAt(0, 0, 0); }
     filmRingMesh.geometry.dispose();
     filmRingMesh.geometry = new THREE.CircleGeometry(6, 48, -Math.PI / 2, Math.max(0.05, pct) * Math.PI * 2);
-    // Breathe IN SYNC with the marker (same global phase as pulseHotspots - #10 synced breathing)
+    // Breathe IN SYNC with the marker (same global phase as pulseHotspots — #10 synced breathing)
     var _frp = 0.92 + 0.08 * Math.sin((performance.now() / 1000) * 1.8);
     filmRingMesh.scale.set(_frp, _frp, _frp);
     filmRingMesh.visible = true;
@@ -5450,7 +5453,7 @@ ${threeJsSrc}
       _aisc.variants.push({ name: name, imageData: url, stereoType: stereoType });
       setActiveVariantViewer(_aisc, _aisc.variants.length - 1);
     };
-    var _aiScope = (TOUR && TOUR.aiScope) || 'view'; // fallback only - scope is now picked on the spot in VR (onChooseScope)
+    var _aiScope = (TOUR && TOUR.aiScope) || 'view'; // fallback only — scope is now picked on the spot in VR (onChooseScope)
     if (renderer.xr.isPresenting) {
       _aiThinkPrompt();
       // AI FLOW RESTORED to the last KNOWN-WORKING version (commit 1dc42d6, before 44f9c7e). Omer: the AI
@@ -5459,9 +5462,9 @@ ${threeJsSrc}
       // added in 44f9c7e. Dropping those 4 OPTIONAL hooks makes runVR run straight through to onApply, exactly
       // like the working version. Pipeline quality (e.g. #7 ai-spec) is untouched. Re-add scope/keep-discard
       // later ONLY with real Quest evidence (chrome://inspect).
-      // Omer 2026-06-28: AI is now WHOLE-ROOM ONLY (no current-view option) - always 'full' so runVR runs
+      // Omer 2026-06-28: AI is now WHOLE-ROOM ONLY (no current-view option) — always 'full' so runVR runs
       // the whole-sphere sweep (processSweep) with the #7 room-aware spec. type -> mesh fills -> burst -> result.
-      AiDesignViewer.runVR({ scene: _aisc, viewDir: _aidir, onApply: _aiApply, vrStatus: updateVRPanelText, scope: ((TOUR && TOUR.aiScope) || 'view'), onChooseScope: _aiChooseScope, shouldAbort: function () { return _aiAbort; }, onPreview: _aiOnPreview, onDecide: _aiDecide, onRevert: _aiOnRevert, onPrompt: _aiOnPrompt, onProgress: _aiOnProgress, onDone: _aiOnDone });
+      AiDesignViewer.runVR({ scene: _aisc, viewDir: _aidir, onApply: _aiApply, vrStatus: updateVRPanelText, scope: ((TOUR && TOUR.aiScope) || 'view'), onChooseScope: _aiChooseScope, fovDeg: (_aiFovPick || undefined), aiEnv: _aiEnvPick, aiNoInvent: _aiNoInventPick, aiModel: _aiModelPick, aiRef: _aiRefPick, shouldAbort: function () { return _aiAbort; }, onPreview: _aiOnPreview, onDecide: _aiDecide, onRevert: _aiOnRevert, onPrompt: _aiOnPrompt, onProgress: _aiOnProgress, onDone: _aiOnDone });
     } else {
       AiDesignViewer.run({ scene: _aisc, viewDir: _aidir, onApply: _aiApply, scope: _aiScope });
     }
@@ -5492,7 +5495,7 @@ ${threeJsSrc}
 
   let _sceneTransitioning = false;
   function goToScene(id, sourceHs) {
-    if (_aiProcessing) return; // Omer 2026-06-28: AI running - block navigation only (map stays viewable; double-trigger cancels)
+    if (_aiProcessing) return; // Omer 2026-06-28: AI running — block navigation only (map stays viewable; double-trigger cancels)
     if (id === currentSceneId) return;
     if (_sceneTransitioning) return; // ignore rapid re-fire (Quest double-tap / fast gaze) mid-transition
     if (vrPanelGroup.visible) hideVRPanel(); // #4: navigating to a new scene dismisses any open info/media popup (Omer 2026-06-27)
@@ -5539,7 +5542,7 @@ ${threeJsSrc}
       lat = s.startLat || 0;
       _filmArrivalLon = lon; // remember the arrival heading for the film return-arrow fallback
       // C6: immersive VR arrival facing comes from vrSceneYawTarget (loadScene set it to startLon),
-      // NOT from the lon variable - align it with the resolved heading or VR ignores walkthrough heading.
+      // NOT from the lon variable — align it with the resolved heading or VR ignores walkthrough heading.
       vrSceneYawTarget = lon * Math.PI / 180;
       vrSceneYawNeedsCalc = true;
       setTimeout(function() { fade.classList.remove('active'); _sceneTransitioning = false; filmOnSceneRevealed(); }, 100);
@@ -5653,7 +5656,7 @@ ${threeJsSrc}
   document.addEventListener('touchend', () => { pointerDown = false; });
   document.addEventListener('touchcancel', () => { pointerDown = false; });
 
-  // Device orientation - lets Quest 3 flat-mode users look around by moving their head
+  // Device orientation — lets Quest 3 flat-mode users look around by moving their head
   let orientBase = null;
   let useOrientation = false;
   if (window.DeviceOrientationEvent) {
@@ -5671,7 +5674,7 @@ ${threeJsSrc}
 
   renderer.domElement.style.touchAction = 'none';
 
-  // Hotspot projection - build once per scene, reposition each frame
+  // Hotspot projection — build once per scene, reposition each frame
   let hsElements = [];
   function buildHotspots() {
     const layer = document.getElementById('hotspot-layer');
@@ -5801,7 +5804,7 @@ ${threeJsSrc}
   var vrPanelProgressFill = null, vrPanelProgressTrack = null, vrPanelProgressW = 0;
   let vrPanelOpenTime = 0;
   const VR_PANEL_COOLDOWN = 0.8;
-  const PANEL_CLOSE_DWELL = 1.2; // gaze dwell to close an info/media panel (shorter than the 1.8s hotspot dwell - easier to hold)
+  const PANEL_CLOSE_DWELL = 1.2; // gaze dwell to close an info/media panel (shorter than the 1.8s hotspot dwell — easier to hold)
   const PANEL_CLOSE_GRACE = 0.5; // keep the close dwell alive this long if gaze briefly wobbles off the button
   const PANEL_OUTSIDE_DWELL = 2.0; // eyes-only escape: gaze OFF the panel (looking away) this long -> close. Mirrors the map's gaze-outside-to-close so an info/media popup can never strand an eyes-only user.
   const POST_PANEL_GAZE_COOLDOWN = 1.5; // after gaze-closing a panel, suppress hotspot/map gaze this long so the lingering gaze doesn't auto-start a new dwell (was 3.0 - made re-activating info hotspots feel sluggish; icons are hidden by default now so the old minimap-refill risk shrank)
@@ -6015,7 +6018,7 @@ ${threeJsSrc}
     if (!_filmPresenting) filmPause(); // C4: opening a popup = user takes over (film-driven shows do not pause)
     hideVRPanel();
     vrPanelOpenTime = performance.now();
-    _panelCloseArmed = false; // require a deliberate glance at Close - don't auto-close if the gaze is already low when the panel appears (e.g. opening AI by looking down)
+    _panelCloseArmed = false; // require a deliberate glance at Close — don't auto-close if the gaze is already low when the panel appears (e.g. opening AI by looking down)
     // Info hotspots may carry a styled "info screen" (notebook / sci-fi / neon / glass / brand). Media
     // and AI panels pass no style -> classic flat panel (unchanged). Plane is sized to the canvas aspect
     // so the auto-fit (short text -> shorter panel) and RTL come through (Omer 2026-06-27).
@@ -6056,17 +6059,17 @@ ${threeJsSrc}
   // Place the panel: ABOVE the anchored hotspot's world direction (fixed) when vrPanelAnchorPos is set,
   // otherwise in front of the current view (AI/desktop fallback). Always faces the user.
   // #2 (Omer 2026-06-27): the panel used to sit 15 units away. In this world hotspots at radius 100
-  // read as the comfortable ~1.3m, so 15 units was ~20cm from the eye - too close to focus. Move it
+  // read as the comfortable ~1.3m, so 15 units was ~20cm from the eye — too close to focus. Move it
   // out to PANEL_VIEW_DIST and scale the WHOLE group by the same factor, so the apparent size is
   // unchanged but it focuses comfortably. PANEL_VIEW_DIST is Quest-tunable (smaller = nearer/larger).
   // #13 (Omer 2026-06-27): 100u (≈1.3m) still felt too close. Push to ≈2m to match the WELCOME-menu
   // distance (MENU_DISTANCE=2m; 100u≈1.3m so 2m≈154u). PANEL_SCALE tracks the distance, so the panel
   // keeps the same apparent size but focuses farther (calmer, like the welcome). Quest-tunable.
   // #7 FIX (Omer 2026-06-28): the panel kept reading as "too close" even at 154 because it draws OVER
-  // everything (depthTest:false) - the on-top cue says "near" while the geometry sat far at 154, a depth
+  // everything (depthTest:false) — the on-top cue says "near" while the geometry sat far at 154, a depth
   // conflict that feels wrong/looming. The WELCOME menu + AI panels sit at MENU_DISTANCE=2m and ARE
-  // comfortable (both cues agree). The panel's apparent SIZE is base/PANEL_BASE_DIST - INDEPENDENT of the
-  // distance (PANEL_SCALE tracks it) - so dropping the distance to the menu's 2m keeps the same size but
+  // comfortable (both cues agree). The panel's apparent SIZE is base/PANEL_BASE_DIST — INDEPENDENT of the
+  // distance (PANEL_SCALE tracks it) — so dropping the distance to the menu's 2m keeps the same size but
   // puts the stereo depth where the brain already expects it. (Was 154; 100; 15.)
   var PANEL_VIEW_DIST = 2, PANEL_BASE_DIST = 15, PANEL_SCALE = PANEL_VIEW_DIST / PANEL_BASE_DIST;
   function _placeVRPanel(camPos, camDir) {
@@ -6105,17 +6108,21 @@ ${threeJsSrc}
     if (selfPlayEl && selfPlayEl.tagName === 'VIDEO') clearSelfPlay(); // #8b drop the self-mode video fill
   }
 
-  // Update the VR panel's text IN PLACE (no reposition) - used for AI design progress.
+  // Update the VR panel's text IN PLACE (no reposition) — used for AI design progress.
   // First call (no panel yet) falls back to showVRPanel so it gets placed in front of the user.
   // ---- AI thinking-mesh wiring: the 3D sparkle replaces the flat text status while an AI edit runs.
   // Loaded as an ai-design sibling module (thinking-mesh.js), so it is only present when the tour is
   // served from the PC server - exactly when AI runs. If absent, we fall back to the old text panel.
   var _aiThinkActive = false, _aiProcessing = false, _aiAbort = false, _aiLastTrigT = 0; var AI_CANCEL_DBL_MS = 600; // _aiProcessing: sweep running (navigation blocked at goToScene; map still viewable). _aiAbort: cancel flag read by the engine. A DOUBLE trigger within AI_CANCEL_DBL_MS cancels.
   function _aiThinkInit() { if (window.AiThinkingMesh) { try { AiThinkingMesh.init(THREE, scene); } catch (e) {} } }
+  // AI debug channel (ai-design/debug.js sibling): breadcrumbs go to the Quest console, the PC
+  // server console (POST /log) and - with ?aidebug=1 - a small in-VR HUD. Safe no-ops if absent.
+  function _aiDebugInit() { try { if (window.AiDebug) AiDebug.initHud(THREE, scene); } catch (e) {} }
+  function _aiLog(m) { try { if (window.AiDebug) AiDebug.log(m); else console.log('[AI] ' + m); } catch (e) {} }
   function _aiThinkPrompt() { // idle sparkle + floating prompt text, replacing the flat "type here" panel
     if (!window.AiThinkingMesh) return false;
     _aiAbort = false; _aiProcessing = false; // fresh run
-    _aiThinkInit(); _aiThinkActive = true; hideVRPanel(); AiThinkingMesh.showPrompt('Tell me what to change');
+    _aiThinkInit(); _aiDebugInit(); _aiThinkActive = true; hideVRPanel(); AiThinkingMesh.showPrompt('Tell me what to change');
     return true;
   }
   function _aiOnPrompt(text) { if (window.AiThinkingMesh && _aiThinkActive) AiThinkingMesh.setPromptText(text); }
@@ -6130,6 +6137,7 @@ ${threeJsSrc}
     if (window.AiThinkingMesh) setTimeout(function () { if (window.AiThinkingMesh) AiThinkingMesh.hide(); }, ok ? 3000 : 200); // #14: hold the (now longer/colourful) finale ~3s
     _aiThinkActive = false; // un-gate the text panel BEFORE showing any message
     if (msg) updateVRPanelText('✨ AI Design', msg); // errors only; cancel/success pass null
+    if (aiScopeFrame && _aiLockedFrame) { aiScopeFrame.visible = false; _aiLockedFrame = false; } // drop the locked view-only border when the edit ends
   }
   // Omer 2026-06-28: GRIP = universal escape from ANY active/STUCK AI UI (the floating thinking mesh, the
   // Keep/Discard panel, the scope picker) so a stuck mesh NEVER forces a tour restart. Aborts a running edit,
@@ -6138,7 +6146,8 @@ ${threeJsSrc}
     _aiAbort = true; _aiThinkActive = false; _aiProcessing = false;
     try { if (window.AiThinkingMesh) AiThinkingMesh.hide(); } catch (e) {}
     if (aiDecideActive) { aiDecideActive = false; if (aiDecideGroup) aiDecideGroup.visible = false; var _rd = aiDecideResolve; aiDecideResolve = null; if (_rd) _rd('discard'); }
-    if (aiScopeActive) { aiScopeActive = false; if (aiScopeGroup) aiScopeGroup.visible = false; if (aiScopeFrame) aiScopeFrame.visible = false; var _rs = aiScopeResolve; aiScopeResolve = null; if (_rs) _rs(null); }
+    if (aiScopeActive) { aiScopeActive = false; if (aiScopeGroup) aiScopeGroup.visible = false; var _rs = aiScopeResolve; aiScopeResolve = null; if (_rs) _rs(null); }
+    if (aiScopeFrame) aiScopeFrame.visible = false; _aiLockedFrame = false; // also drop a locked view-only border
     try { _btnFillHide(); } catch (e) {}
     try { if (gazeFillMesh) gazeFillMesh.visible = false; } catch (e) {}
     try { if (_aiPreviewing && _aiOnRevert) _aiOnRevert(); } catch (e) {}
@@ -6267,9 +6276,9 @@ ${threeJsSrc}
           if (renderer.xr.isPresenting) {
             // immersive VR: 3D panel + voice (DOM overlay is invisible in WebXR)
             _aiThinkPrompt();
-            // Restored to the known-working flow (see the other runVR call) - no scope-picker / keep-discard hooks.
-            // Omer 2026-06-28: WHOLE-ROOM ONLY - always 'full'.
-            AiDesignViewer.runVR({ scene: _aisc, viewDir: _aidir, onApply: _aiApply, vrStatus: updateVRPanelText, scope: ((TOUR && TOUR.aiScope) || 'view'), onChooseScope: _aiChooseScope, shouldAbort: function () { return _aiAbort; }, onPreview: _aiOnPreview, onDecide: _aiDecide, onRevert: _aiOnRevert, onPrompt: _aiOnPrompt, onProgress: _aiOnProgress, onDone: _aiOnDone });
+            // Restored to the known-working flow (see the other runVR call) — no scope-picker / keep-discard hooks.
+            // Omer 2026-06-28: WHOLE-ROOM ONLY — always 'full'.
+            AiDesignViewer.runVR({ scene: _aisc, viewDir: _aidir, onApply: _aiApply, vrStatus: updateVRPanelText, scope: ((TOUR && TOUR.aiScope) || 'view'), onChooseScope: _aiChooseScope, fovDeg: (_aiFovPick || undefined), aiEnv: _aiEnvPick, aiNoInvent: _aiNoInventPick, aiModel: _aiModelPick, aiRef: _aiRefPick, shouldAbort: function () { return _aiAbort; }, onPreview: _aiOnPreview, onDecide: _aiDecide, onRevert: _aiOnRevert, onPrompt: _aiOnPrompt, onProgress: _aiOnProgress, onDone: _aiOnDone });
           } else {
             AiDesignViewer.run({ scene: _aisc, viewDir: _aidir, onApply: _aiApply });
           }
@@ -6392,7 +6401,7 @@ ${threeJsSrc}
     img.src = imgSrc;
   }
 
-  // VR video panel - plays an UPLOADED clip (hs.videoData) as a VideoTexture on the media panel.
+  // VR video panel — plays an UPLOADED clip (hs.videoData) as a VideoTexture on the media panel.
   // DOM <video> is invisible in immersive WebXR, so the frames are drawn onto a 3D plane instead;
   // the element itself stays hidden but attached so it keeps decoding + playing audio.
   function showVRVideo(src) {
@@ -6491,7 +6500,7 @@ ${threeJsSrc}
   document.getElementById('info-close').onclick = closeInfoModal;
   document.getElementById('info-modal').onclick = (e) => { if (e.target === document.getElementById('info-modal')) closeInfoModal(); };
 
-  // VR controller rays - beam restored (2026-06-11 afternoon): with eye-gaze fully disabled
+  // VR controller rays — beam restored (2026-06-11 afternoon): with eye-gaze fully disabled
   // in controller mode, the beam is the only way to aim the trigger at hotspots. The original
   // complaint (laser flashing when hands move) is solved at the root by the profile-based
   // hand detection, so hands never show the beam.
@@ -6507,7 +6516,7 @@ ${threeJsSrc}
     ]);
     const lineMat = new THREE.LineBasicMaterial({ color: 0xff7a00, linewidth: 2, transparent: true, opacity: 0.6, depthTest: false });
     const rayLine = new THREE.Line(lineGeo, lineMat); rayLine.renderOrder = 1700.5; group.add(rayLine); // draw over the dot disc (under the white core) so the beam reaches the dot centre (Omer)
-    // Dot at the end of the ray - orange center, dark halo for contrast against light backgrounds
+    // Dot at the end of the ray — orange center, dark halo for contrast against light backgrounds
     const dotMat = new THREE.MeshBasicMaterial({ color: 0xff7a00, transparent: true, opacity: 0.95, depthTest: false });
     const dot = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 8), dotMat);
     dot.position.set(0, 0, -500);
@@ -6531,7 +6540,7 @@ ${threeJsSrc}
   }
 
   // ===========================================================================
-  //  WAND STYLE SWITCH - flip this one constant to change the controller model.
+  //  WAND STYLE SWITCH — flip this one constant to change the controller model.
   //    'regular' = the original simple tapered wand
   //    'gnarled' = the carved natural-wood wand (burl handle, holo ring at base)
   // ===========================================================================
@@ -6650,7 +6659,7 @@ ${threeJsSrc}
     return new THREE.CanvasTexture(cv);
   }
   function _wMakeHoloRing() {
-    var COLOR = '#ff7a00'; // ring matches the beam (both brand orange) - Omer 2026-06-28
+    var COLOR = '#ff7a00'; // ring matches the beam (both brand orange) — Omer 2026-06-28
     var holo = new THREE.Group();
     var ringMat = new THREE.MeshBasicMaterial({ map: _wHoloTex(COLOR), transparent: true, depthTest: false, side: THREE.DoubleSide, blending: THREE.NormalBlending });
     var ringMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), ringMat);
@@ -6662,10 +6671,10 @@ ${threeJsSrc}
     return holo;
   }
 
-  // #1 (Omer 2026-06-28): procedural wood texture (albedo + roughness map) - ported from the wand lab
+  // #1 (Omer 2026-06-28): procedural wood texture (albedo + roughness map) — ported from the wand lab
   // (Media Assets/wand-mesh.html makeWoodTextures), which reads as photoreal carved wood. The viewer wand
   // previously used only a flat vertex-colour gradient, so on Quest it looked flat/plastic. No backticks /
-  // template-literals / regex (getViewerTemplate constraint) - all string concatenation.
+  // template-literals / regex (getViewerTemplate constraint) — all string concatenation.
   function makeWandWoodTextures(light, dark) {
     var W = 256, H = 1024;
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -6714,7 +6723,7 @@ ${threeJsSrc}
     var TUB = 180, RAD = 20;
     var DARK = new THREE.Color(0x3a2616), LITE = new THREE.Color(0x9a6e44);
 
-    // organic spine along +Z (pommel near the hand, tip forward) - matches the regular wand
+    // organic spine along +Z (pommel near the hand, tip forward) — matches the regular wand
     var pts = [], i, j;
     var NP = 9;
     for (i = 0; i < NP; i++) {
@@ -6756,7 +6765,7 @@ ${threeJsSrc}
         var nx = cs * N.x + sn * B.x, ny = cs * N.y + sn * B.y, nz = cs * N.z + sn * B.z;
         pos.push(c.x + nx * r, c.y + ny * r, c.z + nz * r);
         var tone = 0.4 + 0.5 * (grain * 0.5 + 0.5);
-        // #12 (Omer): vertex colours are now pure ALBEDO - the old fake directional "shade" is dropped so
+        // #12 (Omer): vertex colours are now pure ALBEDO — the old fake directional "shade" is dropped so
         // the real UI lights + envMap (via __styleUiMesh below) do the shading, so the wand is LIT on Quest
         // (not flat). nx/ny/nz are still used for the vertex position above.
         col.push(DARK.r + (LITE.r - DARK.r) * tone,
@@ -6803,13 +6812,13 @@ ${threeJsSrc}
     ring.scale.setScalar(0.045);
     grp.add(ring);
 
-    // Omer 2026-06-27: the wand was reversed - the narrow tip pointed back at the user and the wide
+    // Omer 2026-06-27: the wand was reversed — the narrow tip pointed back at the user and the wide
     // burl faced forward. The controller laser fires along -Z, so flip 180° about Y: narrow tip now
     // points down the laser (forward) and the wide handle sits at the hand. Rigid rotation = winding
     // preserved (no see-through skin).
     grp.rotation.y = Math.PI;
     grp.renderOrder = RO;
-    // #12: give the wand the SAME PBR lighting as the film-tutorial controller - envMap (__uiEnv) + the
+    // #12: give the wand the SAME PBR lighting as the film-tutorial controller — envMap (__uiEnv) + the
     // UI lights, and draw-over-pano (depthTest off, renderOrder 9999). Fixes "flat on Quest".
     // #1c FIX (Omer 2026-06-28): apply the UI env to the WOOD ONLY. Applied to the whole group it also set
     // an envMap on the holo RING's MeshBasicMaterial, which MULTIPLIES the texture by the dark gradient env
@@ -6844,7 +6853,7 @@ ${threeJsSrc}
     // Cancel is a DOUBLE TRIGGER (see onVRSelect), not grip. Navigation is blocked in goToScene.
     if (filmTutActive) { filmTutConsumePress(); return; } // tutorial gate: double press passes it
     if (selfTutActive) { selfTutConsumePress(); return; } // self-guided tutorial gate
-    if (_aiThinkActive || aiScopeActive || aiDecideActive) { _aiForceClear(); return; } // GRIP = escape any active/STUCK AI UI (floating mesh / keep-discard / scope) - no more tour restart
+    if (_aiThinkActive || aiScopeActive || aiDecideActive) { _aiForceClear(); return; } // GRIP = escape any active/STUCK AI UI (floating mesh / keep-discard / scope) — no more tour restart
     if (menuActive) return; // menu is up: use the trigger or gaze to choose Watch/Explore
     resetControllerActivity();
     resetMapGaze();
@@ -6854,7 +6863,7 @@ ${threeJsSrc}
         deactivateVRMinimap();
       }
     } else {
-      // Ignore grip within 800ms of closing - Quest controllers double-fire squeeze
+      // Ignore grip within 800ms of closing — Quest controllers double-fire squeeze
       if (performance.now() - mapDeactivatedAt < 800) return;
       // AUTO TOUR: while the film is the active experience, grip ONLY toggles pause/resume -
       // no ribbon (controller mirror of the eyes look-down toggle).
@@ -7035,11 +7044,11 @@ ${threeJsSrc}
     }
 
     // #5 (Omer 2026-06-27): with an info/media popup open, a trigger that hit nothing actionable
-    // (no close button, no panel, no map UI, no hotspot) dismisses it - pressing anywhere outside a
+    // (no close button, no panel, no map UI, no hotspot) dismisses it — pressing anywhere outside a
     // hotspot closes the popup, not just the Close button.
     if (vrPanelGroup.visible) { hideVRPanel(); return; }
 
-    // (Floating minimap removed - activation handled by the bottom-middle icon above)
+    // (Floating minimap removed — activation handled by the bottom-middle icon above)
   }
 
 
@@ -7052,7 +7061,7 @@ ${threeJsSrc}
         btn.onclick = () => {
           btn.textContent = 'Starting VR...';
           btn.style.background = '#555';
-          // Kill any audio queued by the autoplay listener from flat viewing - we'll re-queue it after the VR session warms up
+          // Kill any audio queued by the autoplay listener from flat viewing — we'll re-queue it after the VR session warms up
           stopAudio();
           pendingAutoplay = null;
           navigator.xr.requestSession('immersive-vr', { optionalFeatures: ['local-floor'] }).then(session => {
@@ -7064,7 +7073,7 @@ ${threeJsSrc}
               let anyHand = false;
               for (const src of session.inputSources) {
                 // Quest reports hands as emulated controllers (gamepad set, src.hand null)
-                // when the session didn't request the hand-tracking feature - detect them
+                // when the session didn't request the hand-tracking feature — detect them
                 // via the input profile names instead so hands never count as controllers.
                 const isHand = src.hand || (src.profiles || []).some(p => p.indexOf('hand') !== -1);
                 if (isHand) anyHand = true;
@@ -7083,9 +7092,9 @@ ${threeJsSrc}
             session.addEventListener('visibilitychange', function () {
               if (session.visibilityState === 'visible' && menuActive) placeMenuInFront();
             });
-            // Initial sync - Quest may already be in hand-tracking mode when the session starts.
+            // Initial sync — Quest may already be in hand-tracking mode when the session starts.
             syncControllerVisibilityToInputSources();
-            // Mark session start time - gaze + auto-audio are suppressed for VR_INITIAL_GRACE seconds so the first frame can paint
+            // Mark session start time — gaze + auto-audio are suppressed for VR_INITIAL_GRACE seconds so the first frame can paint
             vrSessionStartTime = performance.now();
             xrBaseRefSpace = null; eyeLevelDone = false; // re-arm the eye-level recenter for this entry
             if (mat) mat.color.setHex(0x000000); // hold the scene BLACK until the menu fade-in (no bright-pano flash before showMenu)
@@ -7178,7 +7187,7 @@ ${threeJsSrc}
     }).catch(() => {});
   }
 
-  // Gaze system - clockwise pie fill that looks like the hotspot itself filling in
+  // Gaze system — clockwise pie fill that looks like the hotspot itself filling in
   const gazeFillMat = new THREE.MeshBasicMaterial({ transparent: false, side: THREE.DoubleSide, depthTest: false });
   const gazeFillMesh = new THREE.Mesh(new THREE.CircleGeometry(6, 48, -Math.PI / 2, 0.01), gazeFillMat);
   // Must be > vrMinimapMesh.renderOrder (999): both use depthTest:false, so the
@@ -7255,7 +7264,7 @@ ${threeJsSrc}
     navLabelMesh.visible = true;
   }
 
-  // Center reticle dot - always visible in VR so user knows where gaze points
+  // Center reticle dot — always visible in VR so user knows where gaze points
   const reticleMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4, depthTest: false });
   const reticleMesh = new THREE.Mesh(new THREE.CircleGeometry(0.45, 24), reticleMat);
   reticleMesh.renderOrder = 1000;
@@ -7361,7 +7370,7 @@ ${threeJsSrc}
     }
   }
 
-  // Map gaze cursor - visible dot+halo on the map surface (reticle at 50m is invisible against the 3.5m map)
+  // Map gaze cursor — visible dot+halo on the map surface (reticle at 50m is invisible against the 3.5m map)
   const mapCursorHalo = new THREE.Mesh(
     new THREE.CircleGeometry(0.055, 24),
     new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.5, depthTest: false, side: THREE.DoubleSide })
@@ -7386,7 +7395,7 @@ ${threeJsSrc}
   const GAZE_COOLDOWN = 1.5;
   let lastFrameTime = performance.now();
 
-  // Map gaze state (parallel layer - active only when enlarged map is open)
+  // Map gaze state (parallel layer — active only when enlarged map is open)
   let mapGazeTarget = null;
   let mapGazeTimer = 0;
   // Holds the raw (original-type, usually numeric) scene id under gaze. The
@@ -7399,7 +7408,7 @@ ${threeJsSrc}
   const MAP_GAZE_FLOOR_DWELL = 1.5;
   const MAP_GAZE_CLOSE_DWELL = 1.8;
   const MAP_GAZE_OUTSIDE_DWELL = 2.0;
-  const SCENE_ENTER_GAZE_COOLDOWN = 1500; // ms: ignore gaze-on-HS right after landing in a scene, to avoid accidental chained jumps (was 5000 - too long when re-exploring/traveling fast)
+  const SCENE_ENTER_GAZE_COOLDOWN = 1500; // ms: ignore gaze-on-HS right after landing in a scene, to avoid accidental chained jumps (was 5000 — too long when re-exploring/traveling fast)
 
   function resetMapGaze() {
     mapGazeTarget = null;
@@ -7472,7 +7481,7 @@ ${threeJsSrc}
       return;
     }
 
-    // Cooldown after scene navigation - prevent immediate re-trigger
+    // Cooldown after scene navigation — prevent immediate re-trigger
     if (gazeCooldown > 0) {
       gazeCooldown -= dt;
       gazeFillMesh.visible = false;
@@ -7489,7 +7498,7 @@ ${threeJsSrc}
     // Check VR panel. Two EYES-ONLY ways to close (controllers use the trigger and never reach here):
     //  (1) deliberate: gaze the red Close button.
     //  (2) escape: look AWAY from the panel -> a red ring fills at your gaze and closes it after
-    //      PANEL_OUTSIDE_DWELL. The escape guarantees an eyes-only user is NEVER stranded - the old
+    //      PANEL_OUTSIDE_DWELL. The escape guarantees an eyes-only user is NEVER stranded — the old
     //      single-button close was hard to aim at the far/scaled panel and its fill ring was sub-1°.
     if (vrPanelGroup.visible) {
       const elapsed = (performance.now() - vrPanelOpenTime) / 1000;
@@ -7500,7 +7509,7 @@ ${threeJsSrc}
       if (onPanel || elapsed > VR_PANEL_COOLDOWN + 2) _panelSeen = true;
 
       if (elapsed > VR_PANEL_COOLDOWN) {
-        // (1) Close button - armed once the gaze has been OFF it (don't auto-close on open).
+        // (1) Close button — armed once the gaze has been OFF it (don't auto-close on open).
         if (!onClose) _panelCloseArmed = true;
         if (_panelCloseArmed && (onClose || (gazeTarget === vrPanelCloseMesh && gazeGrace < PANEL_CLOSE_GRACE))) {
           _panelOutTimer = 0;
@@ -7514,7 +7523,7 @@ ${threeJsSrc}
               return;
             }
           } else { gazeTarget = vrPanelCloseMesh; gazeTimer = 0; gazeGrace = 0; }
-          // red fill on the close button - radius scales with PANEL_SCALE so it reads at the panel distance
+          // red fill on the close button — radius scales with PANEL_SCALE so it reads at the panel distance
           gazeFillMesh.position.copy(vrPanelCloseMesh.getWorldPosition(new THREE.Vector3()));
           gazeFillMesh.position.add(camPos.clone().sub(gazeFillMesh.position).normalize().multiplyScalar(0.1 * PANEL_SCALE)); // #7: nudge scales with panel distance (was fixed 1.0, too big at the new 2m)
           gazeFillMesh.lookAt(camPos);
@@ -7526,10 +7535,10 @@ ${threeJsSrc}
           gazeFillMat.map = null; gazeFillMat.color.set(0xcc0000); gazeFillMat.opacity = 0.9; gazeFillMat.needsUpdate = true;
           return;
         }
-        // gaze left the close button - drop that dwell
+        // gaze left the close button — drop that dwell
         if (gazeTarget === vrPanelCloseMesh) { gazeTarget = null; gazeTimer = 0; gazeGrace = 0; }
 
-        // (2) Look-away escape - gaze off the panel AND off Close, once it's been seen.
+        // (2) Look-away escape — gaze off the panel AND off Close, once it's been seen.
         if (!onPanel && !onClose && _panelSeen) {
           _panelOutTimer += dt;
           var pctO = Math.min(_panelOutTimer / PANEL_OUTSIDE_DWELL, 1);
@@ -7550,7 +7559,7 @@ ${threeJsSrc}
           return;
         }
       }
-      // reading the panel (or still in cooldown) - cancel the look-away timer, keep the panel open
+      // reading the panel (or still in cooldown) — cancel the look-away timer, keep the panel open
       _panelOutTimer = 0;
       gazeFillMesh.visible = false;
       return;
@@ -7559,7 +7568,7 @@ ${threeJsSrc}
     // After ARRIVING in a scene, suppress panorama hotspot gaze for SCENE_ENTER_GAZE_COOLDOWN so a
     // hotspot sitting directly ahead (common on a straight route) doesn't auto-jump on arrival.
     // Applies to EVERY scene entry, however the user navigated (gaze / controller / map). The
-    // reticle stays visible (set above) - only the dwell is held off.
+    // reticle stays visible (set above) — only the dwell is held off.
     if (performance.now() - (window._lastSceneEnterTime || 0) < SCENE_ENTER_GAZE_COOLDOWN) {
       gazeTarget = null; gazeTimer = 0; gazeGrace = 0;
       gazeFillMesh.visible = false;
@@ -7594,14 +7603,14 @@ ${threeJsSrc}
       gazeFillMesh.quaternion.copy(hsWorldQuat);
       // Push slightly toward camera so the fill sits in front of the target
       const toCamera = camPos.clone().sub(hsWorldPos).normalize();
-      // Map UI elements are flat planes sized in meters; hotspots are larger and farther - use smaller offset for UI
+      // Map UI elements are flat planes sized in meters; hotspots are larger and farther — use smaller offset for UI
       const fillOffset = isMapUITarget ? 0.05 : 0.3;
       gazeFillMesh.position.add(toCamera.multiplyScalar(fillOffset));
       gazeFillMesh.renderOrder = 1002; // reset (the menu fill bumps it to 1602)
       gazeFillMesh.visible = true;
       showHsName(hitTarget.userData); // name the gazed hotspot (any type) at 1.3m while the fill builds
 
-      // Map UI hover removed - controller-trigger only, no gaze on map elements
+      // Map UI hover removed — controller-trigger only, no gaze on map elements
 
       if (gazeTarget === hitTarget) {
         gazeTimer += dt;
@@ -7624,7 +7633,7 @@ ${threeJsSrc}
       const arc = Math.max(0.05, pct) * Math.PI * 2;
       // Breathe IN SYNC with the marker: bake the pulse into the RADIUS (not .scale, which would
       // leak into the map/menu/icon dwell fills that reuse this same mesh). Same formula/phase as
-      // pulseHotspots - one global phase, so the ring stays locked to the synced markers (Omer #10).
+      // pulseHotspots — one global phase, so the ring stays locked to the synced markers (Omer #10).
       var _gfp = 0.92 + 0.08 * Math.sin((performance.now() / 1000) * 1.8);
       gazeFillMesh.geometry = new THREE.CircleGeometry(6 * _gfp, 48, -Math.PI / 2, arc);
       gazeFillMat.transparent = false;
@@ -7716,7 +7725,7 @@ ${threeJsSrc}
     if (uiHits.length > 0) {
       const action = uiHits[0].object.userData._mapAction;
       if (action === 'close') { newTarget = 'close'; dwellThreshold = MAP_GAZE_CLOSE_DWELL; }
-      // Skip disabled (greyed) arrows - gazing them does nothing, so don't draw a dwell ring.
+      // Skip disabled (greyed) arrows — gazing them does nothing, so don't draw a dwell ring.
       else if (action === 'floorPrev' && !floorBtnPrevDisabled) { newTarget = 'floorPrev'; dwellThreshold = MAP_GAZE_FLOOR_DWELL; }
       else if (action === 'floorNext' && !floorBtnNextDisabled) { newTarget = 'floorNext'; dwellThreshold = MAP_GAZE_FLOOR_DWELL; }
     }
@@ -7746,7 +7755,7 @@ ${threeJsSrc}
         const positions = getScenePositions(mapW, mapH, pad, hoverFloorId);
         for (const id in positions) { positions[id].x += 4; positions[id].y += mapTop; }
         const nodeScale = Math.max(1, W / 1000);
-        // Gaze hit radius - forgiving (gaze is less precise than controller) but
+        // Gaze hit radius — forgiving (gaze is less precise than controller) but
         // tight enough that the target tracks the marker, not a huge area around it.
         const hitRadius = 60 * nodeScale;
         const floorScenes = getScenesForFloor(hoverFloorId);
@@ -7764,7 +7773,7 @@ ${threeJsSrc}
           mapNeedsRedraw = true;
         }
         // Cooldown: for SCENE_ENTER_GAZE_COOLDOWN ms after landing in a scene, don't let
-        // gaze dwell start (no ring, no jump) - avoids accidentally re-jumping if the user
+        // gaze dwell start (no ring, no jump) — avoids accidentally re-jumping if the user
         // happens to be looking at a hotspot on arrival. Hover highlight above still works.
         const _sinceSceneEnter = performance.now() - (window._lastSceneEnterTime || 0);
         if (gazeHsId && _sinceSceneEnter >= SCENE_ENTER_GAZE_COOLDOWN) {
@@ -7798,7 +7807,7 @@ ${threeJsSrc}
       const anyHit = raycaster.intersectObjects(allMapObjects);
       // Grace after opening: if the map was just activated (e.g. via look-down, while still
       // looking away from the now eye-level map), don't let an "outside" gaze immediately close
-      // it - give the user ~1.2s to bring their eyes up to the map first.
+      // it — give the user ~1.2s to bring their eyes up to the map first.
       if (anyHit.length === 0 && performance.now() - mapActivatedAt > 1200) {
         newTarget = 'outside';
         dwellThreshold = MAP_GAZE_OUTSIDE_DWELL;
@@ -7823,7 +7832,7 @@ ${threeJsSrc}
         gazeFillMesh.position.copy(camPos).add(camDir.clone().multiplyScalar(2));
         gazeFillMesh.lookAt(camPos);
         gazeFillMat.map = null;
-        gazeFillMat.color.set(0xcc0000); // red - matches the Close buttons (this gaze CLOSES the map)
+        gazeFillMat.color.set(0xcc0000); // red — matches the Close buttons (this gaze CLOSES the map)
         gazeFillMat.transparent = true;
         gazeFillMat.opacity = 0.6 + pct * 0.4;
         reticleMat.color.setHex(pct > 0.5 ? 0xcc0000 : 0xffffff);
@@ -7889,12 +7898,12 @@ ${threeJsSrc}
     }
   }
 
-  // Pre-decoded floor plan images, keyed by floor id - avoids async image-load freezes during floor switching
+  // Pre-decoded floor plan images, keyed by floor id — avoids async image-load freezes during floor switching
   const floorImageCache = {};
   function preloadFloorImages() {
     if (!TOUR.floors) return;
     // Pre-decode floor plan images into the browser's image cache so subsequent loads in
-    // switchVRMapFloor are instant. floorImageCache itself is no longer read directly -
+    // switchVRMapFloor are instant. floorImageCache itself is no longer read directly —
     // switchVRMapFloor creates a fresh Image() and loads from floorPlanData each time.
     for (const f of TOUR.floors) {
       if (!f.floorPlanData) continue;
@@ -7928,7 +7937,7 @@ ${threeJsSrc}
     ctx.beginPath();
     ctx.arc(cx, cy - 20, 30, 0, Math.PI * 2);
     ctx.fill();
-    // Pin body (teardrop tail) - triangle from circle bottom to point
+    // Pin body (teardrop tail) — triangle from circle bottom to point
     ctx.beginPath();
     ctx.moveTo(cx - 22, cy - 5);
     ctx.lineTo(cx + 22, cy - 5);
@@ -8851,27 +8860,42 @@ ${threeJsSrc}
     }
   }
 
-  // === AI SCOPE CHOICE (on-the-spot view/full pick) ====================================
-  // Shown in VR AFTER the user types the AI prompt and BEFORE the Gemini request fires. A faint
-  // ~80deg frame outlines exactly what "Current view" will edit (the engine's CAP_FOV_DEG capture
-  // cone), with Current view / Whole room / Cancel buttons. Mirrors the welcome-menu pick machinery
-  // (same makeMenuButton look + gaze-dwell + controller confirm-fill). Resolves a Promise that
-  // ai-design-viewer.runVR awaits via the onChooseScope hook. World-locked to the forward direction
-  // at prompt-time (= the captured view), so turning the head doesn't move the frame.
+  // === AI MODE MENU (on-the-spot view/full pick) =======================================
+  // v2 (2026-07-03): shown in VR right after triggering AI and BEFORE the Quest keyboard — v1
+  // appeared after typing and died in the keyboard-close moment (gaze down + lingering trigger).
+  // Structure clones the PROVEN Keep/Discard panel: gold title up top, TWO buttons at the BOTTOM
+  // (-1.05, welcome-menu height) with the bouncing LOOK-DOWN chevron. NO Cancel button — grip
+  // cancels (_aiForceClear), and closing the keyboard empty later still cancels. A faint ~100deg
+  // frame follows the head and outlines exactly what "Current view" will edit; the pick latches
+  // the aimed direction into _aidir (the engine's capture viewDir). Resolves a Promise that
+  // ai-design-viewer.runVR awaits via onChooseScope(defaultScope).
   // Tunables (most likely to dial on Quest):
   var AI_SCOPE_DIST = MENU_DISTANCE;            // metres in front (same plane as the welcome menu)
-  var AI_SCOPE_FOV = 80;                        // frame cone in degrees - match ai-design CAP_FOV_DEG
+  var AI_SCOPE_FOV = 100;                       // frame cone in degrees — match ai-design CAP_FOV_DEG (100)
   var AI_SCOPE_DWELL = 2.0;                     // gaze seconds to pick
   var AI_SCOPE_CTRL_FILL = 0.5;                 // controller confirm-fill seconds (mirror MENU_CTRL_FILL_SEC)
-  var AI_SCOPE_BTN_Y = -0.5;                    // #8 v2: raised from -0.95 so the buttons sit in the FORWARD view (no big look-down)
+  var AI_SCOPE_BTN_Y = -0.30;                   // v2: BOTTOM row — exactly the decide-panel / welcome height
   var AI_SCOPE_BTN_DX = 0.62;                   // half the gap between Current view / Whole room
-  var AI_SCOPE_CANCEL_Y = -1.05;               // #8 v2: raised from -1.58 to stay in view
+  var AI_SCOPE_OPT_Y = -0.80;                   // small Options / Back button, below the main row
+  var AI_SCOPE_FOVROW_Y = 0.15;                // options page: the 80/100/120 view-cone row
   var aiScopeActive = false, aiScopeGroup = null, aiScopeFrame = null;
-  var aiScopeViewBtn = null, aiScopeFullBtn = null, aiScopeCancelBtn = null;
-  var aiScopeResolve = null, aiScopeOpenedAt = 0;
-  var aiScopeViewGaze = 0, aiScopeFullGaze = 0, aiScopeCancelGaze = 0;
-  var _armScopeView = false, _armScopeFull = false, _armScopeCancel = false;
+  var aiScopeViewBtn = null, aiScopeFullBtn = null, aiScopeArrow = null, aiScopeTitleMesh = null;
+  var aiScopeResolve = null, aiScopeOpenedAt = 0, _aiScopeDefault = 'view';
   var aiScopeCtrlFillBtn = null, aiScopeCtrlFillT0 = 0;
+  // Generic pick machinery: the CURRENT page's buttons + one shared gaze accumulator. Every button
+  // starts UNARMED per page-show (must look away then back — the v1 auto-fire lesson).
+  var _aiScopePage = 1, _aiScopeTargets = [];
+  var _scopeGazeBtn = null, _scopeGazeT = 0;
+  // Phase 5 in-VR AI options (session-wide; passed to runVR as fovDeg/aiEnv/aiNoInvent/aiModel):
+  var _aiFovPick = 0;              // 0 = engine default (CAP_FOV_DEG=100); else 80/100/120
+  var _aiEnvPick = 'indoor';       // 'outdoor' adds an exterior-scene hint to both prompts
+  var _aiNoInventPick = true;      // the "if it is not in this image return it unchanged" guard
+  var _aiModelPick = 'fast';       // 'pro' = premium gemini-3-pro-image on the server
+  var _aiRefPick = false;          // whole-room ref anchor EXPERIMENT (style reference to later views)
+  try { _aiRefPick = (new URLSearchParams(location.search)).get('airef') === '1'; } catch (e) {} // test preset only — the in-VR toggle is the control
+  var aiScopeOptBtn = null, aiScopeBackBtn = null, _aiOptTitle = null;
+  var aiScopeFov80 = null, aiScopeFov100 = null, aiScopeFov120 = null;
+  var aiScopeEnvBtn = null, aiScopeInventBtn = null, aiScopeModelBtn = null, aiScopeRefBtn = null;
   // #3 (Omer): the "Current view" frame FOLLOWS the head while choosing so you can aim where the edit
   // lands, and only the PRESS sets it. _aiAimDir latches the head direction whenever the gaze is NOT on
   // a button (so it freezes the moment you look at a button to select); the 'view'/'full' pick writes
@@ -8897,26 +8921,97 @@ ${threeJsSrc}
     aiScopeFrame.visible = false; scene.add(aiScopeFrame); // #3: head-locked separately, not in the world-locked button group
     aiScopeViewBtn = makeMenuButton('Current view', '', null); aiScopeViewBtn.userData._scope = 'view'; aiScopeViewBtn.position.set(-AI_SCOPE_BTN_DX, AI_SCOPE_BTN_Y, 0);
     aiScopeFullBtn = makeMenuButton('Whole room', '', null); aiScopeFullBtn.userData._scope = 'full'; aiScopeFullBtn.position.set(AI_SCOPE_BTN_DX, AI_SCOPE_BTN_Y, 0);
-    aiScopeCancelBtn = makeMenuButton('Cancel', '', null); aiScopeCancelBtn.userData._scope = 'cancel'; aiScopeCancelBtn.position.set(0, AI_SCOPE_CANCEL_Y, 0); aiScopeCancelBtn.scale.setScalar(0.8);
-    aiScopeGroup.add(aiScopeViewBtn, aiScopeFullBtn, aiScopeCancelBtn);
-    // #8 FIX v2 (Omer 2026-06-28): a VISIBLE title above the buttons (mirrors the welcome menu's title).
-    // Without it the picker showed only a thin frame + low buttons, so after typing it read as "nothing to
-    // pick". Title sits in the forward view; the buttons (raised above) are right below it.
+    aiScopeGroup.add(aiScopeViewBtn, aiScopeFullBtn);
+    // v2: forward-visible TITLE (decide-panel pattern) — the buttons sit LOW, the title anchors the eye.
     var _scTC = document.createElement('canvas'); _scTC.width = 1024; _scTC.height = 256;
     var _scX = _scTC.getContext('2d');
     _scX.textAlign = 'center'; _scX.textBaseline = 'middle';
-    _scX.fillStyle = '#e8590a'; _scX.font = 'bold 96px sans-serif';
+    _scX.fillStyle = '#ffcf2e'; _scX.font = 'bold 96px sans-serif';
     _scX.fillText('Apply the change to:', 512, 104, 980);
     _scX.fillStyle = '#cbb6ff'; _scX.font = '54px sans-serif';
-    _scX.fillText('pick a button below', 512, 196, 980);
+    _scX.fillText('look down to pick — grip = cancel', 512, 196, 980);
     var _scTtex = new THREE.CanvasTexture(_scTC);
     _scTtex.minFilter = THREE.LinearFilter; _scTtex.magFilter = THREE.LinearFilter;
     try { renderer.initTexture(_scTtex); } catch (e) {}
-    var _scTitle = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.42), new THREE.MeshBasicMaterial({ map: _scTtex, transparent: true, side: THREE.DoubleSide, depthTest: false }));
-    _scTitle.position.set(0, 0.5, 0); _scTitle.renderOrder = 1601;
-    aiScopeGroup.add(_scTitle);
+    aiScopeTitleMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.42), new THREE.MeshBasicMaterial({ map: _scTtex, transparent: true, side: THREE.DoubleSide, depthTest: false }));
+    aiScopeTitleMesh.position.set(0, 0.6, 0); aiScopeTitleMesh.renderOrder = 1601;
+    aiScopeGroup.add(aiScopeTitleMesh);
+    // v2: bouncing LOOK DOWN chevron — pixel-for-pixel the decide-panel arrow (proven on Quest).
+    var _asA = document.createElement('canvas'); _asA.width = 320; _asA.height = 420; var _asX = _asA.getContext('2d');
+    _asX.fillStyle = '#ffffff'; _asX.beginPath();
+    _asX.moveTo(160, 300); _asX.lineTo(60, 162); _asX.lineTo(120, 162);
+    _asX.lineTo(120, 40); _asX.lineTo(200, 40); _asX.lineTo(200, 162); _asX.lineTo(260, 162);
+    _asX.closePath(); _asX.fill();
+    _asX.fillStyle = 'rgba(255,255,255,0.9)'; _asX.font = 'bold 46px sans-serif'; _asX.textAlign = 'center'; _asX.textBaseline = 'middle';
+    _asX.fillText('LOOK DOWN', 160, 372);
+    var _asTex = new THREE.CanvasTexture(_asA); _asTex.minFilter = THREE.LinearFilter; _asTex.magFilter = THREE.LinearFilter;
+    try { renderer.initTexture(_asTex); } catch (e) {}
+    aiScopeArrow = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.55), new THREE.MeshBasicMaterial({ map: _asTex, transparent: true, side: THREE.DoubleSide, depthTest: false }));
+    aiScopeArrow.position.set(0, -0.12, 0); aiScopeArrow.renderOrder = 1601;
+    aiScopeGroup.add(aiScopeArrow);
+    // Phase 5: small Options button on page 1 + the options PAGE 2 controls (hidden until opened).
+    aiScopeOptBtn = makeMenuButton('Options', '', null); aiScopeOptBtn.userData._opt = 'options';
+    aiScopeOptBtn.position.set(0, AI_SCOPE_OPT_Y, 0); aiScopeOptBtn.scale.setScalar(0.7);
+    aiScopeGroup.add(aiScopeOptBtn);
+    _aiOptTitle = _aiCaption('AI options', '#ffcf2e', 2.3, 0.29); _aiOptTitle.position.set(0, 0.6, 0);
+    aiScopeFov80 = makeMenuButton('80', 'narrow cone', null); aiScopeFov80.userData._opt = 'fov80'; aiScopeFov80.position.set(-0.95, AI_SCOPE_FOVROW_Y, 0);
+    aiScopeFov100 = makeMenuButton('100', 'default cone', null); aiScopeFov100.userData._opt = 'fov100'; aiScopeFov100.position.set(0, AI_SCOPE_FOVROW_Y, 0);
+    aiScopeFov120 = makeMenuButton('120', 'wide cone', null); aiScopeFov120.userData._opt = 'fov120'; aiScopeFov120.position.set(0.95, AI_SCOPE_FOVROW_Y, 0);
+    aiScopeEnvBtn = makeMenuButton('Indoor', 'scene type', null); aiScopeEnvBtn.userData._opt = 'env'; aiScopeEnvBtn.position.set(-1.15, AI_SCOPE_BTN_Y, 0); aiScopeEnvBtn.scale.setScalar(0.8);
+    aiScopeInventBtn = makeMenuButton('Guard: On', 'no inventing', null); aiScopeInventBtn.userData._opt = 'invent'; aiScopeInventBtn.position.set(0, AI_SCOPE_BTN_Y, 0); aiScopeInventBtn.scale.setScalar(0.8);
+    aiScopeModelBtn = makeMenuButton('Fast', 'engine', null); aiScopeModelBtn.userData._opt = 'model'; aiScopeModelBtn.position.set(1.15, AI_SCOPE_BTN_Y, 0); aiScopeModelBtn.scale.setScalar(0.8);
+    aiScopeRefBtn = makeMenuButton('Ref: Off', 'room consistency', null); aiScopeRefBtn.userData._opt = 'ref'; aiScopeRefBtn.position.set(0.7, AI_SCOPE_OPT_Y, 0); aiScopeRefBtn.scale.setScalar(0.7);
+    aiScopeBackBtn = makeMenuButton('Back', '', null); aiScopeBackBtn.userData._opt = 'back'; aiScopeBackBtn.position.set(-0.7, AI_SCOPE_OPT_Y, 0); aiScopeBackBtn.scale.setScalar(0.7);
+    aiScopeGroup.add(_aiOptTitle, aiScopeFov80, aiScopeFov100, aiScopeFov120, aiScopeEnvBtn, aiScopeInventBtn, aiScopeModelBtn, aiScopeRefBtn, aiScopeBackBtn);
     aiScopeGroup.visible = false;
     scene.add(aiScopeGroup);
+  }
+  // Repaint the toggle labels + highlight the selected FOV stop (selection = slightly larger).
+  function _aiScopeRetexToggles() {
+    retexMenuButton(aiScopeEnvBtn, _aiEnvPick === 'outdoor' ? 'Outdoor' : 'Indoor', 'scene type', null);
+    retexMenuButton(aiScopeInventBtn, _aiNoInventPick ? 'Guard: On' : 'Guard: Off', 'no inventing', null);
+    retexMenuButton(aiScopeModelBtn, _aiModelPick === 'pro' ? 'Best' : 'Fast', 'engine', null);
+    retexMenuButton(aiScopeRefBtn, _aiRefPick ? 'Ref: On' : 'Ref: Off', 'room consistency', null);
+    var f = _aiFovPick || 100;
+    aiScopeFov80.scale.setScalar(f === 80 ? 0.85 : 0.7);
+    aiScopeFov100.scale.setScalar(f === 100 ? 0.85 : 0.7);
+    aiScopeFov120.scale.setScalar(f === 120 ? 0.85 : 0.7);
+  }
+  // Switch between page 1 (Current view / Whole room / Options) and page 2 (the options).
+  function _aiScopeShowPage(n) {
+    _aiScopePage = n;
+    var p1 = (n === 1);
+    aiScopeViewBtn.visible = p1; aiScopeFullBtn.visible = p1; aiScopeArrow.visible = false; // arrow hidden: the menu now sits front-and-centre, no look-down needed
+    aiScopeTitleMesh.visible = p1; aiScopeOptBtn.visible = p1;
+    if (aiScopeFrame) aiScopeFrame.visible = p1;
+    _aiOptTitle.visible = !p1;
+    aiScopeFov80.visible = !p1; aiScopeFov100.visible = !p1; aiScopeFov120.visible = !p1;
+    aiScopeEnvBtn.visible = !p1; aiScopeInventBtn.visible = !p1; aiScopeModelBtn.visible = !p1;
+    aiScopeRefBtn.visible = !p1; aiScopeBackBtn.visible = !p1;
+    _aiScopeTargets = p1 ? [aiScopeViewBtn, aiScopeFullBtn, aiScopeOptBtn]
+                         : [aiScopeFov80, aiScopeFov100, aiScopeFov120, aiScopeEnvBtn, aiScopeInventBtn, aiScopeModelBtn, aiScopeRefBtn, aiScopeBackBtn];
+    for (var i = 0; i < _aiScopeTargets.length; i++) _aiScopeTargets[i].userData._arm = false; // unarmed per show
+    _scopeGazeBtn = null; _scopeGazeT = 0; aiScopeCtrlFillBtn = null; _btnFillHide();
+    if (!p1) _aiScopeRetexToggles();
+    _aiLog('scope menu: page ' + n);
+  }
+  // One dispatcher for every button on both pages (gaze dwell AND controller confirm-fill land here).
+  function _aiScopeAct(btn) {
+    if (!btn || !btn.userData) return;
+    var s = btn.userData._scope, o = btn.userData._opt;
+    if (s) { aiScopePick(s); return; }
+    if (o === 'options') { _aiScopeShowPage(2); return; }
+    if (o === 'back') { _aiScopeShowPage(1); return; }
+    if (o === 'fov80') _aiFovPick = 80;
+    else if (o === 'fov100') _aiFovPick = 100;
+    else if (o === 'fov120') _aiFovPick = 120;
+    else if (o === 'env') _aiEnvPick = (_aiEnvPick === 'outdoor') ? 'indoor' : 'outdoor';
+    else if (o === 'invent') _aiNoInventPick = !_aiNoInventPick;
+    else if (o === 'model') _aiModelPick = (_aiModelPick === 'pro') ? 'fast' : 'pro';
+    else if (o === 'ref') _aiRefPick = !_aiRefPick;
+    _aiLog('option: ' + o + ' -> fov=' + (_aiFovPick || 100) + ' env=' + _aiEnvPick + ' guard=' + _aiNoInventPick + ' model=' + _aiModelPick + ' ref=' + _aiRefPick);
+    _aiScopeRetexToggles();
+    btn.userData._arm = false; _scopeGazeBtn = null; _scopeGazeT = 0; _btnFillHide(); // look away to re-fire
   }
   function placeAiScopeInFront() {
     if (!aiScopeGroup || !renderer.xr.isPresenting) return;
@@ -8927,104 +9022,130 @@ ${threeJsSrc}
     aiScopeGroup.position.copy(p).add(fwd.clone().multiplyScalar(AI_SCOPE_DIST));
     aiScopeGroup.position.y = p.y; // level with the eyes
     aiScopeGroup.lookAt(p.x, p.y, p.z); // face the user (buttons at local z=0)
+    // DIAGNOSTIC: log where the menu actually landed in world space + the head's own position, so the
+    // server /log reveals if it's in front, behind, or (e.g. camPos 0,0,0) placed at the floor origin.
+    _aiLog('menu@ head=(' + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ',' + p.z.toFixed(1) + ') fwd=(' + fwd.x.toFixed(2) + ',' + fwd.z.toFixed(2) + ') groupY=' + aiScopeGroup.position.y.toFixed(2));
     // #3: seed the head-locked frame's first position (updateAiScope drives it every frame after).
-    if (aiScopeFrame && _aiAimDir) { aiScopeFrame.position.copy(p).add(_aiAimDir.clone().multiplyScalar(AI_SCOPE_DIST)); aiScopeFrame.lookAt(p.x, p.y, p.z); }
+    if (aiScopeFrame) { aiScopeFrame.position.copy(p).add(d.clone().normalize().multiplyScalar(AI_SCOPE_DIST)); aiScopeFrame.lookAt(p.x, p.y, p.z); } // seed at the REAL look dir (updateAiScope drives it after)
   }
   // Returns a Promise resolving 'view' / 'full' / null(cancel). Passed to runVR as onChooseScope.
-  function _aiChooseScope() {
+  // v2: called BEFORE the keyboard with the engine's remembered default (last pick this session)
+  // and the engine's viewDir Vector3 (hooks.viewDir) — the SAME object the capture reads, so the
+  // aim-then-commit pick can write the aimed direction into it. v1 read the call-site local
+  // _aidir from here, which is OUT OF SCOPE at module level -> ReferenceError inside the Promise
+  // executor -> onChooseScope rejected -> the whole flow silently died (the vanish bug).
+  var _aiScopeViewDir = null, _aiLockedFrame = false; // _aiLockedFrame: the view-only border stays pinned at the aimed spot through the edit
+  function _aiChooseScope(defaultScope, viewDir) {
     return new Promise(function (resolve) {
       buildAiScope();
-      // #8 FIX v2 (Omer 2026-06-28): HIDE the thinking-mesh during scope choice. Kept visible (v1) it was a
-      // head-locked sparkle that competed with / drew over the low scope buttons - Omer saw "look down to
-      // pick" but no buttons. The scope panel now carries its OWN visible title (buildAiScope) + raised
-      // buttons, so there's a clear forward anchor without the mesh.
+      _aiScopeViewDir = (viewDir && viewDir.copy) ? viewDir : null;
+      _aiScopeDefault = (defaultScope === 'full') ? 'full' : 'view';
+      // HIDE the thinking-mesh during the choice — the menu carries its own title, nothing overlaps.
       if (window.AiThinkingMesh) { try { AiThinkingMesh.hide(); } catch (e) {} }
       aiScopeResolve = resolve;
-      aiScopeViewGaze = 0; aiScopeFullGaze = 0; aiScopeCancelGaze = 0;
-      // Omer 2026-06-28 FIX "dismissed after typing": start UNARMED + record open time. Right after the keyboard
-      // closes your gaze/wand points DOWN (where the keyboard was) and Cancel sits low, so an armed button used
-      // to auto-fire → the edit cancelled itself. Unarmed = must look AWAY from a button then back to pick it.
-      _armScopeView = false; _armScopeFull = false; _armScopeCancel = false;
+      // Start UNARMED + record open time (kept from v1's last fix): must look AWAY from a button then
+      // back to pick it, and the first 450ms of gaze/trigger are ignored — belt-and-braces even though
+      // v2 opens with a clean state (before the keyboard, straight off the AI trigger).
       aiScopeOpenedAt = performance.now();
-      aiScopeCtrlFillBtn = null;
-      aiScopeViewBtn.material.opacity = 1; aiScopeFullBtn.material.opacity = 1; aiScopeCancelBtn.material.opacity = 1;
-      // #3: start the aim where the prompt was entered (so the frame opens centred), then let it follow the head.
+      aiScopeViewBtn.material.opacity = 1; aiScopeFullBtn.material.opacity = 1;
+      _aiScopeShowPage(1); // sets the pickable targets, unarms every button, clears fills
+      // Default highlight: gentle scale-up on the remembered pick (still needs an explicit pick).
+      aiScopeViewBtn.scale.setScalar(_aiScopeDefault === 'view' ? 1.1 : 1.0);
+      aiScopeFullBtn.scale.setScalar(_aiScopeDefault === 'full' ? 1.1 : 1.0);
+      // Aim starts at the trigger-time direction (frame opens centred), then follows the head.
       if (!_aiAimDir) _aiAimDir = new THREE.Vector3();
-      _aiAimDir.copy(_aidir && _aidir.lengthSq ? _aidir : new THREE.Vector3(0, 0, -1)).normalize();
+      _aiAimDir.copy(_aiScopeViewDir && _aiScopeViewDir.lengthSq ? _aiScopeViewDir : new THREE.Vector3(0, 0, -1)).normalize();
       aiScopeFrame.visible = true;
       aiScopeGroup.visible = true;
       aiScopeActive = true;
       placeAiScopeInFront();
+      _aiLog('scope menu: built + placed (default=' + _aiScopeDefault + ')');
     });
   }
   function aiScopePick(scope) {
     if (!aiScopeActive) return;
     aiScopeActive = false;
     if (aiScopeGroup) aiScopeGroup.visible = false;
-    if (aiScopeFrame) aiScopeFrame.visible = false;
     gazeFillMesh.visible = false; _btnFillHide();
-    // #3: SET the capture direction to where the frame was aimed (mutates _aidir = engine's viewDir).
-    if (scope !== 'cancel' && _aiAimDir && _aidir && _aidir.copy) _aidir.copy(_aiAimDir);
+    _aiLog('scope pick: ' + scope);
+    if (scope === 'view') {
+      // LOCK the border where you aimed + set the capture direction to that exact spot, and KEEP the
+      // border visible through typing + processing so you SEE what's being edited (Omer 2026-07-05).
+      // Un-rotate by vrSceneYaw so the captured cone matches where you're actually looking (the engine
+      // works in the un-rotated equirect frame; without this the edit could miss the target entirely).
+      var _xc = renderer.xr.getCamera(), _lp = new THREE.Vector3(), _ld = new THREE.Vector3();
+      _xc.getWorldPosition(_lp); _xc.getWorldDirection(_ld); _ld.normalize();
+      if (_aiScopeViewDir && _aiScopeViewDir.copy) { _aiScopeViewDir.copy(_ld); _aiScopeViewDir.applyAxisAngle(new THREE.Vector3(0, 1, 0), -vrSceneYaw); _aiScopeViewDir.normalize(); }
+      if (aiScopeFrame) { aiScopeFrame.position.copy(_lp).add(_ld.clone().multiplyScalar(AI_SCOPE_DIST)); aiScopeFrame.lookAt(_lp.x, _lp.y, _lp.z); aiScopeFrame.visible = true; }
+      _aiLockedFrame = true;
+    } else {
+      if (aiScopeFrame) aiScopeFrame.visible = false;
+      _aiLockedFrame = false;
+    }
     var r = aiScopeResolve; aiScopeResolve = null;
     if (scope === 'cancel') { if (r) r(null); return; }
-    // #5: This view -> pin the thinking sparkle at the captured view; Whole room -> let it float/follow.
+    // v2: the KEYBOARD comes next (menu is before typing now) — re-enter the PROMPT state, not fill.
+    // This view -> pin the sparkle at the captured view; Whole room -> let it float/follow the head.
     if (window.AiThinkingMesh) { try {
-      AiThinkingMesh.show();
-      if (scope === 'view') AiThinkingMesh.setAnchor('fixed', renderer.xr.getCamera(), _aidir);
-      else AiThinkingMesh.setAnchor('head');
+      AiThinkingMesh.showPrompt('Tell me what to change');
+      AiThinkingMesh.setAnchor('head'); // float with your gaze (PILOT behaviour) - never pinned to space
     } catch (e) {} }
     if (r) r(scope);
   }
   // Controller trigger pick (called from onVRSelect with a ready raycaster). Starts a confirm-fill.
   function aiScopePickByController(rc) {
     if (!aiScopeActive || !aiScopeGroup) return false;
-    if (performance.now() - aiScopeOpenedAt < 450) return false; // ignore the lingering keyboard-close trigger
-    var hits = rc.intersectObjects([aiScopeViewBtn, aiScopeFullBtn, aiScopeCancelBtn]);
+    if (performance.now() - aiScopeOpenedAt < 450) return false; // settle: ignore a lingering trigger right after open
+    var hits = rc.intersectObjects(_aiScopeTargets);
     if (hits.length > 0) { aiScopeCtrlFillBtn = hits[0].object; aiScopeCtrlFillT0 = performance.now(); return true; }
     return false;
   }
-  // Per-frame: gaze-dwell + controller confirm-fill. Uses the welcome cyan button fill (_btnFill) - #4.
+  // Per-frame: gaze-dwell + controller confirm-fill. Uses the welcome cyan button fill (_btnFill) — #4.
   function updateAiScope(dt) {
     if (!aiScopeActive || !renderer.xr.isPresenting || !aiScopeGroup) return;
-    if (performance.now() - aiScopeOpenedAt < 450) { _btnFillHide(); return; } // settle: ignore gaze/fill right after open so the keyboard-close look-down can't auto-fire a button
+    if (aiScopeArrow && aiScopeArrow.visible) aiScopeArrow.position.y = -0.12 + Math.sin(performance.now() / 300) * 0.08; // gentle bounce (matches the decide/welcome arrow)
+    if (performance.now() - aiScopeOpenedAt < 450) { _btnFillHide(); return; } // settle: ignore gaze/fill right after open
     var xrCam = renderer.xr.getCamera();
     var camPos = new THREE.Vector3(), dir = new THREE.Vector3();
     xrCam.getWorldPosition(camPos); xrCam.getWorldDirection(dir);
+    // Head-follow: if you turn away from the menu, bring it back in front so it floats WITH you and is
+    // never lost behind you (Omer: "wherever I look I see it with me", like the pilot). Stays put while
+    // you face it (dot >= 0.7 ~= within 45deg) so gaze/controller selection still works.
+    var _toMenu = aiScopeGroup.position.clone().sub(camPos);
+    if (_toMenu.lengthSq() > 1e-4 && dir.dot(_toMenu.normalize()) < 0.7) placeAiScopeInFront();
     if (aiScopeCtrlFillBtn) { // controller confirm-fill takes priority
       var ce = (performance.now() - aiScopeCtrlFillT0) / 1000;
       _btnFill(aiScopeCtrlFillBtn, ce / AI_SCOPE_CTRL_FILL);
-      if (ce >= AI_SCOPE_CTRL_FILL) { var sc = aiScopeCtrlFillBtn.userData._scope; aiScopeCtrlFillBtn = null; aiScopePick(sc); }
+      if (ce >= AI_SCOPE_CTRL_FILL) { var b0 = aiScopeCtrlFillBtn; aiScopeCtrlFillBtn = null; _aiScopeAct(b0); }
       return;
     }
-    var vw = aiScopeViewBtn.getWorldPosition(new THREE.Vector3());
-    var fw = aiScopeFullBtn.getWorldPosition(new THREE.Vector3());
-    var cw = aiScopeCancelBtn.getWorldPosition(new THREE.Vector3());
-    var cone = Math.cos(15 * Math.PI / 180);
-    var onV = dir.dot(vw.clone().sub(camPos).normalize()) > cone;
-    var onF = dir.dot(fw.clone().sub(camPos).normalize()) > cone;
-    var onC = dir.dot(cw.clone().sub(camPos).normalize()) > cone;
-    if (!onV) _armScopeView = true;
-    if (!onF) _armScopeFull = true;
-    if (!onC) _armScopeCancel = true;
-    // #3: the frame FOLLOWS the head - latch the aim whenever the gaze is NOT on a button (so it freezes
-    // the instant you look at one to select), then head-lock the frame to that aimed direction.
-    if (_aiAimDir && !onV && !onF && !onC) _aiAimDir.copy(dir);
-    if (_aiAimDir) { aiScopeFrame.position.copy(camPos).add(_aiAimDir.clone().multiplyScalar(AI_SCOPE_DIST)); aiScopeFrame.lookAt(camPos); }
-    aiScopeFrame.visible = !onF; // Whole room edits the whole sphere -> the view-only frame is irrelevant
-    if (onV && _armScopeView) {
-      aiScopeFullGaze = 0; aiScopeCancelGaze = 0; aiScopeViewGaze += dt;
-      _btnFill(aiScopeViewBtn, aiScopeViewGaze / AI_SCOPE_DWELL);
-      if (aiScopeViewGaze >= AI_SCOPE_DWELL) aiScopePick('view');
-    } else if (onF && _armScopeFull) {
-      aiScopeViewGaze = 0; aiScopeCancelGaze = 0; aiScopeFullGaze += dt;
-      _btnFill(aiScopeFullBtn, aiScopeFullGaze / AI_SCOPE_DWELL);
-      if (aiScopeFullGaze >= AI_SCOPE_DWELL) aiScopePick('full');
-    } else if (onC && _armScopeCancel) {
-      aiScopeViewGaze = 0; aiScopeFullGaze = 0; aiScopeCancelGaze += dt;
-      _btnFill(aiScopeCancelBtn, aiScopeCancelGaze / AI_SCOPE_DWELL);
-      if (aiScopeCancelGaze >= AI_SCOPE_DWELL) aiScopePick('cancel');
+    // Generic gaze pass over the CURRENT page's targets: arm by looking away, dwell-fill the first
+    // armed button under the 15-degree cone, act when the dwell completes.
+    var cone = Math.cos(15 * Math.PI / 180), hit = null, onAny = false, onFull = false, i, b;
+    for (i = 0; i < _aiScopeTargets.length; i++) {
+      b = _aiScopeTargets[i];
+      var on = dir.dot(b.getWorldPosition(new THREE.Vector3()).sub(camPos).normalize()) > cone;
+      if (!on) { b.userData._arm = true; continue; }
+      onAny = true;
+      if (b === aiScopeFullBtn) onFull = true;
+      if (!hit && b.userData._arm) hit = b;
+    }
+    if (_aiScopePage === 1) {
+      // The frame FOLLOWS the head — latch the aim whenever the gaze is NOT on a button (so it freezes
+      // the instant you look at one to select), then head-lock the frame to that aimed direction.
+      if (_aiAimDir && !onAny) _aiAimDir.copy(dir); // capture aim (written into the engine viewDir on pick)
+      // VISUAL border: always head-lock to your REAL look direction so it sits dead-centre in view.
+      // Fix 2026-07-04: it used _aiAimDir (the yaw-un-rotated CAPTURE dir), so the frame flew off to
+      // the side/behind by vrSceneYaw and was never seen. The border must track the real head.
+      if (aiScopeFrame) { aiScopeFrame.position.copy(camPos).add(dir.clone().multiplyScalar(AI_SCOPE_DIST)); aiScopeFrame.lookAt(camPos); aiScopeFrame.visible = !onFull; }
+    }
+    if (hit) {
+      if (_scopeGazeBtn !== hit) { _scopeGazeBtn = hit; _scopeGazeT = 0; }
+      _scopeGazeT += dt;
+      _btnFill(hit, Math.min(1, _scopeGazeT / AI_SCOPE_DWELL));
+      if (_scopeGazeT >= AI_SCOPE_DWELL) { _scopeGazeBtn = null; _scopeGazeT = 0; _aiScopeAct(hit); }
     } else {
-      aiScopeViewGaze = 0; aiScopeFullGaze = 0; aiScopeCancelGaze = 0;
+      _scopeGazeBtn = null; _scopeGazeT = 0;
       _btnFillHide();
     }
   }
@@ -9189,7 +9310,7 @@ ${threeJsSrc}
     hideVRPanel(); // drop the flat status panel so the caption stands alone
     // #15 (Omer): success wording. #16: a CLEAR failure warning (the variant is still kept, file isn't).
     var txt = ok ? (createdHs ? '✓ Saved to file and created a new Design Option Hot Spot' : '✓ Saved to file (added to design options)')
-                 : '⚠ Could not save the file - kept as a design option only';
+                 : '⚠ Could not save the file — kept as a design option only';
     aiSavedMesh = _aiCaption(txt, ok ? '#6fe08a' : '#ffcf2e', 3.0, 0.34);
     aiSavedMesh.material.opacity = 0;
     scene.add(aiSavedMesh);
@@ -9238,7 +9359,7 @@ ${threeJsSrc}
     var lat = 90 - THREE.MathUtils.radToDeg(Math.acos(yy));
     var nid = 1; for (i = 0; i < scn.hotspots.length; i++) { if (scn.hotspots[i].id >= nid) nid = scn.hotspots[i].id + 1; }
     scn.hotspots.push({ id: nid, lon: lon, lat: lat, type: 'designopt', placement: 'wall', depth: 1.45,
-      // #3 FIX (Omer 2026-06-28): was depth:1 - every OTHER hotspot defaults to the 'Mid' size stop
+      // #3 FIX (Omer 2026-06-28): was depth:1 — every OTHER hotspot defaults to the 'Mid' size stop
       // (HS_SIZE_DEFAULT = HS_SIZE_STOPS[2] = 1.45), so the auto-created DO hotspot rendered a different
       // (smaller) size than the rest. Match the Mid stop so it's the same size as the others.
       label: 'Design Options', icon: '🎨', target: null, infoTitle: '', infoBody: '', infoStyle: 'classic',
@@ -9289,7 +9410,7 @@ ${threeJsSrc}
 
   // --- Reposition helpers ---
 
-  // Icon is HEAD-LOCKED - follows the user's head every frame so it stays in peripheral lower-left.
+  // Icon is HEAD-LOCKED — follows the user's head every frame so it stays in peripheral lower-left.
   // Called from animate loop when icon should be visible. Renamed from repositionMapIcon to make
   // its per-frame nature explicit.
   function updateMapIconPosition() {
@@ -9304,7 +9425,7 @@ ${threeJsSrc}
     camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).normalize();
     camUp.crossVectors(camRight, camDir).normalize();
     // Place in peripheral lower-left, head-locked. Same offsets as the old floating minimap
-    // (2.8m forward, 1.5m left, 1.0m down) - farther/larger angular size = easier to aim at.
+    // (2.8m forward, 1.5m left, 1.0m down) — farther/larger angular size = easier to aim at.
     vrMinimapIcon.position.copy(camPos)
       .add(camDir.clone().multiplyScalar(2.8))
       .add(camRight.clone().multiplyScalar(-1.5))
@@ -9330,7 +9451,7 @@ ${threeJsSrc}
       .add(camUp.clone().multiplyScalar(-1.0));
     vrFilmIcon.lookAt(camPos);
   }
-  // AI icon: head-locked, lower-RIGHT (mirror of the map icon) so it is OFF-center - an
+  // AI icon: head-locked, lower-RIGHT (mirror of the map icon) so it is OFF-center — an
   // intentional glance is needed to fill it (no auto-fill from the centered resting gaze).
   function updateAiIconPosition() {
     if (!renderer.xr.isPresenting) return;
@@ -9362,7 +9483,7 @@ ${threeJsSrc}
     xrCam.getWorldPosition(camPos);
     xrCam.getWorldDirection(camDir);
     var fwd = new THREE.Vector3(camDir.x, 0, camDir.z);
-    if (fwd.lengthSq() < 1e-6) fwd.set(0, 0, -1); // looking straight up/down - safe fallback
+    if (fwd.lengthSq() < 1e-6) fwd.set(0, 0, -1); // looking straight up/down — safe fallback
     fwd.normalize();
     var right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
     mesh.position.copy(camPos)
@@ -9463,7 +9584,7 @@ ${threeJsSrc}
   let aiGazeTimer = 0;   // dwell accumulator for the anchored AI master icon
   // "Arm on fresh glance" gates: an icon only fills once the gaze has been OFF it since the ribbon
   // appeared. Off-center icons (map/AI) arm on frame 1; a centered icon (film) under the resting
-  // look-down gaze stays disarmed until the user glances away and back - kills the auto-fill.
+  // look-down gaze stays disarmed until the user glances away and back — kills the auto-fill.
   let _armMap = false, _armFilm = false, _armAi = false;
   let _panelCloseArmed = false; // same idea for the VR panel Close button (don't auto-close on open)
   let _panelSeen = false;       // has the user looked AT the open panel yet? gates the look-away close
@@ -9517,13 +9638,13 @@ ${threeJsSrc}
 
     // Reserved top strip for floor name banner (NOT inside floor plan)
     const hdrScale = Math.max(1, W / 1000);
-    const hdrFontSize = Math.round(48 * hdrScale);  // doubled from 24 - easier to read at distance in VR
+    const hdrFontSize = Math.round(48 * hdrScale);  // doubled from 24 — easier to read at distance in VR
     const bannerH = hdrFontSize + 32; // banner takes this many pixels at the top
     const mapTop = bannerH + 4;       // floor plan starts here
     const mapH = H - mapTop - 4;      // floor plan available height
     const mapW = W - 8;               // floor plan available width (4px padding each side)
 
-    // Single save that wraps both the clip and the zoom transform - so EVERYTHING drawn
+    // Single save that wraps both the clip and the zoom transform — so EVERYTHING drawn
     // under the zoom transform (floor plan, paths, scene nodes, labels) is clipped to the
     // map area and can never overflow into the banner above when zoomed in.
     ctx.save();
@@ -9540,9 +9661,9 @@ ${threeJsSrc}
       ctx.translate(-W / 2, -(mapTop + mapH / 2));
     }
 
-    // Background floor plan - drawn into the (now-clipped) area
+    // Background floor plan — drawn into the (now-clipped) area
     if (minimapFloorImg && minimapFloorImg.complete && minimapFloorImg.naturalWidth) {
-      // Letterbox the image inside the map area - canvas dims stay constant across floor switches,
+      // Letterbox the image inside the map area — canvas dims stay constant across floor switches,
       // so we fit the image preserving its aspect ratio (no stretching).
       const imgAspect = minimapFloorImg.naturalHeight / minimapFloorImg.naturalWidth;
       const areaAspect = mapH / mapW;
@@ -9566,7 +9687,7 @@ ${threeJsSrc}
       ctx.fillStyle = 'rgba(10, 15, 30, 0.7)';
       ctx.fillRect(4, mapTop, mapW, mapH);
     }
-    // (Removed the inner ctx.restore() - the outer save now wraps the entire zoomed/clipped
+    // (Removed the inner ctx.restore() — the outer save now wraps the entire zoomed/clipped
     // section through to the end of the scene-nodes draw below. Inactive border moved
     // to after the outer restore so it draws unclipped at full canvas coords.)
 
@@ -9604,7 +9725,7 @@ ${threeJsSrc}
       });
     });
 
-    // Scene nodes - editor radii (current 16, others 12)
+    // Scene nodes — editor radii (current 16, others 12)
     scenes.forEach(s => {
       const p = positions[s.id];
       if (!p) return;
@@ -9632,7 +9753,7 @@ ${threeJsSrc}
         ctx.fill();
       });
 
-      // Label - match editor style
+      // Label — match editor style
       if (activeMode && (isCurrent || isHovered)) {
         ctx.save();
         const label = s.name;
@@ -9656,7 +9777,7 @@ ${threeJsSrc}
 
     ctx.restore(); // undo zoom/pan transform AND outer clip
 
-    // Inactive-mode orange border - drawn outside clip so the rounded edge is crisp.
+    // Inactive-mode orange border — drawn outside clip so the rounded edge is crisp.
     if (!activeMode) {
       ctx.beginPath();
       ctx.roundRect(4, mapTop, mapW, mapH, 12);
@@ -9665,7 +9786,7 @@ ${threeJsSrc}
       ctx.stroke();
     }
 
-    // Floor name banner - drawn LAST so it appears above floor plan, in the reserved top strip
+    // Floor name banner — drawn LAST so it appears above floor plan, in the reserved top strip
     drawFloorNameBanner();
 
     // Zoom indicator
@@ -9720,7 +9841,7 @@ ${threeJsSrc}
     vrHotspotGroup.visible = false; // #9 hide hotspot markers/titles so nothing shows or fires behind the enlarged map
     if (navLabelMesh) navLabelMesh.visible = false; // #9 also drop any lingering hotspot name label
     mapShrink = null; // cancel any leftover shrink so a stale close can't fire right after this open
-    window._lastSceneEnterTime = 0; // opening the map is deliberate - don't let the 5s post-navigation cooldown block map-HS gaze
+    window._lastSceneEnterTime = 0; // opening the map is deliberate — don't let the 5s post-navigation cooldown block map-HS gaze
     mapActivatedAt = performance.now();
     mapGazeLastFrame = performance.now();
     resetMapGaze();
@@ -9747,14 +9868,14 @@ ${threeJsSrc}
     vrMinimapMesh.material.depthWrite = true;
     vrMinimapMesh.visible = true;
 
-    // Position centered in front of viewer - flatten to horizontal so the map is always vertical
+    // Position centered in front of viewer — flatten to horizontal so the map is always vertical
     // even when the user activated it while looking down at the bottom-middle icon.
     const xrCam = renderer.xr.getCamera();
     const camPos = new THREE.Vector3();
     const camDir = new THREE.Vector3();
     xrCam.getWorldPosition(camPos);
     xrCam.getWorldDirection(camDir);
-    // Drop the pitch - keep only the horizontal (yaw) component
+    // Drop the pitch — keep only the horizontal (yaw) component
     camDir.y = 0;
     if (camDir.lengthSq() < 0.0001) camDir.set(0, 0, -1);
     camDir.normalize();
@@ -9768,7 +9889,7 @@ ${threeJsSrc}
 
     // GROW-IN: expand FROM the floating minimap icon out to the final eye-level position, animating
     // position + scale + ORIENTATION (slerp). Starting at the icon's exact pose (position AND angle)
-    // makes the handoff seamless - no orientation "jump". Buttons stay hidden until stepMapGrow lands.
+    // makes the handoff seamless — no orientation "jump". Buttons stay hidden until stepMapGrow lands.
     vrMinimapIcon.updateMatrixWorld(true);
     const _iconPos = vrMinimapIcon.getWorldPosition(new THREE.Vector3());
     const _fromQuat = vrMinimapIcon.getWorldQuaternion(new THREE.Quaternion()); // the icon's current facing
@@ -9792,7 +9913,7 @@ ${threeJsSrc}
   // Drives the map grow-in animation each frame while mapGrow is active (see activateVRMinimap).
   function stepMapGrow() {
     const t = Math.min(1, (performance.now() - mapGrow.start) / mapGrow.dur);
-    const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease-in-out cubic (smooth start - no fast jump)
+    const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease-in-out cubic (smooth start — no fast jump)
     vrMinimapMesh.position.lerpVectors(mapGrow.fromPos, mapGrow.toPos, e); // travel from the icon out to the final spot
     vrMinimapMesh.quaternion.copy(mapGrow.fromQuat).slerp(mapGrow.toQuat, e); // rotate smoothly from icon angle to final angle
     vrMinimapMesh.scale.setScalar(0.15 + 0.85 * e); // 0.15 -> 1, stays fully visible (no fade)
@@ -9817,8 +9938,8 @@ ${threeJsSrc}
   // Public closer: starts the reverse "shrink to icon" animation. The real teardown runs
   // in finishDeactivateVRMinimap() once the shrink lands (mirrors activateVRMinimap's grow-in).
   function deactivateVRMinimap() {
-    if (mapGrow || mapShrink) return;       // busy animating - ignore (grow is brief; double-close guarded)
-    if (!vrMinimapActive) { finishDeactivateVRMinimap(); return; } // nothing on screen - just ensure clean state
+    if (mapGrow || mapShrink) return;       // busy animating — ignore (grow is brief; double-close guarded)
+    if (!vrMinimapActive) { finishDeactivateVRMinimap(); return; } // nothing on screen — just ensure clean state
     resetMapGaze();
     gazeFillMesh.visible = false;
     setFloorButtonHover('prev', false);
@@ -9830,7 +9951,7 @@ ${threeJsSrc}
     vrMinimapCloseBtn.visible = false;
     mapCursorDot.visible = false;
     mapCursorHalo.visible = false;
-    // Close = contract back INTO the floating icon (reverse of the open) - one continuous motion,
+    // Close = contract back INTO the floating icon (reverse of the open) — one continuous motion,
     // ease-in-out, tracking the icon's live spot so it lands exactly where the icon reappears.
     mapShrink = { start: performance.now(), dur: 1000, fromPos: vrMinimapMesh.position.clone(), fromScale: vrMinimapMesh.scale.x, fromQuat: vrMinimapMesh.quaternion.clone() };
   }
@@ -9838,7 +9959,7 @@ ${threeJsSrc}
   // Drives the reverse shrink each frame; tears down for real when it lands.
   function stepMapShrink() {
     // Contract back INTO the floating icon: track the icon's live head-locked spot each frame so the
-    // map ends exactly where the icon reappears - one continuous motion, no "two-step" hop between
+    // map ends exactly where the icon reappears — one continuous motion, no "two-step" hop between
     // the map's spot and the icon's spot.
     updateMapIconPosition();
     vrMinimapIcon.updateMatrixWorld(true);
@@ -9879,13 +10000,13 @@ ${threeJsSrc}
     mapPanY = 0;
     mapDragStart = null;
     mapTriggerHeld = false;
-    // Reset to actual current floor - read from cache, no async load
+    // Reset to actual current floor — read from cache, no async load
     const actualFloorId = getCurrentFloorId();
     mapViewFloorId = actualFloorId;
     const cached = floorImageCache[actualFloorId];
 
     if (cached && cached.ready && cached.img.naturalWidth) {
-      // Read aspect from the actual decoded image - the cache only stores {img, ready},
+      // Read aspect from the actual decoded image — the cache only stores {img, ready},
       // not aspect/w/h, so reading cached.aspect would give undefined → NaN icon geometry.
       minimapFloorImg = cached.img;
       mapAspect = cached.img.naturalHeight / cached.img.naturalWidth;
@@ -9893,12 +10014,12 @@ ${threeJsSrc}
       minimapFloorImg = null;
       mapAspect = 0.754;
     }
-    // DO NOT resize vrMinimapCanvas here - that corrupts the CanvasTexture's GPU buffer.
+    // DO NOT resize vrMinimapCanvas here — that corrupts the CanvasTexture's GPU buffer.
     // Canvas dims stay at whatever the initial floor image set them to; drawVRMinimap
     // letterboxes any-aspect floor image inside the constant-size canvas.
     rebuildVRMinimapIconGeometry();
 
-    // Map plane no longer used in small mode - hide it; the bottom-middle icon takes over
+    // Map plane no longer used in small mode — hide it; the bottom-middle icon takes over
     vrMinimapMesh.visible = false;
     mapImageReady = true;
 
@@ -9925,7 +10046,7 @@ ${threeJsSrc}
     if (performance.now() - mapFloorSwitchCooldown < 1200) return;
     const sorted = [...TOUR.floors].sort((a, b) => a.level - b.level);
     const curIdx = sorted.findIndex(f => f.id === mapViewFloorId);
-    // No wrap-around - edges bail silently
+    // No wrap-around — edges bail silently
     const newIdx = curIdx < 0 ? 0 : Math.max(0, Math.min(sorted.length - 1, curIdx + direction));
     if (newIdx === curIdx) return;
 
@@ -9942,7 +10063,7 @@ ${threeJsSrc}
     const targetFloor = sorted[newIdx];
 
     if (targetFloor.floorPlanData) {
-      // Load fresh image. DO NOT resize the canvas - that confuses the CanvasTexture buffer
+      // Load fresh image. DO NOT resize the canvas — that confuses the CanvasTexture buffer
       // and the new content appears as a tiny region. Keep canvas dims constant; drawVRMinimap
       // letterboxes the image to fit. Plane geometry also stays constant.
       const newImg = new Image();
@@ -9955,7 +10076,7 @@ ${threeJsSrc}
         vrMinimapTex.needsUpdate = true;
       };
       newImg.src = targetFloor.floorPlanData;
-      // Keep the old floor visible until the new image is fully decoded - atomic swap inside
+      // Keep the old floor visible until the new image is fully decoded — atomic swap inside
       // newImg.onload above. No intermediate "black flash" while loading.
     } else {
       // No floor plan data → dark fallback
@@ -9969,7 +10090,7 @@ ${threeJsSrc}
   }
 
   function handleVRMinimapClick(uv) {
-    // (Removed the bottom-corner UV fallback for floor switching - the dedicated 3D arrow
+    // (Removed the bottom-corner UV fallback for floor switching — the dedicated 3D arrow
     // buttons are reliable, and the fallback was eating HS clicks that happened to land in
     // the bottom corners of the floor plan.)
     const W = vrMinimapCanvas.width, H = vrMinimapCanvas.height;
@@ -9984,7 +10105,7 @@ ${threeJsSrc}
     let mx = uv.x * W;
     let my = (1 - uv.y) * H;
 
-    // Reverse the zoom/pan transform - drawVRMinimap zooms around (W/2, mapTop + mapH/2)
+    // Reverse the zoom/pan transform — drawVRMinimap zooms around (W/2, mapTop + mapH/2)
     if (mapZoom > 1) {
       mx = (mx - W / 2 - mapPanX) / mapZoom + W / 2;
       my = (my - (mapTop + mapH / 2) - mapPanY) / mapZoom + (mapTop + mapH / 2);
@@ -10270,7 +10391,7 @@ ${threeJsSrc}
   }
 
   // Subtle pulse for hotspot meshes. #10 (Omer 2026-06-27): ALL hotspots of every type now breathe
-  // IN SYNC - the phase is a single global time term (the old "+ c.position.x" offset desynced them by
+  // IN SYNC — the phase is a single global time term (the old "+ c.position.x" offset desynced them by
   // position). The film/gaze fill rings use the SAME global phase so they stay locked to their marker.
   function pulseHotspots(time) {
     vrHotspotGroup.children.forEach(c => {
@@ -10326,7 +10447,7 @@ ${threeJsSrc}
       if (pendingAutoAudio && panoReady && tourStarted && !menuActive && tourMode !== 'auto'
           && !introActive && !filmTutActive && !selfTutActive) {
         // #4 FIX (Omer 2026-06-28): also hold the auto-audio while the intro / film / self tutorial gate
-        // is up - it was starting the first scene's autostart clip BEFORE the tutorial was dismissed
+        // is up — it was starting the first scene's autostart clip BEFORE the tutorial was dismissed
         // ("audio started while the tutorial was still showing"). pendingAutoAudio stays queued (not
         // cleared), so it fires on the first frame AFTER the gate clears.
         // tourStarted: never before a mode is chosen (covers the flat warmup where menuActive is
@@ -10370,7 +10491,7 @@ ${threeJsSrc}
         const dt = (_vrNow - (window._lastVRFrame || _vrNow)) / 1000;
         window._lastVRFrame = _vrNow;
         // Gaze dispatch. An open VR info/media panel takes priority over BOTH the
-        // hotspot gaze and the map gaze - mirrors onVRSelect, which checks the panel
+        // hotspot gaze and the map gaze — mirrors onVRSelect, which checks the panel
         // Close first. Without this, when the enlarged map AND a panel were both open,
         // only updateMapGaze ran; it has no panel awareness, so gazing at the panel
         // registered as "outside the map" and closed the MAP instead of the panel
@@ -10386,9 +10507,9 @@ ${threeJsSrc}
         } else if (!vrMinimapActive) {
           updateGaze();
         } else if (mapGrow) {
-          stepMapGrow(); // map is growing in - animate it; suppress map gaze until it lands
+          stepMapGrow(); // map is growing in — animate it; suppress map gaze until it lands
         } else if (mapShrink) {
-          stepMapShrink(); // map is shrinking out - animate it; suppress map gaze until it lands
+          stepMapShrink(); // map is shrinking out — animate it; suppress map gaze until it lands
         } else {
           updateMapGaze();
         }
@@ -10397,8 +10518,8 @@ ${threeJsSrc}
         // Film head-gestures EVERY frame (not gated by the map/panel block below) so eyes pause keeps
         // working during a presentation panel - Omer 2026-06-20.
         _filmHeadGestures(dt);
-        // Floating icon - head-locked unless anchored by looking down.
-        // #6 (Omer): also suppress while the AI scope/decide panel is up - its Cancel button sits low,
+        // Floating icon — head-locked unless anchored by looking down.
+        // #6 (Omer): also suppress while the AI scope/decide panel is up — its Cancel button sits low,
         // so looking down to it must NOT anchor the Map+AI ribbon (grip path already guarded, see onGrip).
         if (!vrMinimapActive && !vrPanelGroup.visible && !aiScopeActive && !aiDecideActive) {
           // Grip reveal is timed: always auto-hide after ICONS_IDLE_HIDE seconds, even for
@@ -10424,7 +10545,7 @@ ${threeJsSrc}
 
           // Hotspot gaze takes priority over the look-down map gesture. A low-positioned hotspot
           // forces the head down past the anchor pitch too, so without this guard, gazing at it
-          // would anchor the map and hijack the shared gazeFillMesh - making the hotspot impossible
+          // would anchor the map and hijack the shared gazeFillMesh — making the hotspot impossible
           // to operate without first looking back up. updateGaze ran earlier this frame, so
           // gazeTarget is current: if it's an actual hotspot, don't anchor (and release any anchor).
           const _gazingHotspot = !!(gazeTarget && gazeTarget.userData && gazeTarget.userData.type);
@@ -10470,7 +10591,7 @@ ${threeJsSrc}
             filmGazeTimer = 0;
             anchorIdleTimer = 0;
             minimapGazingAtIcon = false;
-            // When releasing because a hotspot is under gaze, leave gazeFillMesh alone - updateGaze
+            // When releasing because a hotspot is under gaze, leave gazeFillMesh alone — updateGaze
             // owns it this frame and already positioned the dwell ring on the hotspot.
             if (!_gazingHotspot) gazeFillMesh.visible = false;
           }
@@ -10498,7 +10619,7 @@ ${threeJsSrc}
 
             // Gaze-on-icon gate: only fill the dwell ring while the user is actually LOOKING AT the
             // frozen icon (head-forward within ~15° of the icon direction). A downward look at the
-            // scene (stairs, floor detail) still anchors the icon harmlessly but never fills/opens -
+            // scene (stairs, floor detail) still anchors the icon harmlessly but never fills/opens —
             // this fixes the false-trigger where ANY look-down auto-opened the map. Generous cone =
             // no precise aiming; just glance toward the lower-left corner where the icon sits. To go
             // back to the floating minimap, look back up past the horizon (unanchor, handled above).
@@ -10631,6 +10752,7 @@ ${threeJsSrc}
         filmUpdatePresentRing();
         updateVRMediaProgressBar();
         if (window.AiThinkingMesh && renderer.xr.isPresenting) AiThinkingMesh.update(renderer.xr.getCamera());
+        if (window.AiDebug && renderer.xr.isPresenting && AiDebug.active()) AiDebug.update(renderer.xr.getCamera());
         updatePauseSym();
         updatePausedHud();
         updateMenu(dt);
@@ -10643,7 +10765,7 @@ ${threeJsSrc}
         updateFloorArrow();
         updateFilmHsName(); // after updateFloorArrow so _floorArrowHsId is current; overrides the gaze/ray hide
 
-        // Per-frame safety sync - keep wand visibility in lockstep with controller-vs-hand state,
+        // Per-frame safety sync — keep wand visibility in lockstep with controller-vs-hand state,
         // in case Quest changes input sources without firing inputsourceschange.
         {
           const _xrSession = renderer.xr.getSession();
@@ -10711,8 +10833,8 @@ ${threeJsSrc}
             mapDragStart = null;
           }
           // Hover detection: raycast EITHER controller to find which HS the laser is over.
-          // Math mirrors handleVRMinimapClick exactly - banner-aware Y zoom-reverse and
-          // (4, mapTop) position shift - so the hover hit aligns with rendered nodes.
+          // Math mirrors handleVRMinimapClick exactly — banner-aware Y zoom-reverse and
+          // (4, mapTop) position shift — so the hover hit aligns with rendered nodes.
           // Skip entirely when controllers are hidden (idle / hand-tracking) so gaze-set
           // mapHoveredSceneId from updateMapGaze isn't wiped every frame.
           if (controllersVisible && !handTrackingActive) {
@@ -10767,7 +10889,7 @@ ${threeJsSrc}
           // Controller drives the highlight ONLY when it's actually pointing at a
           // hotspot (newHovered set). When the laser is on the map but not on any
           // hotspot, leave the gaze-driven hover from updateMapGaze alone instead of
-          // wiping it to null - otherwise the laser (almost always on the map plane)
+          // wiping it to null — otherwise the laser (almost always on the map plane)
           // erases the eye-hover every frame. → "controller when pointing, else eyes".
           if (newHovered !== null && newHovered !== oldHovered) {
             mapHoveredSceneId = newHovered;
@@ -11296,7 +11418,7 @@ ${threeJsSrc}
         line.className = 'film-show-line';
         const sel = document.createElement('select');
         const none = document.createElement('option');
-        none.value = ''; none.textContent = '- hotspot -';
+        none.value = ''; none.textContent = '— hotspot —';
         sel.appendChild(none);
         showables.forEach(h => {
           const o = document.createElement('option');
@@ -11385,7 +11507,7 @@ ${threeJsSrc}
     if (!state.film.entries.length) {
       const empty = document.createElement('div');
       empty.style.cssText = 'padding:10px 2px;color:#6a6a8a;font-size:13px';
-      empty.textContent = 'No scenes in the film yet - add some below.';
+      empty.textContent = 'No scenes in the film yet — add some below.';
       list.appendChild(empty);
     }
     // Add-dropdown: all scenes, in sidebar order
@@ -11559,7 +11681,7 @@ ${threeJsSrc}
       const arrayBuf = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuf }).promise;
       const page = await pdf.getPage(1);
-      // Scale up for readable detail - target ~4000px on longest side
+      // Scale up for readable detail — target ~4000px on longest side
       const baseViewport = page.getViewport({ scale: 1 });
       const maxDim = Math.max(baseViewport.width, baseViewport.height);
       const scale = Math.min(8, Math.max(3, 4000 / maxDim));
@@ -11740,7 +11862,7 @@ ${threeJsSrc}
         fpCtx.fill();
       });
 
-      // Label - only show for hovered or current scene
+      // Label — only show for hovered or current scene
       if (s.id === fpHoveredSceneId || isCurrent) {
         fpCtx.save();
         const label = s.name;
@@ -11877,7 +11999,9 @@ ${threeJsSrc}
 })();
 
 </script>
-<!-- in-editor help. self-contained: the button above carries data-oymer-tutorial. -->
+<!-- in-editor help. self-contained: the button above carries data-oymer-tutorial.
+     The asset is a WEBSITE asset (VRTours.html + suite-vrtours.html use it too), so it lives in
+     omerdotan-site/media/ and Suite-Server answers this path from there - one copy, no drift. -->
 <script src="media/tutorial.js?v=1"></script>
 </body>
 </html>
