@@ -304,8 +304,35 @@ var OYMER_SERVICES = [
     [["שאלות? תשובות!", "FAQ.html"], ["סיפורי לקוחות", "ClientStories.html"], ["בלוג", "Blog.html"],
      ["אודות", "About.html"], ["צור קשר", "Contact.html"]].forEach(function (l) { link(l, false); });
     document.body.appendChild(menu);
-    var open = false;
-    burger.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); open = !open; menu.style.display = open ? "block" : "none"; });
+    /* A transparent backdrop under the menu: a tap on the page that shows below
+       the menu closes it (and never reaches the page). Lives below the menu
+       (z 48 < 49) and below the fixed header (z 50), so the burger stays live. */
+    var backdrop = document.createElement("div");
+    backdrop.className = "oymer-mobile-backdrop";
+    backdrop.style.cssText = "position:fixed;inset:0;z-index:48;display:none;background:transparent;";
+    document.body.appendChild(backdrop);
+    /* Scroll lock. body{overflow:hidden} alone does not hold on iOS Safari, so
+       the body is pinned with position:fixed at the current scroll offset and
+       put back (same offset) on close. The header is fixed, so it is unmoved. */
+    var open = false, lockedY = 0;
+    function set(o) {
+      open = o;
+      menu.style.display = o ? "block" : "none";
+      backdrop.style.display = o ? "block" : "none";
+      burger.setAttribute("aria-expanded", o ? "true" : "false");
+      var b = document.body.style;
+      if (o) {
+        lockedY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        b.position = "fixed"; b.top = (-lockedY) + "px"; b.left = "0"; b.right = "0";
+        b.width = "100%"; b.overflow = "hidden";
+      } else {
+        b.position = ""; b.top = ""; b.left = ""; b.right = ""; b.width = ""; b.overflow = "";
+        window.scrollTo(0, lockedY);
+      }
+    }
+    burger.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); set(!open); });
+    backdrop.addEventListener("click", function (e) { e.preventDefault(); set(false); });
+    backdrop.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
   }
 
   /* ---- self-hosted accessibility menu (נגישות) ---- */
