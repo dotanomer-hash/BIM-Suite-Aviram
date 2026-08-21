@@ -166,6 +166,7 @@ var OYMER_SERVICES = [
   ];
 
   /* ---- shared dropdown builder ---- */
+  var DROPDOWNS = [];   // every dropdown registers a closer here, so one can close the others
   function makeDropdown(btn, links) {
     var wrap = btn.parentNode;
     if (!wrap || wrap.querySelector(".oymer-submenu")) return;
@@ -181,9 +182,25 @@ var OYMER_SERVICES = [
       menu.appendChild(a);
     });
     wrap.appendChild(menu);
-    var open = false;
+    var open = false, leaveTimer = null;
     function set(o) { open = o; menu.style.display = o ? "block" : "none"; btn.setAttribute("aria-expanded", o); }
-    btn.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); set(!open); });
+    /* Opening one dropdown closes every other one - services and products can
+       never be down at the same time. Each builder registers its own closer. */
+    DROPDOWNS.push(function (except) { if (except !== set && open) set(false); });
+    function closeOthers() { DROPDOWNS.forEach(function (c) { c(set); }); }
+    /* Open on HOVER, on pointer devices only: a touch tap also fires mouseenter,
+       and the click handler right after it would close what the tap just opened. */
+    function canHover() { return !window.matchMedia || window.matchMedia("(hover:hover)").matches; }
+    wrap.addEventListener("mouseenter", function () {
+      if (!canHover()) return;
+      clearTimeout(leaveTimer); closeOthers(); set(true);
+    });
+    wrap.addEventListener("mouseleave", function () {
+      if (!canHover()) return;
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(function () { set(false); }, 180);  // forgiving gap between button and menu
+    });
+    btn.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); closeOthers(); set(!open); });
     document.addEventListener("click", function () { if (open) set(false); });
     menu.addEventListener("click", function (e) { e.stopPropagation(); });
   }
