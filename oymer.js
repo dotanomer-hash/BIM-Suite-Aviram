@@ -314,6 +314,7 @@ var OYMER_SERVICES = [
       }
       (container || menu).appendChild(a);
     }
+    var SECTIONS = [];   // one open section at a time, like the desktop dropdowns
     function collapsible(title, rows) {
       var btn = document.createElement("button");
       btn.style.cssText = "display:flex;width:100%;align-items:center;justify-content:space-between;padding:13px 8px;background:none;border:0;border-bottom:1px solid #f1f5f9;font-size:16px;font-weight:700;color:#0f172a;cursor:pointer;font-family:inherit;";
@@ -324,12 +325,19 @@ var OYMER_SERVICES = [
       var body = document.createElement("div"); body.style.display = "none";
       rows.forEach(function (l) { link(l, true, body); });
       var open = rows.some(function (l) { return (l[1] || "").toLowerCase() === curPage; });  // auto-open the section you're in
-      if (open) { body.style.display = "block"; arrow.style.transform = "rotate(180deg)"; }
+      function set(o) {
+        open = o;
+        body.style.display = o ? "block" : "none";
+        arrow.style.transform = o ? "rotate(180deg)" : "";
+      }
+      if (open) set(true);
+      /* Same rule as the desktop dropdowns: one section at a time. Without this
+         a tap on המוצרים left השירותים open above it and the menu was a wall. */
+      SECTIONS.push(function (except) { if (except !== set && open) set(false); });
       btn.addEventListener("click", function (e) {
         e.preventDefault(); e.stopPropagation();
-        open = !open;
-        body.style.display = open ? "block" : "none";
-        arrow.style.transform = open ? "rotate(180deg)" : "";
+        SECTIONS.forEach(function (c) { c(set); });
+        set(!open);
       });
       menu.appendChild(btn); menu.appendChild(body);
     }
